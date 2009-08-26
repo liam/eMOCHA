@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<style name="BigButton">
+        <item name="android:textSize">20px</item>
+        <item name="android:textColor">#00276F</item>
+</style>
+
+<style name="ScreenHeader">
+	<item name="android:textColor">@color/hopkins_blue</item>
+	<item name="android:paddingBottom">10px</item>
+	<item name="android:paddingTop">10px</item>
+</style>
+</resources>

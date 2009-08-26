@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/LinearLayout01" android:orientation="vertical" android:layout_centerHorizontal="true" android:layout_height="fill_parent" android:background="@color/background" android:layout_width="fill_parent" android:padding="10px">
+	<ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:paddingBottom="40px" android:layout_width="wrap_content" android:padding="5px" android:src="@drawable/mh_logo_tiny"></ImageView>
+	<TextView android:id="@+id/TextView01" android:layout_height="wrap_content" style="@style/ScreenHeader" android:text="@string/label_call_menu" android:layout_width="wrap_content"></TextView>
+	<Button android:id="@+id/ButtonCallConsult" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" style="@style/BigButton" android:textColor="@color/hopkins_blue" android:textSize="18px" android:text="@string/but_call_consult"></Button>
+	<Button android:id="@+id/ButtonCallClinic" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" style="@style/BigButton" android:textColor="@color/hopkins_blue" android:textSize="18px" android:text="@string/but_call_clinic"></Button>
+	<Button android:id="@+id/ButtonCallOther" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:textColor="@color/hopkins_blue" android:textSize="18px" android:text="@string/but_call_other"></Button>
+</LinearLayout>

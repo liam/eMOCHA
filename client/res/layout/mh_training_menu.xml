@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/LinearLayout01" android:orientation="vertical" android:layout_centerHorizontal="true" android:layout_height="fill_parent" android:background="@color/background" android:layout_width="fill_parent" android:padding="10px">
+	<ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:paddingBottom="40px" android:layout_width="wrap_content" android:padding="5px" android:src="@drawable/mh_logo_tiny"></ImageView>
+	<TextView android:id="@+id/TextView01" android:text="@string/label_training_menu" style="@style/ScreenHeader" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+	<Button android:id="@+id/ButtonTrainLectures" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" style="@style/BigButton" android:textColor="@color/hopkins_blue" android:textSize="18px" android:text="@string/but_train_lectures"></Button>
+	<Button android:id="@+id/ButtonTrainCourses" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" style="@style/BigButton" android:textColor="@color/hopkins_blue" android:textSize="18px" android:text="@string/but_train_courses"></Button>
+	<Button android:id="@+id/ButtonTrainLibrary" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:textColor="@color/hopkins_blue" android:textSize="18px" android:text="@string/but_train_library"></Button>
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<color name="hopkins_blue">#00276F</color>
+<color name="background">#FFFFFF</color>
+    
+<string name="app_name">eMocha</string>
+
+<!-- log in screen -->
+<string name="label_welcome">Welcome to eMocha</string>
+<string name="label_username">Username</string>
+<string name="label_password">Password</string>
+<string name="label_login">Log in</string>
+
+<!-- main menu -->
+<string name="label_main_menu">Welcome. What would you like to do today?</string>
+<string name="but_call">Make call</string>
+<string name="but_training">Training</string>
+<string name="but_add_patient">New patient</string>
+<string name="but_upd_patient">Update patient</string>
+<string name="but_help">Help using the phone</string>
+
+<!-- call menu -->
+<string name="label_call_menu">Make a call</string>
+<string name="but_call_consult">Consultation</string>
+<string name="but_call_clinic">Hospital or clinic</string>
+<string name="but_call_other">Other numbers</string>
+
+<!-- help -->
+<string name="label_help">Help</string>
+<string name="help_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean convallis laoreet sem eu laoreet. Morbi faucibus magna sit amet ante lobortis vestibulum. Nulla hendrerit ultrices rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas elementum mi sit amet purus malesuada a pretium libero convallis. Proin eget turpis nunc, a venenatis odio. Sed eget tortor et elit sagittis varius sed vitae enim. Curabitur lectus felis, aliquam ac congue et, condimentum ut velit. Fusce nibh ante, ullamcorper a malesuada eget, volutpat ut sapien. Etiam aliquet consequat ligula, sit amet venenatis mauris dapibus in. Nunc eu sapien nunc, quis porta purus. Pellentesque libero libero, malesuada eu pulvinar eget, vulputate a nunc. Quisque venenatis interdum porta. Donec in dui lorem. Proin et tempus libero. Quisque nec sem et felis sodales luctus id non nunc. Vivamus lacus lorem, suscipit a tempus eget, interdum in nibh. Integer vel urna vel mi pulvinar rutrum eget et purus. Nunc adipiscing dui sit amet ante sollicitudin congue.
+
+Aenean iaculis convallis enim eget fermentum. Nullam enim orci, placerat vel pharetra sit amet, congue ut augue. Maecenas quis lorem in ligula vehicula ornare non et turpis. Integer a lacus sit amet quam sagittis auctor tristique semper ipsum. Aenean mi ligula, bibendum eget semper mollis, mattis ac lectus. Duis velit mauris, tempus a dignissim vel, tempor nec erat. Proin adipiscing condimentum bibendum. Fusce pharetra commodo tincidunt. Sed nibh nisl, aliquam nec cursus vel, ultrices vitae sem. Proin posuere ligula varius magna ultrices at volutpat felis ultrices. Curabitur vulputate ante quis sem pretium non elementum massa mattis. Praesent libero ipsum, consequat eget interdum vel, lobortis sed nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+Sed molestie, tortor nec egestas cursus, massa tellus ultricies elit, quis iaculis tortor libero ut libero. Ut et ante nec lacus sollicitudin cursus eget eu nulla. Proin ante enim, sodales tempor faucibus sit amet, luctus vitae nulla. Etiam luctus aliquet turpis sed iaculis. Proin dictum dolor vehicula turpis dapibus vel congue urna mollis. In in mattis tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper purus non enim pellentesque rutrum malesuada diam feugiat. Suspendisse tristique condimentum consectetur. Sed et lacus ultrices nisi commodo pulvinar ut a ante. Donec quis turpis eu tortor sodales hendrerit eu id lacus. Praesent consequat, sem eu pharetra malesuada, nibh nibh tristique sem, sed feugiat magna metus nec arcu. Aenean ullamcorper dapibus congue. Suspendisse dapibus felis id mi malesuada dignissim. Aliquam sapien risus, convallis sit amet aliquam at, dignissim quis enim. Nulla adipiscing, augue nec varius ornare, mi massa suscipit tellus, in placerat dolor nibh dictum arcu. Integer auctor metus quis augue blandit porttitor. Vivamus feugiat fringilla metus, at luctus nibh rutrum non. Nam quis ipsum nunc. 
+</string>
+
+<!-- training menu -->
+<string name="label_training_menu">Choose training type</string>
+<string name="label_training_library">Choose a book</string>
+<string name="label_training_lectures">Choose a lecture</string>
+<string name="label_training_courses">Choose a course</string>
+<string name="but_train_lectures">Lectures</string>
+<string name="but_train_courses">Courses</string>
+<string name="but_train_library">Library</string>
+
+<string name="allowed_number">+256777667444</string>
+</resources>
