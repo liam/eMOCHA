@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/LinearLayout01" android:layout_centerHorizontal="true" android:layout_height="fill_parent" android:background="@color/background" android:layout_width="fill_parent" android:padding="10px" android:orientation="horizontal">
+	<LinearLayout android:id="@+id/LinearLayout02" android:layout_width="wrap_content" android:orientation="vertical" android:layout_height="fill_parent" android:layout_marginRight="10px">
+<ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:paddingBottom="40px" android:layout_width="wrap_content" android:padding="5px" android:src="@drawable/mh_logo_tiny"></ImageView><TextView android:id="@+id/TextView01" style="@style/ScreenHeader" android:text="@string/label_main_menu" android:layout_width="fill_parent" android:layout_height="fill_parent"></TextView></LinearLayout><LinearLayout android:id="@+id/LinearLayout03" android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent"><Button android:id="@+id/ButtonMainMenuCall" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:text="@string/but_call" style="@style/BigButton" android:textColor="@color/hopkins_blue" android:textSize="18px"></Button><Button android:id="@+id/ButtonMainMenuTraining" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:text="@string/but_training" style="@style/BigButton" android:textColor="@color/hopkins_blue" android:textSize="18px"></Button><Button android:id="@+id/ButtonMainMenuAddPatient" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:text="@string/but_add_patient" android:textColor="@color/hopkins_blue" android:textSize="18px"></Button><Button android:id="@+id/ButtonMainMenuUpdPatient" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:text="@string/but_upd_patient" android:textColor="@color/hopkins_blue" android:textSize="18px"></Button><Button android:id="@+id/ButtonMainMenuHelp" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:text="@string/but_help" android:textColor="@color/hopkins_blue" android:textSize="18px"></Button></LinearLayout>
+	
+	
+	
+	
+	
+	
+
+</LinearLayout>
