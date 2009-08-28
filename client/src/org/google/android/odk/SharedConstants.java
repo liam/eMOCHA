@@ -102,9 +102,14 @@ public class SharedConstants {
     public final static int APPLICATION_FONTSIZE = 10;
     
     /**
-     * Remote address where MOCHA CCGHE saves data
+     * Remote address where eMOCHA server saves data
      * vs148064.vserver.de 
      * 127.0.0.1/uganda/android
+     * TODO: the protocol should be https
+     * TODO: each phone card has a unique IMEI. We will send maybe a MD5 of this IMEI by POST. 
+     *       Server only accepts data from known phones.
+     *       String myIMSI = android.os.SystemProperties.get(android.telephony.TelephonyProperties.PROPERTY_IMSI);
+     *       String myIMEI = android.os.SystemProperties.get(android.telephony.TelephonyProperties.PROPERTY_IMEI);
      */
     public final static String MOCHA_URL = "http://62.75.148.64/savedata.php";
     
