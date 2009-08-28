@@ -20,16 +20,51 @@
 package net.ccghe.emocha;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 public class MHTrainingItem extends Activity {
 
+	private String pVideoPath;
+    private Button pPlayVideo;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	
 	    setContentView(R.layout.mh_training_item);
+
+        pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);
+        
+        pPlayVideo.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View v) {
+				  Intent tIntent = new Intent(getApplicationContext(), MHVideo.class);				
+				  tIntent.putExtra(MHConstants.DOC_ID, pVideoPath);					  
+				  startActivity(tIntent);        		
+        	}
+        });
+	    
+	    Bundle extras = getIntent().getExtras();
+	    pVideoPath = extras.getString(MHConstants.DOC_ID);
+		
+	    String tThumbPath = pVideoPath.replaceFirst(".mp4", ".jpg");
+	    Uri tThumbUri = Uri.parse(tThumbPath);
+	    
+	    //TODO: check if the image exists, otherwise show some default thumb
+	    	    
+	    ImageView tThumb = (ImageView) findViewById(R.id.ImageVideoThumb);
+	    
+
+	    tThumb.setImageURI(tThumbUri);
+	    
+		// pVideoPath is the path to the video
+		// replace mp4 for jpg
+		// and then use this as a source for the image
 	}
 
 }

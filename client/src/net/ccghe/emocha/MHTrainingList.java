@@ -117,7 +117,7 @@ public class MHTrainingList extends Activity {
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLectures:
-					  tIntent = new Intent(getApplicationContext(), MHVideo.class);				
+					  tIntent = new Intent(getApplicationContext(), MHTrainingItem.class);				
 					  tIntent.putExtra(MHConstants.DOC_ID, MHConstants.VIDEO_LECTURES_PATH + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;
