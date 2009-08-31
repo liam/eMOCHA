@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="5px"><TextView android:id="@+id/TextView01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/label_server_url"></TextView>
+<EditText android:id="@+id/EditText01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="http://"></EditText>
+</LinearLayout>

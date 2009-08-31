@@ -45,4 +45,5 @@ Sed molestie, tortor nec egestas cursus, massa tellus ultricies elit, quis iacul
 <string name="but_train_library">Library</string>
 
 <string name="allowed_number">+256777667444</string>
+<string name="label_server_url">Server URL</string>
 </resources>
