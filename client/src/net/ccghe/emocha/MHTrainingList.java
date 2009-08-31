@@ -103,7 +103,7 @@ public class MHTrainingList extends Activity {
 			  pUnits.add("nelfinavir");
 			  break;
 	  }
-	  pAdapter = new ArrayAdapter<String>(this, R.layout.mh_list_row, R.id.ListText, pUnits);
+	  pAdapter = new ArrayAdapter<String>(this, R.layout.mh_training_row, R.id.ListText, pUnits);
 	  pList.setAdapter(pAdapter);
 	  
 	  pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,12 +112,12 @@ public class MHTrainingList extends Activity {
 			Intent tIntent;
 			switch (pType) {
 				  case R.id.ButtonTrainCourses:
-					  tIntent = new Intent(getApplicationContext(), MHTrainingItem.class);				
+					  tIntent = new Intent(getApplicationContext(), MHTrainingItemInfo.class);				
 					  tIntent.putExtra(MHConstants.DOC_ID, MHConstants.VIDEO_COURSES_PATH + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLectures:
-					  tIntent = new Intent(getApplicationContext(), MHTrainingItem.class);				
+					  tIntent = new Intent(getApplicationContext(), MHTrainingItemInfo.class);				
 					  tIntent.putExtra(MHConstants.DOC_ID, MHConstants.VIDEO_LECTURES_PATH + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;

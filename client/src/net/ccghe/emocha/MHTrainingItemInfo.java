@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class MHTrainingItem extends Activity {
+public class MHTrainingItemInfo extends Activity {
 
 	private String pVideoPath;
     private Button pPlayVideo;
@@ -37,7 +37,7 @@ public class MHTrainingItem extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	
-	    setContentView(R.layout.mh_training_item);
+	    setContentView(R.layout.mh_training_item_info);
 
         pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);
         
@@ -50,8 +50,9 @@ public class MHTrainingItem extends Activity {
         });
 	    
 	    Bundle extras = getIntent().getExtras();
-	    pVideoPath = extras.getString(MHConstants.DOC_ID);
-		
+
+	    // get path to the requested video, replace file extension by .jpg (video thumbnail)
+	    pVideoPath = extras.getString(MHConstants.DOC_ID);		
 	    String tThumbPath = pVideoPath.replaceFirst(".mp4", ".jpg");
 	    Uri tThumbUri = Uri.parse(tThumbPath);
 	    
@@ -59,12 +60,7 @@ public class MHTrainingItem extends Activity {
 	    	    
 	    ImageView tThumb = (ImageView) findViewById(R.id.ImageVideoThumb);
 	    
-
-	    tThumb.setImageURI(tThumbUri);
-	    
-		// pVideoPath is the path to the video
-		// replace mp4 for jpg
-		// and then use this as a source for the image
+	    tThumb.setImageURI(tThumbUri);	    
 	}
 
 }
