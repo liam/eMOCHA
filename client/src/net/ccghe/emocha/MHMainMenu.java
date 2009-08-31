@@ -26,6 +26,8 @@ import org.google.android.odk.SharedConstants;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -35,6 +37,8 @@ public class MHMainMenu extends Activity {
 	private Button pAddPatientButton;
 	private Button pEditPatientButton;
 	private Button pHelpButton;
+	
+	private final static int MENU_SETTINGS = 1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,11 @@ public class MHMainMenu extends Activity {
 			}
 		});
 		
-		
+	}
+	
+	public boolean onCreateOptionsMenu(Menu tMenu) {
+		MenuItem tItem = tMenu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.ic_menu_preferences);
+		tItem.setIntent(new Intent(this, MHSettingList.class));
+		return true;
 	}
 }
