@@ -19,13 +19,15 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-public class MHConstants {
-	public static final String TRAINING_TYPE  		= "trainingType";
-	public static final String DOC_ID				= "docID";
+import android.app.Activity;
+import android.os.Bundle;
 
-	public static final String BASE_PATH 			= "/sdcard/emocha/";
-	public static final String VIDEO_COURSES_PATH	= BASE_PATH + "training/courses/";
-	public static final String VIDEO_LECTURES_PATH	= BASE_PATH + "training/lectures/";
+public class Help extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.mh_help);
+	}
 	
-	public final static String VIDEO_FILE_PATTERN = "^\\w.*\\.mp4$";
 }

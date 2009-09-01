@@ -25,44 +25,42 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
-public class MHCallMenu extends Activity {
-	private Button pCallConsult;
-	private Button pCallClinic;
-	private Button pCallOther;
+public class TrainingThumb extends Activity {
 
+	private String pVideoPath;
+    private Button pPlayVideo;
+	
+	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_call_menu);
-		
-		
-		pCallConsult = (Button) findViewById(R.id.ButtonCallConsult);
-		pCallClinic  = (Button) findViewById(R.id.ButtonCallClinic);
-		pCallOther   = (Button) findViewById(R.id.ButtonCallOther);
-		
-		pCallConsult.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				callHospital();
-			}
-		});
-		pCallClinic.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				callHospital();
-			}
-		});
-		pCallOther.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent OpenDialer = new Intent(Intent.ACTION_DIAL);
-	            startActivity(OpenDialer);
-            }
-		});
+	    super.onCreate(savedInstanceState);
+	
+	    setContentView(R.layout.mh_training_thumb);
+
+        pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);
+        
+        pPlayVideo.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View v) {
+				  Intent tIntent = new Intent(getApplicationContext(), VideoPlayer.class);				
+				  tIntent.putExtra(Constants.DOC_ID, pVideoPath);					  
+				  startActivity(tIntent);        		
+        	}
+        });
+	    
+	    Bundle extras = getIntent().getExtras();
+
+	    // get path to the requested video, replace file extension by .jpg (video thumbnail)
+	    pVideoPath = extras.getString(Constants.DOC_ID);		
+	    String tThumbPath = pVideoPath.replaceFirst(".mp4", ".jpg");
+	    Uri tThumbUri = Uri.parse(tThumbPath);
+	    
+	    //TODO: check if the image exists, otherwise show some default thumb
+	    	    
+	    ImageView tThumb = (ImageView) findViewById(R.id.ImageVideoThumb);
+	    
+	    tThumb.setImageURI(tThumbUri);	    
 	}
-	private void callHospital() {
-		try {
-	        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+256777667444")));
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	    }								
-	}
+
 }

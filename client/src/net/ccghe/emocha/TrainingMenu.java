@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MHTrainingMenu extends Activity {
+public class TrainingMenu extends Activity {
 	private Button pTrainingLectures;
 	private Button pTrainingCourses;
 	private Button pTrainingLibrary;
@@ -56,8 +56,8 @@ public class MHTrainingMenu extends Activity {
 						Toast.makeText(getApplicationContext(), "LIBRARY", Toast.LENGTH_SHORT).show();						        		
 		        		break;
 		        }
-		        Intent tIntent = new Intent(getApplicationContext(), MHTrainingList.class);
-		        tIntent.putExtra(MHConstants.TRAINING_TYPE, tID);
+		        Intent tIntent = new Intent(getApplicationContext(), TrainingDocList.class);
+		        tIntent.putExtra(Constants.TRAINING_TYPE, tID);
 		        startActivity(tIntent);
             }			
 		};

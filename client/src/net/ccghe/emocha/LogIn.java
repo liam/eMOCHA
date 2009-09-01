@@ -21,46 +21,43 @@ package net.ccghe.emocha;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class MHTrainingItemInfo extends Activity {
+public class LogIn extends Activity {
 
-	private String pVideoPath;
-    private Button pPlayVideo;
-	
+	private Button pLoginButton;
+	private EditText pInputUser;
+	private EditText pInputPassword;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	
-	    setContentView(R.layout.mh_training_item_info);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.mh_log_in);
 
-        pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);
-        
-        pPlayVideo.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View v) {
-				  Intent tIntent = new Intent(getApplicationContext(), MHVideo.class);				
-				  tIntent.putExtra(MHConstants.DOC_ID, pVideoPath);					  
-				  startActivity(tIntent);        		
-        	}
-        });
-	    
-	    Bundle extras = getIntent().getExtras();
+		pLoginButton   = (Button) findViewById(R.id.ButtonLogIn);
+		pInputUser     = (EditText) findViewById(R.id.InputUser);
+		pInputPassword = (EditText) findViewById(R.id.InputPassword);
+		
+		pLoginButton.setOnClickListener(new View.OnClickListener() {
 
-	    // get path to the requested video, replace file extension by .jpg (video thumbnail)
-	    pVideoPath = extras.getString(MHConstants.DOC_ID);		
-	    String tThumbPath = pVideoPath.replaceFirst(".mp4", ".jpg");
-	    Uri tThumbUri = Uri.parse(tThumbPath);
-	    
-	    //TODO: check if the image exists, otherwise show some default thumb
-	    	    
-	    ImageView tThumb = (ImageView) findViewById(R.id.ImageVideoThumb);
-	    
-	    tThumb.setImageURI(tThumbUri);	    
+			public void onClick(View v) {		
+				String tUser     = pInputUser.getText().toString();
+				String tPassword = pInputPassword.getText().toString();
+
+				if (tUser.equals("user") && tPassword.equals("pass")) {
+					Intent i = new Intent(getApplicationContext(), Main.class);
+	                startActivity(i);
+				} else {
+					Toast.makeText(LogIn.this, "Wrong password", Toast.LENGTH_SHORT).show();				
+				}
+			}
+
+		});
+
 	}
-
 }

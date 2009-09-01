@@ -21,13 +21,29 @@ package net.ccghe.emocha;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.webkit.WebView;
 
-public class MHHelp extends Activity {
+public class HTMLView extends Activity {
+	private WebView webview;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_help);
-	}
+    protected void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    
+	    setContentView(R.layout.mh_htmlview);
+
+	    Bundle extras = getIntent().getExtras();
+		String tDocID = extras.getString(Constants.DOC_ID);
+	    
+	    webview = (WebView) findViewById(R.id.webview);
+	    webview.getSettings().setJavaScriptEnabled(true);
+	    
+	    // maybe use loadData instead.
+	    // then we can read html files from the sdcard and
+	    // pass the content of the files into loadUrl()
+	    webview.loadUrl("file:///android_asset/full_" + tDocID + ".html" );
+	        
+    }
+	
 	
 }

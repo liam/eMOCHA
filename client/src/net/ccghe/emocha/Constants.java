@@ -19,31 +19,19 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.webkit.WebView;
+public class Constants {
+	public static final String TRAINING_TYPE  		= "trainingType";
+	public static final String DOC_ID				= "docID";
 
-public class MHWebView extends Activity {
-	private WebView webview;
-
-	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    
-	    setContentView(R.layout.mh_webview);
-
-	    Bundle extras = getIntent().getExtras();
-		String tDocID = extras.getString(MHConstants.DOC_ID);
-	    
-	    webview = (WebView) findViewById(R.id.webview);
-	    webview.getSettings().setJavaScriptEnabled(true);
-	    
-	    // maybe use loadData instead.
-	    // then we can read html files from the sdcard and
-	    // pass the content of the files into loadUrl()
-	    webview.loadUrl("file:///android_asset/full_" + tDocID + ".html" );
-	        
-    }
+	public static final String ODK_FORM_PATH        = "/sdcard/odk/forms/mHealth.xml";
 	
+	public static final String BASE_PATH 			= "/sdcard/emocha/";
+	public static final String VIDEO_COURSES_PATH	= BASE_PATH + "training/courses/";
+	public static final String VIDEO_LECTURES_PATH	= BASE_PATH + "training/lectures/";
 	
+	public static final String VIDEO_FILE_PATTERN   = "^\\w.*\\.mp4$";
+
+	
+	public static final String MAIN_PREFS_FILE_NAME = "eMOCHA_Preferences";
+	public static final String PREFS_VAR_SERVER_URL = "serverURL";
 }

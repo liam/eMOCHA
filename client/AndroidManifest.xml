@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       android:versionCode="1"
-      android:versionName="1.0.0" package="net.ccghe.emocha">
+      android:versionName="1.0.0" 
+      package="net.ccghe.emocha">
       
 <application android:icon="@drawable/mh_icon" android:label="@string/app_name" android:debuggable="true" android:theme="@android:style/Theme.Light">
-	<activity android:label="@string/app_name" android:name="MHLogIn"></activity>	
-	<activity android:name="MHMainMenu" android:label="@string/app_name">
+	<!-- <ODK> -->
+	<activity android:name="org.google.android.odk.MainMenu" android:label="@string/app_name"/>
+    <activity android:name="org.google.android.odk.FormEntry" android:label="@string/app_name"/>
+    <activity android:name="org.google.android.odk.InstanceChooser" android:label="@string/app_name"/>
+    <activity android:name="org.google.android.odk.FormChooser" android:label="@string/app_name"/>
+    <activity android:name="org.google.android.odk.FormManager" android:label="@string/app_name"/>
+	<!-- </ODK> -->
+
+	<activity android:name="LogIn" android:label="@string/app_name"></activity>	
+	<activity android:name="Main" android:label="@string/app_name">
 		<intent-filter>
 			<action android:name="android.intent.action.MAIN"></action>
 			<category android:name="android.intent.category.DEFAULT"></category>
 			<category android:name="android.intent.category.LAUNCHER"></category>
 		</intent-filter>
 	</activity>
-	<activity android:name="MHCallMenu" android:label="@string/app_name"></activity>
-	<activity android:name="MHHelp" android:label="@string/app_name"></activity>
-	<activity android:name="MHTrainingMenu" android:label="@string/app_name"></activity>
-	<activity android:name="MHTrainingList" android:label="@string/app_name"></activity>
-	<activity android:name="MHVideo" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-	<activity android:name="MHWebView" android:label="@string/app_name"></activity>
-	<activity android:name="MHTrainingItemInfo" android:label="@string/app_name"></activity>
+	<activity android:name="CallMenu" android:label="@string/app_name"></activity>
+	<activity android:name="Help" android:label="@string/app_name"></activity>
+	<activity android:name="TrainingMenu" android:label="@string/app_name"></activity>
+	<activity android:name="TrainingDocList" android:label="@string/app_name"></activity>
+	<activity android:name="VideoPlayer" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+	<activity android:name="HTMLView" android:label="@string/app_name"></activity>
+	<activity android:name="TrainingThumb" android:label="@string/app_name"></activity>
+	<activity android:name="Settings"></activity>
 
-	<!-- ODK -->
-	<activity android:name="org.google.android.odk.MainMenu" android:label="@string/app_name"/>
-    <activity android:name="org.google.android.odk.FormEntry" android:label="@string/app_name"/>
-    <activity android:name="org.google.android.odk.InstanceChooser" android:label="@string/app_name"/>
-    <activity android:name="org.google.android.odk.FormChooser" android:label="@string/app_name"/>
-    <activity android:name="org.google.android.odk.FormManager" android:label="@string/app_name"/>
-<activity android:name="MHSettingList"></activity>
 </application>
 
 <uses-permission android:name="android.permission.CALL_PHONE" />

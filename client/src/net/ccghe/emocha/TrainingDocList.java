@@ -33,7 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MHTrainingList extends Activity {
+public class TrainingDocList extends Activity {
 	private TextView			 pTitle;
 	private ListView             pList;
 	private ArrayAdapter<String> pAdapter;
@@ -67,22 +67,22 @@ public class MHTrainingList extends Activity {
 	  setContentView(R.layout.mh_training_list);
 
 	  Bundle extras = getIntent().getExtras();
-	  pType = extras.getInt(MHConstants.TRAINING_TYPE);
+	  pType = extras.getInt(Constants.TRAINING_TYPE);
 	  
 	  pList  = (ListView) findViewById(R.id.TrainingList);
 	  pTitle = (TextView) findViewById(R.id.TrainingListTitle);
 	  pUnits = new ArrayList<String> ();
 	  
-	  pVideoFilePattern = Pattern.compile(MHConstants.VIDEO_FILE_PATTERN);
+	  pVideoFilePattern = Pattern.compile(Constants.VIDEO_FILE_PATTERN);
 	  	  
 	  switch (pType) {
 		  case R.id.ButtonTrainCourses:
 			  pTitle.setText(R.string.label_training_courses);
-			  addFilesFromFolder(MHConstants.VIDEO_COURSES_PATH);			  
+			  addFilesFromFolder(Constants.VIDEO_COURSES_PATH);			  
 			  break;
 		  case R.id.ButtonTrainLectures:
 			  pTitle.setText(R.string.label_training_lectures);
-			  addFilesFromFolder(MHConstants.VIDEO_LECTURES_PATH);			  			  
+			  addFilesFromFolder(Constants.VIDEO_LECTURES_PATH);			  			  
 			  break;
 		  case R.id.ButtonTrainLibrary:
 			  pTitle.setText(R.string.label_training_library);
@@ -112,18 +112,18 @@ public class MHTrainingList extends Activity {
 			Intent tIntent;
 			switch (pType) {
 				  case R.id.ButtonTrainCourses:
-					  tIntent = new Intent(getApplicationContext(), MHTrainingItemInfo.class);				
-					  tIntent.putExtra(MHConstants.DOC_ID, MHConstants.VIDEO_COURSES_PATH + pUnits.get(tPosition));					  
+					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
+					  tIntent.putExtra(Constants.DOC_ID, Constants.VIDEO_COURSES_PATH + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLectures:
-					  tIntent = new Intent(getApplicationContext(), MHTrainingItemInfo.class);				
-					  tIntent.putExtra(MHConstants.DOC_ID, MHConstants.VIDEO_LECTURES_PATH + pUnits.get(tPosition));					  
+					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
+					  tIntent.putExtra(Constants.DOC_ID, Constants.VIDEO_LECTURES_PATH + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLibrary:
-					  tIntent = new Intent(getApplicationContext(), MHWebView.class);
-				      tIntent.putExtra(MHConstants.DOC_ID, pUnits.get(tPosition));
+					  tIntent = new Intent(getApplicationContext(), HTMLView.class);
+				      tIntent.putExtra(Constants.DOC_ID, pUnits.get(tPosition));
 				      startActivity(tIntent);
 					  break;	
 			}

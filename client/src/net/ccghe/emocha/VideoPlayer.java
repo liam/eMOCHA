@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-public class MHVideo extends Activity {
+public class VideoPlayer extends Activity {
 
     private VideoView pVideo;
     private MediaController pPlayer;
@@ -37,7 +37,7 @@ public class MHVideo extends Activity {
         setContentView(R.layout.mh_video_player);
 
 	    Bundle extras = getIntent().getExtras();
-		String tDocID = extras.getString(MHConstants.DOC_ID);
+		String tDocID = extras.getString(Constants.DOC_ID);
         
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
 //      getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

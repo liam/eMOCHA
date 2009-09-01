@@ -25,13 +25,14 @@ import org.google.android.odk.SharedConstants;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class MHMainMenu extends Activity {
+public class Main extends Activity {
 	private Button pCallButton;
 	private Button pTrainingButton;
 	private Button pAddPatientButton;
@@ -53,23 +54,20 @@ public class MHMainMenu extends Activity {
 			
 		pCallButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), MHCallMenu.class);
+				Intent i = new Intent(getApplicationContext(), CallMenu.class);
                 startActivity(i); 
 			}
 		});
 		pTrainingButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), MHTrainingMenu.class);
+				Intent i = new Intent(getApplicationContext(), TrainingMenu.class);
                 startActivity(i);
 			}
 		});
 		pAddPatientButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//Intent i = new Intent(getApplicationContext(), MainMenu.class);
-                //startActivity(i);
-                
                 Intent i = new Intent(getApplicationContext(), FormEntry.class);                
-                i.putExtra(SharedConstants.FILEPATH_KEY, "/sdcard/odk/forms/mHealth.xml");
+                i.putExtra(SharedConstants.FILEPATH_KEY, Constants.ODK_FORM_PATH);
                 startActivity(i);                
 			}
 		});
@@ -81,16 +79,31 @@ public class MHMainMenu extends Activity {
 		});		
 		pHelpButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), MHHelp.class);
+				Intent i = new Intent(getApplicationContext(), Help.class);
                 startActivity(i);
 			}
 		});
-		
 	}
 	
+	@Override
+	protected void onStart() {
+		super.onResume();
+		
+		// Check if we have defined a serverURL.
+		// If not, we can not continue: go to the Settings activity
+		SharedPreferences tSettings = getSharedPreferences(Constants.MAIN_PREFS_FILE_NAME, 0);
+		String tServerURL = tSettings.getString(Constants.PREFS_VAR_SERVER_URL, ".");
+		if (tServerURL == ".") {
+    	   Intent i = new Intent(getApplicationContext(), Settings.class);
+    	   startActivity(i);    	   
+		}
+	}
+
+
+
 	public boolean onCreateOptionsMenu(Menu tMenu) {
 		MenuItem tItem = tMenu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.ic_menu_preferences);
-		tItem.setIntent(new Intent(this, MHSettingList.class));
+		tItem.setIntent(new Intent(this, Settings.class));
 		return true;
 	}
 }
