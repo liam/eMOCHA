@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory android:title="@string/preferences_category_server">
+
+<EditTextPreference android:title="@string/preferences_input_title_server_url" android:summary="@string/preferences_input_summary_server_url" android:defaultValue="https://" android:key="pref_server_url"></EditTextPreference>
+<EditTextPreference android:title="@string/preferences_input_title_password" android:summary="@string/preferences_input_summary_password" android:key="pref_api_password"></EditTextPreference>
+<PreferenceScreen android:title="@string/preferences_input_title_reqpwd">
+<intent android:action="android.intent.action.MAIN" 
+                android:targetPackage="net.ccghe.emocha" 
+            	android:targetClass="net.ccghe.emocha.SettingsReqPwd" />
+</PreferenceScreen>
+</PreferenceCategory>
+
+
+</PreferenceScreen>
