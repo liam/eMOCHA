@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:padding="10px" android:background="@color/background" android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical">
+<TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settings_add_phone_label" android:textColor="@color/hopkins_blue"></TextView>
+
+<TextView android:id="@+id/SettingsAddPhoneResponse" android:text="@string/pleaseWait" android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center_vertical|center_horizontal" android:textColor="@color/hopkins_blue" android:layout_marginLeft="20px" android:layout_marginRight="20px"></TextView>
+</LinearLayout>
