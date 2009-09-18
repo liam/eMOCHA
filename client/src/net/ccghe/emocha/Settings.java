@@ -19,50 +19,21 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import net.ccghe.emocha.model.Preferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
-public class Settings extends Activity {
-
-	private SharedPreferences 	pSettings;
-	private Button 				pButtonSavePrefs;
-	private EditText			pServerURLInput;
-	
+public class Settings extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.mh_settings);
-
-		pSettings = getSharedPreferences(Constants.MAIN_PREFS_FILE_NAME, 0);
-
-		pServerURLInput = (EditText) findViewById(R.id.ServerURLInput);
+		addPreferencesFromResource(R.xml.preferences);
 		
-		pButtonSavePrefs = (Button) findViewById(R.id.ButtonSavePrefs);
-		pButtonSavePrefs.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				SharedPreferences.Editor tEditSettings = pSettings.edit();
-				tEditSettings.putString(Constants.PREFS_VAR_SERVER_URL, pServerURLInput.getText().toString());
-				tEditSettings.commit();
-				
-				Intent i = new Intent(getApplicationContext(), Main.class);
-                startActivity(i); 				
-			}
-		});		
-				
-		String tServerURL = pSettings.getString(Constants.PREFS_VAR_SERVER_URL, ".");
-		if (tServerURL == ".") {
-			Toast.makeText(getApplicationContext(), "Please enter server URL", Toast.LENGTH_SHORT).show();	
-		} else {
-			pServerURLInput.setText(tServerURL);
-		}
-	
+		if (Preferences.getServerURL() == null) {
+			Toast.makeText(getApplicationContext(), "Please enter valid server URL", Toast.LENGTH_SHORT).show();	
+		} 
 	}
 	
 }
