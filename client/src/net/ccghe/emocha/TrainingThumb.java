@@ -31,6 +31,7 @@ public class TrainingThumb extends Activity {
 
 	private String pVideoPath;
     private Button pPlayVideo;
+    private Button pTakeQuiz;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -39,15 +40,23 @@ public class TrainingThumb extends Activity {
 	
 	    setContentView(R.layout.mh_training_thumb);
 
-        pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);
-        
+        pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);        
         pPlayVideo.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View v) {
-				  Intent tIntent = new Intent(getApplicationContext(), VideoPlayer.class);				
-				  tIntent.putExtra(Constants.DOC_ID, pVideoPath);					  
-				  startActivity(tIntent);        		
+				Intent tIntent = new Intent(getApplicationContext(), VideoPlayer.class);				
+				tIntent.putExtra(Constants.DOC_ID, pVideoPath);					  
+				startActivity(tIntent);        		
         	}
         });
+        
+        pTakeQuiz  = (Button) findViewById(R.id.ButtonTakeQuiz);
+        pTakeQuiz.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+                Intent tIntent = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
+                tIntent.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "quiz_one.xml");
+                startActivity(tIntent);                				
+			}
+		});
 	    
 	    Bundle extras = getIntent().getExtras();
 
