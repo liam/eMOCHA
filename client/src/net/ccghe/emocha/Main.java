@@ -19,13 +19,12 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-import org.google.android.odk.FormEntry;
+import net.ccghe.emocha.model.Preferences;
+
 import org.google.android.odk.MainMenu;
-import org.google.android.odk.SharedConstants;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +45,11 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mh_main_menu);
 
+		Preferences.init(this);
+		
+		Intent tService = new Intent(this, ServerService.class);
+		startService(tService);
+		
 		pCallButton =        (Button) findViewById(R.id.ButtonMainMenuCall);
 		pTrainingButton =    (Button) findViewById(R.id.ButtonMainMenuTraining);
 		pAddPatientButton =  (Button) findViewById(R.id.ButtonMainMenuAddPatient);
@@ -66,8 +70,8 @@ public class Main extends Activity {
 		});
 		pAddPatientButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), FormEntry.class);                
-                i.putExtra(SharedConstants.FILEPATH_KEY, Constants.ODK_FORM_PATH);
+                Intent i = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
+                i.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "mHealth.xml");
                 startActivity(i);                
 			}
 		});
@@ -87,15 +91,12 @@ public class Main extends Activity {
 	
 	@Override
 	protected void onStart() {
-		super.onResume();
+		super.onStart();
 		
-		// Check if we have defined a serverURL.
-		// If not, we can not continue: go to the Settings activity
-		SharedPreferences tSettings = getSharedPreferences(Constants.MAIN_PREFS_FILE_NAME, 0);
-		String tServerURL = tSettings.getString(Constants.PREFS_VAR_SERVER_URL, ".");
-		if (tServerURL == ".") {
-    	   Intent i = new Intent(getApplicationContext(), Settings.class);
-    	   startActivity(i);    	   
+		// if basic settings have not been set, go to preferences screen.
+		if (!Preferences.hasBasicSettings()) {
+			Intent i = new Intent(getApplicationContext(), Settings.class);
+			startActivity(i);    	   			
 		}
 	}
 
@@ -106,4 +107,14 @@ public class Main extends Activity {
 		tItem.setIntent(new Intent(this, Settings.class));
 		return true;
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Intent tService = new Intent(this, ServerService.class);
+		stopService(tService);
+		Preferences.destroy();
+	}
+	
+	
 }
