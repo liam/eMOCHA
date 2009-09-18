@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="preferences_input_title_reqpwd">Request password</string>
+    <string name="pleaseWait">Please wait</string>
 
 <color name="hopkins_blue">#00276F</color>
 <color name="background">#FFFFFF</color>
     
-<string name="app_name">eMocha</string>
+<string name="app_name">eMOCHA</string>
 
 <!-- log in screen -->
-<string name="label_welcome">Welcome to eMocha</string>
+<string name="label_welcome">Welcome to eMOCHA</string>
 <string name="label_username">Username</string>
 <string name="label_password">Password</string>
 <string name="label_login">Log in</string>
@@ -46,4 +48,11 @@ Sed molestie, tortor nec egestas cursus, massa tellus ultricies elit, quis iacul
 
 <string name="allowed_number">+256777667444</string>
 <string name="label_server_url">Server URL</string>
+<string name="settings_serverURL_undefined">The server URL has not been defined yet, so I can't request a password. Please go back and set the server URL first.</string>
+<string name="settings_add_phone_label">Contacting the server to activate your phone and request a password...</string>
+<string name="preferences_input_summary_password">The password should be given to you by the same person that gave you the phone. It's different for each phone.</string>
+<string name="preferences_input_summary_server_url">eMOCHA will communicate with the server through this HTTPS address</string>
+<string name="preferences_input_title_password">Password</string>
+<string name="preferences_input_title_server_url">Remote URL</string>
+<string name="preferences_category_server"></string>
 </resources>
