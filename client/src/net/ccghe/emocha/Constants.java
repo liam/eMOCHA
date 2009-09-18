@@ -20,18 +20,35 @@
 package net.ccghe.emocha;
 
 public class Constants {
-	public static final String TRAINING_TYPE  		= "trainingType";
-	public static final String DOC_ID				= "docID";
+	public static final String TRAINING_TYPE  			= "trainingType";
+	public static final String DOC_ID					= "docID";
 
-	public static final String ODK_FORM_PATH        = "/sdcard/odk/forms/mHealth.xml";
+	public static final String PATH_ODK_FORMS        	= "/sdcard/odk/forms/";
 	
-	public static final String BASE_PATH 			= "/sdcard/emocha/";
-	public static final String VIDEO_COURSES_PATH	= BASE_PATH + "training/courses/";
-	public static final String VIDEO_LECTURES_PATH	= BASE_PATH + "training/lectures/";
+	public static final String BASE_PATH 				= "/sdcard/emocha/";
+	public static final String PATH_TRAINING_COURSES	= BASE_PATH + "training/courses/";
+	public static final String PATH_TRAINING_LECTURES	= BASE_PATH + "training/lectures/";
+	public static final String PATH_TRAINING_LIBRARY	= BASE_PATH + "training/library/";
 	
-	public static final String VIDEO_FILE_PATTERN   = "^\\w.*\\.mp4$";
+	public static final String FILE_PATTERN_VIDEO   	= "^\\w.*\\.mp4$";	
+	public static final String FILE_PATTERN_HTML    	= "^\\w.*\\.html$";	
+	
+	public static final int SERVER_URL_MIN_LENGTH   	= 18; 
 
+	/*
+	 	To be able to jump into ODK without showing us the main menu
+	 	and loading a form directly, we modify the "ODK/AndroidManifest.xml"
+	 	and add an intent-filter to the FormEntry activity:
+
+		<intent-filter>
+			<action android:name="org.odk.collect.android.SHOW_FORM" />
+	        <category android:name="android.intent.category.DEFAULT"/>
+		</intent-filter>    
+	 	
+	 */
+	public static final String ODK_INTENT_FILTER_SHOW_FORM 	= "org.odk.collect.android.SHOW_FORM";
 	
-	public static final String MAIN_PREFS_FILE_NAME = "eMOCHA_Preferences";
-	public static final String PREFS_VAR_SERVER_URL = "serverURL";
+	// Next value must equal the value of: 
+	// org.google.android.odk.SharedConstants.FILEPATH_KEY
+    public static final String ODK_FILEPATH_KEY 			= "formpath";
 }
