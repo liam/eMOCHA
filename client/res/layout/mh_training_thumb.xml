@@ -9,6 +9,6 @@
 
 <ImageView android:src="@drawable/test_video_thumbnail" android:scaleType="centerInside" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/ImageVideoThumb"></ImageView><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical|center_horizontal" android:text="Play video" android:id="@+id/ButtonPlayVideo"></Button>
 </FrameLayout><TextView android:id="@+id/TextView02" android:layout_height="wrap_content" android:text="Seen 3 times." android:gravity="right" android:layout_width="fill_parent"></TextView>
-<Button android:id="@+id/Button02" android:layout_height="wrap_content" android:text="Take quiz" android:layout_width="fill_parent"></Button><TextView android:id="@+id/TextView03" android:textColor="@color/hopkins_blue" android:layout_width="fill_parent" android:layout_marginTop="10px" android:textSize="16px" android:text="Quiz passed on 28.08.2009!" android:gravity="center" android:layout_height="fill_parent"></TextView>
+<Button android:layout_height="wrap_content" android:text="Take quiz" android:layout_width="fill_parent" android:id="@+id/ButtonTakeQuiz"></Button><TextView android:id="@+id/TextView03" android:textColor="@color/hopkins_blue" android:layout_width="fill_parent" android:layout_marginTop="10px" android:textSize="16px" android:text="Quiz passed on 28.08.2009!" android:gravity="center" android:layout_height="fill_parent"></TextView>
 
 </LinearLayout>
