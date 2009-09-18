@@ -20,9 +20,6 @@
 package net.ccghe.emocha;
 
 import net.ccghe.emocha.model.Preferences;
-
-import org.google.android.odk.MainMenu;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -77,8 +74,6 @@ public class Main extends Activity {
 		});
 		pEditPatientButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), MainMenu.class);
-                startActivity(i);
 			}
 		});		
 		pHelpButton.setOnClickListener(new View.OnClickListener() {

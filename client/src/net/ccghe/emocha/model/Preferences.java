@@ -1,6 +1,6 @@
 package net.ccghe.emocha.model;
 
-import org.javarosa.core.util.MD5;
+import net.ccghe.utils.MD5;
 
 import net.ccghe.emocha.Constants;
 import android.content.Context;
