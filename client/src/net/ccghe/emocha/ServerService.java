@@ -6,10 +6,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import net.ccghe.emocha.model.Preferences;
+import net.ccghe.utils.PostData;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.google.android.odk.PostData;
 
 import android.app.Service;
 import android.content.Intent;
