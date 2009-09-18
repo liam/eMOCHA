@@ -40,20 +40,21 @@ public class TrainingDocList extends Activity {
 	private ArrayList<String>	 pUnits;
 	private int 				 pType;
 	
-	private Pattern 			 pVideoFilePattern;
-	private Matcher				 pVideoFileMatcher;
-		
+	private Pattern 			 pFilePatternVideo;
+	private Pattern   			 pFilePatternHTML;
+	private Matcher				 pPatternMatcher;
+	
 	/**
 	 * @param tFolderPath
 	 */
-	private void addFilesFromFolder(String tFolderPath) {
+	private void addFilesFromFolder(String tFolderPath, Pattern tPattern) {
 		  File tFolder = new File(tFolderPath);
 		  File[] tListOfFiles = tFolder.listFiles();	  
 		  for (int i = 0; i < tListOfFiles.length; i++) {
 			  if (tListOfFiles[i].isFile()) {
 				  String tName = tListOfFiles[i].getName();
-				  pVideoFileMatcher = pVideoFilePattern.matcher(tName);
-				  if(pVideoFileMatcher.matches()) {
+				  pPatternMatcher = tPattern.matcher(tName);
+				  if(pPatternMatcher.matches()) {
 					  pUnits.add(tName);
 				  }
 		    } 
@@ -73,34 +74,21 @@ public class TrainingDocList extends Activity {
 	  pTitle = (TextView) findViewById(R.id.TrainingListTitle);
 	  pUnits = new ArrayList<String> ();
 	  
-	  pVideoFilePattern = Pattern.compile(Constants.VIDEO_FILE_PATTERN);
+	  pFilePatternVideo = Pattern.compile(Constants.FILE_PATTERN_VIDEO);
+	  pFilePatternHTML  = Pattern.compile(Constants.FILE_PATTERN_HTML);
 	  	  
 	  switch (pType) {
 		  case R.id.ButtonTrainCourses:
 			  pTitle.setText(R.string.label_training_courses);
-			  addFilesFromFolder(Constants.VIDEO_COURSES_PATH);			  
+			  addFilesFromFolder(Constants.PATH_TRAINING_COURSES, pFilePatternVideo);			  
 			  break;
 		  case R.id.ButtonTrainLectures:
 			  pTitle.setText(R.string.label_training_lectures);
-			  addFilesFromFolder(Constants.VIDEO_LECTURES_PATH);			  			  
+			  addFilesFromFolder(Constants.PATH_TRAINING_LECTURES, pFilePatternVideo);			  			  
 			  break;
 		  case R.id.ButtonTrainLibrary:
 			  pTitle.setText(R.string.label_training_library);
-			  pUnits.add("abacavir");
-			  pUnits.add("atazanavir"); 
-			  pUnits.add("darunavir");
-			  pUnits.add("delavirdine");
-			  pUnits.add("didanosine");
-			  pUnits.add("efavirenz");
-			  pUnits.add("emtricitabine"); 
-			  pUnits.add("enfuvirtide");
-			  pUnits.add("etravirine");
-			  pUnits.add("fosamprenavir"); 
-			  pUnits.add("indinavir"); 
-			  pUnits.add("lamivudine");
-			  pUnits.add("lopinavir_ritonavir"); 
-			  pUnits.add("maraviroc");
-			  pUnits.add("nelfinavir");
+			  addFilesFromFolder(Constants.PATH_TRAINING_LIBRARY, pFilePatternHTML);
 			  break;
 	  }
 	  pAdapter = new ArrayAdapter<String>(this, R.layout.mh_training_row, R.id.ListText, pUnits);
@@ -113,12 +101,12 @@ public class TrainingDocList extends Activity {
 			switch (pType) {
 				  case R.id.ButtonTrainCourses:
 					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
-					  tIntent.putExtra(Constants.DOC_ID, Constants.VIDEO_COURSES_PATH + pUnits.get(tPosition));					  
+					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_COURSES + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLectures:
 					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
-					  tIntent.putExtra(Constants.DOC_ID, Constants.VIDEO_LECTURES_PATH + pUnits.get(tPosition));					  
+					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_LECTURES + pUnits.get(tPosition));					  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLibrary:
