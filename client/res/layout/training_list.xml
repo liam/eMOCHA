@@ -6,7 +6,7 @@
 	
 	
 	
-<ListView android:id="@+id/TrainingList" android:layout_height="fill_parent" android:textFilterEnabled="true" android:background="#FFF" android:cacheColorHint="#888" android:layout_width="fill_parent">
+<ListView android:id="@+id/TrainingList" android:layout_height="fill_parent" android:textFilterEnabled="true" android:layout_width="fill_parent">
 </ListView>
 
 
