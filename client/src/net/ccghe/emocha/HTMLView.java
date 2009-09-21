@@ -31,7 +31,7 @@ public class HTMLView extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
-	    setContentView(R.layout.mh_htmlview);
+	    setContentView(R.layout.htmlview);
 
 	    Bundle extras = getIntent().getExtras();
 		String tDocID = extras.getString(Constants.DOC_ID);

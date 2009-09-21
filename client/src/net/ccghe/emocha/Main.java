@@ -40,7 +40,7 @@ public class Main extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_main_menu);
+		setContentView(R.layout.main_menu);
 
 		Preferences.init(this);
 		

@@ -36,7 +36,7 @@ public class TrainingMenu extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_training_menu);
+		setContentView(R.layout.training_menu);
 		
 		pTrainingCourses  = (Button) findViewById(R.id.ButtonTrainCourses);
 		pTrainingLectures = (Button) findViewById(R.id.ButtonTrainLectures);

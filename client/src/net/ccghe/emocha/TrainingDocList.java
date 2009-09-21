@@ -65,7 +65,7 @@ public class TrainingDocList extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  
-	  setContentView(R.layout.mh_training_list);
+	  setContentView(R.layout.training_list);
 
 	  Bundle extras = getIntent().getExtras();
 	  pType = extras.getInt(Constants.TRAINING_TYPE);
@@ -91,7 +91,7 @@ public class TrainingDocList extends Activity {
 			  addFilesFromFolder(Constants.PATH_TRAINING_LIBRARY, pFilePatternHTML);
 			  break;
 	  }
-	  pAdapter = new ArrayAdapter<String>(this, R.layout.mh_training_row, R.id.ListText, pUnits);
+	  pAdapter = new ArrayAdapter<String>(this, R.layout.training_row, R.id.ListText, pUnits);
 	  pList.setAdapter(pAdapter);
 	  
 	  pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

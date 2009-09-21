@@ -34,7 +34,7 @@ public class CallMenu extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_call_menu);
+		setContentView(R.layout.call_menu);
 		
 		
 		pCallConsult = (Button) findViewById(R.id.ButtonCallConsult);

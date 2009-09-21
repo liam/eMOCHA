@@ -37,7 +37,7 @@ public class LogIn extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_log_in);
+		setContentView(R.layout.log_in);
 
 		pLoginButton   = (Button) findViewById(R.id.ButtonLogIn);
 		pInputUser     = (EditText) findViewById(R.id.InputUser);

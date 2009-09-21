@@ -34,7 +34,7 @@ public class VideoPlayer extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.mh_video_player);
+        setContentView(R.layout.video_player);
 
 	    Bundle extras = getIntent().getExtras();
 		String tDocID = extras.getString(Constants.DOC_ID);
@@ -42,7 +42,7 @@ public class VideoPlayer extends Activity {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
 //      getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        setContentView(R.layout.mh_video_player);
+        setContentView(R.layout.video_player);
 
         pVideo = (VideoView) findViewById(R.id.video);
         pVideo.setVideoPath(tDocID);

@@ -38,7 +38,7 @@ public class TrainingThumb extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	
-	    setContentView(R.layout.mh_training_thumb);
+	    setContentView(R.layout.training_thumb);
 
         pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);        
         pPlayVideo.setOnClickListener(new View.OnClickListener() {

@@ -27,7 +27,7 @@ public class Help extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mh_help);
+		setContentView(R.layout.help);
 	}
 	
 }

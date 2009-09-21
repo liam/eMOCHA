@@ -12,7 +12,7 @@ public class SettingsReqPwd extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.mh_settings_add_phone);
+		setContentView(R.layout.settings_add_phone);
 		
 		pResponseText = (TextView) findViewById(R.id.SettingsAddPhoneResponse);
 	}
