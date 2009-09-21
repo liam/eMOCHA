@@ -1,0 +1,40 @@
+Name:
+	eMOCHA - electronic Mobile Open-Source Comprehensive Health Application
+
+Version:
+	Pre-alpha version - 26.08.2009
+	Working concept demo, with hardcoded values for our specific set up.
+
+Description:
+	eMOCHA is a free open source tool that helps health workers in developing countries.
+	It has two parts. One runs on Android mobile phones and the other on server side.
+
+	The mobile software does patient data gathering, text and voice communications 
+	with remote doctors and video based e-learning.
+	
+	Doctors in hospitals use a web browser to access the server side to 
+	analyze the data gathered by the phones, reply to questions, and assign tasks 
+	to health workers.
+
+Changes since last version:
+	None
+	
+Requirements:
+	Android phone running OS version 1.5
+	Server with PHP5 and MySQSL
+	Any current web browser with JavaScript support (Firefox, Opera, Chrome, Safari, Internet Explorer)
+
+Installation, getting started, documentation:
+	Soon...
+
+Known problems:
+	Hopefully not so soon...
+	
+Pricing:
+	Free
+
+License:
+	GNU General Public License
+	
+	eMOCHA includes the Open Data Kit Android application, 
+	which is distributed under the Apache License, Version 2.0
