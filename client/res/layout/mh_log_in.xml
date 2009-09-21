@@ -5,7 +5,7 @@
 <LinearLayout android:id="@+id/LinearLayout01" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true">
 
 
-<ImageView android:id="@+id/ImageView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="20px" android:paddingBottom="40px" android:src="@drawable/mh_logo_tiny">
+<ImageView android:id="@+id/ImageView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="20px" android:paddingBottom="40px" android:src="@drawable/logo">
 </ImageView>
 <TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/ImageView01" android:paddingBottom="20px" android:paddingLeft="20px" android:text="@string/label_welcome" android:textColor="@color/hopkins_blue"></TextView><TableLayout android:id="@+id/TableLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/TextView01" android:paddingLeft="45px">
 <TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content">
