@@ -3,4 +3,5 @@ client/gen/net/ccghe/emocha/R.java
 client/default.properties
 server/eMOCHA
 server/secure/sdcard/
+server/secure/include/config_local.php
 _*/
