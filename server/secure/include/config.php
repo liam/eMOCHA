@@ -1,0 +1,1 @@
+<?	$Config = Array();	$current_path = dirname(__FILE__).DIRECTORY_SEPARATOR;	$local_config_file = realpath($current_path.'config_local.php');	if(is_file($local_config_file)) {		include($local_config_file);	    return;	}  $Config['DB']['MAIN'] = Array(  	'URL' => '',    'USR' => '',    'PWD' => '',    'DB'  => ''  );  $Config['PATH']['CURRENT'] = "";?>
