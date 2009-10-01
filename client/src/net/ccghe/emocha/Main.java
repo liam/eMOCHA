@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,23 +35,22 @@ public class Main extends Activity {
 	private Button pHelpButton;
 	
 	private final static int MENU_SETTINGS = 1;
+	private final static int MENU_TEST = 2;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_menu);
-
-		Preferences.init(this);
 		
 		Intent tService = new Intent(this, ServerService.class);
 		startService(tService);
-		
+	
 		pCallButton =        (Button) findViewById(R.id.ButtonMainMenuCall);
 		pTrainingButton =    (Button) findViewById(R.id.ButtonMainMenuTraining);
 		pAddPatientButton =  (Button) findViewById(R.id.ButtonMainMenuAddPatient);
 		pEditPatientButton = (Button) findViewById(R.id.ButtonMainMenuUpdPatient);
 		pHelpButton =        (Button) findViewById(R.id.ButtonMainMenuHelp);
-			
+
 		pCallButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent i = new Intent(getApplicationContext(), CallMenu.class);
@@ -98,17 +96,24 @@ public class Main extends Activity {
 
 
 	public boolean onCreateOptionsMenu(Menu tMenu) {
-		MenuItem tItem = tMenu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.ic_menu_preferences);
-		tItem.setIntent(new Intent(this, Settings.class));
+		tMenu.
+			add(0, MENU_SETTINGS, 0, "Settings").
+			setIcon(R.drawable.ic_menu_preferences).
+			setIntent(new Intent(this, Settings.class));
+
+		tMenu.
+			add(0, MENU_TEST, 0, "Test").
+			setIcon(R.drawable.ic_menu_clear_playlist).
+			setIntent(new Intent(this, Test.class));
+		
 		return true;
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Intent tService = new Intent(this, ServerService.class);
-		stopService(tService);
-		Preferences.destroy();
+		//Intent tService = new Intent(this, ServerService.class);
+		//stopService(tService);
 	}
 	
 	
