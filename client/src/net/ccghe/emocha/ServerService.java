@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.ccghe.emocha.model.DBAdapter;
 import net.ccghe.emocha.model.Preferences;
 import net.ccghe.utils.PostData;
 
@@ -24,9 +25,12 @@ public class ServerService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		Preferences.init(this);
+		DBAdapter.init(this);
 		
 		startService();
-		Log.i("ABE", "Start SERVICE");
+		Log.i("EMOCHA", "Start SERVICE");
 	}
 	
 	@Override
@@ -34,7 +38,11 @@ public class ServerService extends Service {
 		super.onDestroy();
 		
 		stopService();
-		Log.i("ABE", "Stop SERVICE");
+		
+		Preferences.destroy();
+		DBAdapter.destroy();
+		
+		Log.i("EMOCHA", "Stop SERVICE");
 	}
 
 	@Override
@@ -66,7 +74,7 @@ public class ServerService extends Service {
 	        
 			String tResponse = PostData.Send(tPostData, tURL);
 
-			Log.i("ABE", "Service called server. Response is: " + tResponse);								
+			Log.i("EMOCHA", "Service called server. Response is: " + tResponse);			
 		}
 	};
 		
