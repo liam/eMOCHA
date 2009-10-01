@@ -56,6 +56,41 @@ public class DBAdapter {
 		}
 	}
 	
+	public static class FileDetails {
+		private Cursor mCursor = null;
+		private boolean mValid = true;
+		FileDetails(Cursor cursor) {
+			if (cursor.getCount() > 0) {
+				mCursor = cursor;
+			} else {
+				mValid = false;
+			}
+		}
+		public boolean valid() {
+			return mValid;
+		}
+		public long length() {
+			return mCursor.getLong(2);
+		}
+		public long lastModified() {
+			return mCursor.getLong(1);
+		}
+		public void close() {
+			mCursor.close();
+			mCursor = null;
+		}
+	}
+	public static FileDetails getFile(String path) throws SQLException {
+		Cursor c = sDB.query(true, SDCARD_TABLE, 
+				new String[] { "path", "ts", "size", "md5", "to_delete", "to_download" },
+				"path='" + path + "'", null, null, null, null, null);
+		if (c != null) {
+			c.moveToFirst();
+		}
+		return new FileDetails(c);
+	}
+	
+	
 	private static ContentValues getValues(long ts, long size, String md5, boolean delete, boolean download) {
 		ContentValues values = new ContentValues();
 		values.put("ts", 			ts);
@@ -78,16 +113,6 @@ public class DBAdapter {
 	}
 	public static boolean deleteMarked() {
 		return sDB.delete(SDCARD_TABLE, "to_delete=1", null) > 0;		
-	}
-
-	public static Cursor getFile(String path) throws SQLException {
-		Cursor c = sDB.query(true, SDCARD_TABLE, 
-				new String[] { "path", "ts", "size", "md5", "to_delete", "to_download" },
-				"path='" + path + "'", null, null, null, null, null);
-		if (c != null) {
-			c.moveToFirst();
-		}
-		return c;
 	}
 
 	public static boolean updateFile(String path, long ts, long size, String md5, boolean delete, boolean download) {

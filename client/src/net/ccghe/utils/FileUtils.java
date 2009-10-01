@@ -97,15 +97,14 @@ public class FileUtils {
     }
 
 
-    public static ArrayList<String> getFilesAsArrayListRecursive(String path) {
-        ArrayList<String> mFileList = new ArrayList<String>();
+    public static ArrayList<FileInfo> getFilesAsArrayListRecursive(String path) {
+        ArrayList<FileInfo> mFileList = new ArrayList<FileInfo>();
         File root = new File(path);
         getFilesAsArrayListRecursiveHelper(root, mFileList);
         return mFileList;
     }
 
-
-    private static void getFilesAsArrayListRecursiveHelper(File f, ArrayList<String> filelist) {
+    private static void getFilesAsArrayListRecursiveHelper(File f, ArrayList<FileInfo> filelist) {
         if (f.isDirectory()) {
             File[] childs = f.listFiles();
             for (File child : childs) {
@@ -113,9 +112,8 @@ public class FileUtils {
             }
             return;
         }
-        filelist.add(f.getAbsolutePath());
+        filelist.add(new FileInfo(f.getAbsolutePath(), f.lastModified(), f.length()));
     }
-
 
     public static boolean deleteFolder(String path) {
         // not recursive
@@ -236,9 +234,11 @@ public class FileUtils {
         }
     }
 
+    public static String getMd5Hash(String filename) {
+    	return getMd5Hash(new File(filename));
+    }
 
     public static String getMd5Hash(File file) {
-
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(getFileAsBytes(file));
@@ -251,7 +251,6 @@ public class FileUtils {
         } catch (NoSuchAlgorithmException e) {
             Log.e("MD5", e.getMessage());
             return null;
-
         }
     }
 
