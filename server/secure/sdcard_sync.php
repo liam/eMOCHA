@@ -132,7 +132,11 @@
 		  	$filesDBQ = query("SELECT * FROM sdcard");
 		  	$filesA = array();
 		  	while($rowA = mysql_fetch_assoc($filesDBQ)) {
-		  		$filesA[] = Array($rowA['path'], $rowA['ts'], $rowA['size'], $rowA['md5']);
+		  		$filesA[] = Array(
+		  			"path" 	=> $rowA['path'], 
+		  			"ts" 	=> $rowA['ts'], 
+		  			"size" 	=> $rowA['size'], 
+		  			"md5" 	=> $rowA['md5']);
 		  	}
 			print json_encode(array(
 				'files' => $filesA
