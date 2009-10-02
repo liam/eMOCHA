@@ -77,21 +77,19 @@ public class ServerService extends Service {
 	private Runnable doSlowStuff = new Runnable() {
 		public void run() {
 			// https://secure.ccghe.net/sdcard_sync.php?cmd=getFileList
-			String tURL = Preferences.getServerURL(ServerService.this);
+			String url = Preferences.getServerURL(ServerService.this);
 			
-			if (tURL == null) {
+			if (url == null) {
 				return;
 			}
 			
-	        List<NameValuePair> tPostData = new ArrayList<NameValuePair>(2);   	
-	        tPostData.add(new BasicNameValuePair("usr", Preferences.getIMEI_hash(ServerService.this)));
-	        tPostData.add(new BasicNameValuePair("pwd", Preferences.getPassword(ServerService.this)));
-	        
-	        tPostData.add(new BasicNameValuePair("cmd", "doSomething"));
-	        tPostData.add(new BasicNameValuePair("param1", "now"));	        
+	        List<NameValuePair> postData = new ArrayList<NameValuePair>(2);   	
+	        postData.add(new BasicNameValuePair("usr", Preferences.getUser(ServerService.this)));
+	        postData.add(new BasicNameValuePair("pwd", Preferences.getPassword(ServerService.this)));	        
+	        postData.add(new BasicNameValuePair("cmd", "hello"));
 	        //tPostData.add(new BasicNameValuePair("xml", new String(tData, "UTF-8")));
 	        
-			String tResponse = PostData.Send(tPostData, tURL);
+			String tResponse = PostData.Send(postData, url);
 
 			Log.i("EMOCHA", "Service called server. Response is: " + tResponse);			
 		}
