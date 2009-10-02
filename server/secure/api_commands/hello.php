@@ -1,0 +1,5 @@
+<?
+
+	$responseA['msg'] = 'Hello world :)';
+
+?>

@@ -1,5 +1,4 @@
 <?php
-
 	/* This php script is queried by each phone to find out 
 	 * if there are pending updates on on the sdcard.
 	 
@@ -23,44 +22,15 @@
       - files on the phone should be dowloaded to a temporary folder until they are
         complete, then moved to the final destination 
 	*/
-
-	include 'include/config.php';
-	include 'include/file.php';
-	include 'include/db.php';
-
-	connectToDB($Config['DB']['MAIN']);
-	
-	// File where to store a timestamp. Time when last file system scan looking
-	// for changed files took place
-	define ('LASTFSCHECK',  'config/lastFSCheck');
-	
-	// File where to store a timestamp. Time when last write on database took place.
-	// Phones will store a copy of this value. If the value doesn't change, phones
-	// know there is nothing new to download. If it has changed, then they must
-	// compare the file details to know if something must be downloaded or not.
-	define ('LASTDBCHANGE', 'config/lastDBChange');
-	
-	// Calls to this file after these many seconds will trigger a file system
-	// scan looking for changed files. Maybe once every 30 minutes? Lower is
-	// better in case a file must be urgently fixed in all phones, but also
-	// uses more resources. The resources used are in proportion to the number
-	// of files in the folder. If the number of files is low, one could set a
-	// very low value for this constant (30 seconds for example). 
-	define ('FSCHECKFREQ',  10);
-	
-	define ('SDCARDFOLDER', 'sdcard/emocha');
-
-	$lastFSCheck = implode(file(LASTFSCHECK));
-	$timeForNewCheck = time() > ($lastFSCheck + FSCHECKFREQ);
+		
+	$lastFSCheck = implode(file($Config['PATH']['LASTFSCHECK']));
+	$timeForNewCheck = time() > ($lastFSCheck + $Config['TIME']['FSCHECKFREQ']);
 	if ($timeForNewCheck) {
 		//print "<br/>RECHECK";
 		syncFilesToDB();
-		writeFile(LASTFSCHECK, time());
+		writeFile($Config['PATH']['LASTFSCHECK'], time());
 	} 
-	$lastDBChange = implode(file(LASTDBCHANGE));
-	
-	// TODO: add user and password checking
-	
+		
 	function syncFilesToDB() {
 		$dbChanged = false;
 	  
@@ -77,7 +47,7 @@
 	  	};  	
 	  
 		// create an array with all files in the disk
-		$filesDiskA = getFileList(SDCARDFOLDER, true);
+		$filesDiskA = getFileList($Config['PATH']['SDCARDFOLDER'], true);
 		foreach($filesDiskA as $fileInDisk) {
 			$pathInDisk    = $fileInDisk['path'];
 			$fileFoundInDB = isset($filesDBA[$pathInDisk]);
@@ -118,39 +88,19 @@
 		}
 	
 		if ($dbChanged) {
-			writeFile(LASTDBCHANGE, time());
+			writeFile($Config['PATH']['LASTDBCHANGE'], time());
 		}	
 	}
 
-	switch($_REQUEST['cmd']) {
-		case 'getSyncDetails':
-			print json_encode(array(
-				'lastDBChange' => $lastDBChange
-			));
-			break;
-		case 'getFileList':
-		  	$filesDBQ = query("SELECT * FROM sdcard");
-		  	$filesA = array();
-		  	while($rowA = mysql_fetch_assoc($filesDBQ)) {
-		  		$filesA[] = Array(
-		  			"path" 	=> $rowA['path'], 
-		  			"ts" 	=> $rowA['ts'], 
-		  			"size" 	=> $rowA['size'], 
-		  			"md5" 	=> $rowA['md5']);
-		  	}
-			print json_encode(array(
-				'files' => $filesA
-			));
-			// TODO: send data in json format. it's easier to parse than xml.
-			// the phone requires similar code
-			// will compare local sqlite database with json data and make a list
-			// of files to download. service will download them, and mark them in
-			// sqlite as ready. application will use sqlite to show documents, videos, etc.
-			break;
-		case 'getFile':
-			// TODO: attempt to download a file
-			break;
-	}
-
+  	$filesDBQ = query("SELECT * FROM sdcard");
+  	$filesA = array();
+  	while($rowA = mysql_fetch_assoc($filesDBQ)) {
+  		$filesA[] = Array(
+  			"path" 	=> $rowA['path'], 
+  			"ts" 	=> $rowA['ts'], 
+  			"size" 	=> $rowA['size'], 
+  			"md5" 	=> $rowA['md5']);
+  	}
+  	$responseA['files'] = $filesA;
 
 ?>
