@@ -112,7 +112,7 @@ public class FileUtils {
             }
             return;
         }
-        filelist.add(new FileInfo(f.getAbsolutePath(), f.lastModified(), f.length()));
+        filelist.add(new FileInfo(f.getAbsolutePath(), f.lastModified(), f.length(), ""));
     }
 
     public static boolean deleteFolder(String path) {

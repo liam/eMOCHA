@@ -23,11 +23,13 @@ public class FileInfo {
 	private String mPath;
 	private long mLastModified;
 	private long mLength;
+	private String mMD5;
 	
-	public FileInfo(String path, long lastModified, long length) {
-		this.mPath 			= path;
-		this.mLastModified 	= lastModified;
-		this.mLength 		= length;
+	public FileInfo(String path, long lastModified, long length, String md5) {
+		mPath 			= path;
+		mLastModified 	= lastModified;
+		mLength 		= length;
+		mMD5			= md5;
 	}
 	
 	public String path() {
@@ -38,4 +40,8 @@ public class FileInfo {
 	}
 	public long length() {
 		return mLength;
-	}}
+	}
+	public String md5() {
+		return mMD5;
+	}
+}
