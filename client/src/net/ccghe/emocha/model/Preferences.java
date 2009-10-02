@@ -19,19 +19,23 @@
  ******************************************************************************/
 package net.ccghe.emocha.model;
 
-import net.ccghe.utils.MD5;
+import java.io.UnsupportedEncodingException;
+
+import com.twmacinta.util.MD5;
 
 import net.ccghe.emocha.Constants;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 public class Preferences {
 	public static final String PREF_SERVER_URL = "pref_server_url";
 	public static final String PREF_PASSWORD   = "pref_api_password";
 
-	private static String pImeiHash;
+	private static String imei;
+	private static String user;
 
 	private static SharedPreferences sPrefs = null;
 	
@@ -40,8 +44,16 @@ public class Preferences {
 			sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 			// Get the hashed IMEI code
-	        TelephonyManager tPhoneManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-	        pImeiHash = new String(MD5.hash(tPhoneManager.getDeviceId().getBytes())); 
+	        TelephonyManager phoneManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+	        imei = phoneManager.getDeviceId();
+	        
+	        MD5 md5 = new MD5();
+	        try {
+				md5.Update(imei, null);
+				user = md5.asHex();
+			} catch (UnsupportedEncodingException e) {
+				user = "";
+			}			
 		}
 	}
 	public static void destroy() {
@@ -57,9 +69,13 @@ public class Preferences {
 		init(context);
 		return sPrefs.getString(PREF_PASSWORD, "");
 	}
-	public static String getIMEI_hash(Context context) {
+	public static String getImei(Context context) {
 		init(context);
-		return pImeiHash;
+		return imei;
+	}
+	public static String getUser(Context context) {
+		init(context);
+		return user;
 	}
 
 	public static boolean hasBasicSettings(Context context) {
