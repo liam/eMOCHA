@@ -40,7 +40,7 @@ public class SettingsReqPwd extends Activity {
 	protected void onResume() {
 		super.onResume();
 				
-		if (Preferences.getServerURL().length() < Constants.SERVER_URL_MIN_LENGTH) {
+		if (Preferences.getServerURL(this).length() < Constants.SERVER_URL_MIN_LENGTH) {
 			pResponseText.setText(R.string.settings_serverURL_undefined);			
 		} else {
 			// send POST to server

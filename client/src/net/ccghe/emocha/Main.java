@@ -87,7 +87,7 @@ public class Main extends Activity {
 		super.onStart();
 		
 		// if basic settings have not been set, go to preferences screen.
-		if (!Preferences.hasBasicSettings()) {
+		if (!Preferences.hasBasicSettings(this)) {
 			Intent i = new Intent(getApplicationContext(), Settings.class);
 			startActivity(i);    	   			
 		}

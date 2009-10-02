@@ -35,32 +35,35 @@ public class Preferences {
 
 	private static SharedPreferences sPrefs = null;
 	
-	public static void init(Context tContext) {
+	public static void init(Context context) {
 		if (sPrefs == null) {
-			sPrefs = PreferenceManager.getDefaultSharedPreferences(tContext);
+			sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+			// Get the hashed IMEI code
+	        TelephonyManager tPhoneManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+	        pImeiHash = new String(MD5.hash(tPhoneManager.getDeviceId().getBytes())); 
 		}
-		
-		// Get the hashed IMEI code
-        TelephonyManager tPhoneManager = (TelephonyManager) tContext.getSystemService(Context.TELEPHONY_SERVICE);
-        pImeiHash = new String(MD5.hash(tPhoneManager.getDeviceId().getBytes())); 
 	}
 	public static void destroy() {
 		sPrefs = null;
 	}
 	
-	public static String getServerURL() {
+	public static String getServerURL(Context context) {
+		init(context);
 		String tURL = sPrefs.getString(PREF_SERVER_URL, ""); 
 		return tURL.length() < Constants.SERVER_URL_MIN_LENGTH ? null : tURL;
 	}
-	public static String getPassword() {
+	public static String getPassword(Context context) {
+		init(context);
 		return sPrefs.getString(PREF_PASSWORD, "");
 	}
-	public static String getIMEI_hash() {
+	public static String getIMEI_hash(Context context) {
+		init(context);
 		return pImeiHash;
 	}
 
-	public static boolean hasBasicSettings() {
-		String tPwd = getPassword();
-		return getServerURL() != null && tPwd.length() >= 4;
+	public static boolean hasBasicSettings(Context context) {
+		String tPwd = getPassword(context);
+		return getServerURL(context) != null && tPwd.length() >= 4;
 	}
 }

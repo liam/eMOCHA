@@ -31,7 +31,7 @@ public class Settings extends PreferenceActivity {
 		
 		addPreferencesFromResource(R.xml.preferences);
 		
-		if (Preferences.getServerURL() == null) {
+		if (Preferences.getServerURL(this) == null) {
 			Toast.makeText(getApplicationContext(), "Please enter valid server URL", Toast.LENGTH_SHORT).show();	
 		} 
 	}

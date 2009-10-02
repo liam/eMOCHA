@@ -45,7 +45,6 @@ public class ServerService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		Preferences.init(this);
 		DBAdapter.init(this);
 		
 		startService();
@@ -71,21 +70,22 @@ public class ServerService extends Service {
 
 	private TimerTask doRefresh = new TimerTask() {
 		public void run() {
-			Thread tThread = new Thread(null, doSlowStuff, "Background");
+			Thread tThread = new Thread(null, doSlowStuff, "ServerService");
 			tThread.start();
 		}
 	};
 	private Runnable doSlowStuff = new Runnable() {
 		public void run() {
-			String tURL = Preferences.getServerURL();
+			// https://secure.ccghe.net/sdcard_sync.php?cmd=getFileList
+			String tURL = Preferences.getServerURL(ServerService.this);
 			
 			if (tURL == null) {
 				return;
 			}
 			
 	        List<NameValuePair> tPostData = new ArrayList<NameValuePair>(2);   	
-	        tPostData.add(new BasicNameValuePair("usr", Preferences.getIMEI_hash()));
-	        tPostData.add(new BasicNameValuePair("pwd", Preferences.getPassword()));
+	        tPostData.add(new BasicNameValuePair("usr", Preferences.getIMEI_hash(ServerService.this)));
+	        tPostData.add(new BasicNameValuePair("pwd", Preferences.getPassword(ServerService.this)));
 	        
 	        tPostData.add(new BasicNameValuePair("cmd", "doSomething"));
 	        tPostData.add(new BasicNameValuePair("param1", "now"));	        
