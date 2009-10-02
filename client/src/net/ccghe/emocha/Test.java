@@ -20,6 +20,8 @@
 package net.ccghe.emocha;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.ccghe.emocha.model.DBAdapter;
 import net.ccghe.emocha.model.DBAdapter.FileDetails;
@@ -55,7 +57,10 @@ public class Test extends Activity {
 	private String jsonDecode() {
 		String response = "";
         String json_code = getString(R.string.json_sample_code);
-        Log.i("EMOCHA", json_code);
+        String path;
+        
+        Map<String, FileInfo> serverFiles = new HashMap<String, FileInfo>();        
+        
         try {
 			JSONObject jsonResponseObject = new JSONObject(json_code);
 			JSONArray jsonFilesArray = jsonResponseObject.getJSONArray("files");
@@ -64,11 +69,18 @@ public class Test extends Activity {
 			
 			for (int i = 0; i < numOfFiles; i++) {  
 				jsonFile = jsonFilesArray.getJSONObject(i);
-				response += jsonFile.get("path") + "\n  "
-					+ jsonFile.getString("size") + ", "
-					+ jsonFile.getString("ts") + ", "
-					+ jsonFile.getString("md5") + "\n";
+				path = jsonFile.getString("path");
+				serverFiles.put(path, new FileInfo(
+						path, 
+						jsonFile.getLong("ts"),
+						jsonFile.getLong("size"),
+						jsonFile.getString("md5")
+				));
 			}
+			Log.i("EMOCHA", serverFiles.get("sdcard/emocha/training/lectures/lecture01.jpg").path());
+			Log.i("EMOCHA", serverFiles.get("sdcard/emocha/training/lectures/lecture01.jpg").md5());
+			Log.i("EMOCHA", "" + serverFiles.get("sdcard/emocha/training/lectures/lecture01.jpg").length());
+			Log.i("EMOCHA", "" + serverFiles.get("sdcard/emocha/training/lectures/lecture01.jpg").lastModified());
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
