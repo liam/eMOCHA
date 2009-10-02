@@ -19,7 +19,17 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.ccghe.emocha.model.Preferences;
+import net.ccghe.utils.PostData;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -39,11 +49,27 @@ public class SettingsReqPwd extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-				
-		if (Preferences.getServerURL(this).length() < Constants.SERVER_URL_MIN_LENGTH) {
+		
+		String url = Preferences.getServerURL(this); 
+		
+		if (url.length() < Constants.SERVER_URL_MIN_LENGTH) {
 			pResponseText.setText(R.string.settings_serverURL_undefined);			
-		} else {
-			// send POST to server
+		} else {		
+	        List<NameValuePair> postData = new ArrayList<NameValuePair>(2);   	
+	        postData.add(new BasicNameValuePair("imei", Preferences.getImei(this)));	        
+	        postData.add(new BasicNameValuePair("cmd", "activatePhone"));	        
+
+	        String json_code = PostData.Send(postData, url);	        
+			try {
+				JSONObject jsonResponseObject = new JSONObject(json_code);
+				String response = jsonResponseObject.getString("msg");
+				pResponseText.setText(response);			
+			} catch (JSONException e) {
+				pResponseText.setText("error");			
+			}
+
+	        
+	        
 		}
 	}
 	
