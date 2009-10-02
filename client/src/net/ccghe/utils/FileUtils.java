@@ -16,18 +16,17 @@
 
 package net.ccghe.utils;
 
-import android.os.Environment;
-import android.util.Log;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import android.os.Environment;
+import android.util.Log;
+
+import com.twmacinta.util.MD5;
 
 /**
  * Static methods used for common file operations.
@@ -239,19 +238,12 @@ public class FileUtils {
     }
 
     public static String getMd5Hash(File file) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(getFileAsBytes(file));
-            BigInteger number = new BigInteger(1, messageDigest);
-            String md5 = number.toString(16);
-            while (md5.length() < 32)
-                md5 = "0" + md5;
-            return md5;
-
-        } catch (NoSuchAlgorithmException e) {
+    	try {
+			return MD5.asHex(MD5.getHash(file));
+		} catch (IOException e) {
             Log.e("MD5", e.getMessage());
             return null;
-        }
+		}
     }
 
 
