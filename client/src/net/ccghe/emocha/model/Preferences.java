@@ -33,6 +33,7 @@ public class Preferences {
 	public static final String PREF_SERVER_URL = "pref_server_url";
 	public static final String PREF_PASSWORD   = "pref_api_password";
 	public static final String NET_ACTIVE      = "pref_net_active";
+	public static final String LAST_SERVER_UPD = "pref_sys_last_server_upd";
 
 	private static String imei;
 	private static String user;
@@ -80,6 +81,16 @@ public class Preferences {
 	public static Boolean getNetworkActive(Context context) {
 		init(context);
 		return sPrefs.getBoolean(NET_ACTIVE , false);
+	}
+	public static String getLastServerUpdateTS(Context context) {
+		init(context);
+		return sPrefs.getString(LAST_SERVER_UPD, "0");
+	}
+	public static void setLastServerUpdateTS(String ts, Context context) {
+		init(context);
+		SharedPreferences.Editor editor = sPrefs.edit();
+		editor.putString(LAST_SERVER_UPD, ts);
+		editor.commit();
 	}
 
 	public static boolean hasBasicSettings(Context context) {
