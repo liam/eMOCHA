@@ -19,14 +19,9 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.ccghe.emocha.model.Preferences;
 import net.ccghe.utils.PostData;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +30,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class SettingsReqPwd extends Activity {
-	private TextView pResponseText;
+	private TextView responseText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,7 @@ public class SettingsReqPwd extends Activity {
 		
 		setContentView(R.layout.settings_add_phone);
 		
-		pResponseText = (TextView) findViewById(R.id.SettingsAddPhoneResponse);
+		responseText = (TextView) findViewById(R.id.SettingsAddPhoneResponse);
 	}
 
 	@Override
@@ -53,19 +48,15 @@ public class SettingsReqPwd extends Activity {
 		String url = Preferences.getServerURL(this); 
 		
 		if (url.length() < Constants.SERVER_URL_MIN_LENGTH) {
-			pResponseText.setText(R.string.settings_serverURL_undefined);			
+			responseText.setText(R.string.settings_serverURL_undefined);			
 		} else {		
-	        List<NameValuePair> postData = new ArrayList<NameValuePair>(2);   	
-	        postData.add(new BasicNameValuePair("imei", Preferences.getImei(this)));	        
-	        postData.add(new BasicNameValuePair("cmd", "activatePhone"));	        
-
-	        String json_code = PostData.Send(postData, url);	        
+	        JSONObject response = PostData.activatePhone(Preferences.getImei(this));
+			
 			try {
-				JSONObject jsonResponseObject = new JSONObject(json_code);
-				String response = jsonResponseObject.getString("msg");
-				pResponseText.setText(response);			
+				String msg = response.getString("msg");
+				responseText.setText(msg);			
 			} catch (JSONException e) {
-				pResponseText.setText("error");			
+				responseText.setText("error");			
 			}
 
 	        
