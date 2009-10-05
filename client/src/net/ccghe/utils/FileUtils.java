@@ -220,7 +220,21 @@ public class FileUtils {
 
     }
 
-
+    public static String getExtension(String path) {
+        int dot = path.lastIndexOf('.');
+        return path.substring(dot + 1);
+    }
+    
+    public static String getFilename(String path) {
+          int sep = path.lastIndexOf('/');
+          return path.substring(sep + 1);
+    }
+    
+    public static String getFolder(String path) {
+        int sep = path.lastIndexOf('/');
+        return path.substring(0, sep);
+    }
+    
     private static boolean storageReady() {
         String cardstatus = Environment.getExternalStorageState();
         if (cardstatus.equals(Environment.MEDIA_REMOVED)
