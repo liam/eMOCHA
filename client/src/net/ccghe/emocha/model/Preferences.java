@@ -21,18 +21,18 @@ package net.ccghe.emocha.model;
 
 import java.io.UnsupportedEncodingException;
 
-import com.twmacinta.util.MD5;
-
 import net.ccghe.emocha.Constants;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+
+import com.twmacinta.util.MD5;
 
 public class Preferences {
 	public static final String PREF_SERVER_URL = "pref_server_url";
 	public static final String PREF_PASSWORD   = "pref_api_password";
+	public static final String NET_ACTIVE      = "pref_net_active";
 
 	private static String imei;
 	private static String user;
@@ -76,6 +76,10 @@ public class Preferences {
 	public static String getUser(Context context) {
 		init(context);
 		return user;
+	}
+	public static Boolean getNetworkActive(Context context) {
+		init(context);
+		return sPrefs.getBoolean(NET_ACTIVE , false);
 	}
 
 	public static boolean hasBasicSettings(Context context) {
