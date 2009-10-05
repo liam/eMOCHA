@@ -1,4 +1,6 @@
 <?
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', 'On');
 
 	// eMOCHA server side gateway
 	
@@ -11,6 +13,7 @@
 	} 
 
 	include 'include/db.php';
+	include 'include/file.php';
 	include 'include/config.php';
 
 	connectToDB($Config['DB']['MAIN']);
