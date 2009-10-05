@@ -30,10 +30,10 @@
 		syncFilesToDB();
 		writeFile($Config['PATH']['LASTFSCHECK'], time());
 	} 
-		
 	function syncFilesToDB() {
+		global $Config;
+		
 		$dbChanged = false;
-	  
 	  	// create an array with all files in the database
 	  	$filesDBQ = query("SELECT * FROM sdcard");
 	  	$filesDBA = Array();  	
@@ -45,7 +45,6 @@
 	  			'ondisk' => false
 	  		);
 	  	};  	
-	  
 		// create an array with all files in the disk
 		$filesDiskA = getFileList($Config['PATH']['SDCARDFOLDER'], true);
 		foreach($filesDiskA as $fileInDisk) {
@@ -78,7 +77,6 @@
 				//print "<br/>new file: $pathInDisk";			
 			}
 		}
-		
 		foreach($filesDBA AS $pathInDB => $fileDetails) {
 			if (!$fileDetails['ondisk']) {
 				query("DELETE FROM sdcard WHERE path='%s'", $pathInDB);
@@ -86,21 +84,32 @@
 				//print "<br/>Delete from DB: $pathInDB";
 			} 
 		}
-	
 		if ($dbChanged) {
 			writeFile($Config['PATH']['LASTDBCHANGE'], time());
 		}	
 	}
 
-  	$filesDBQ = query("SELECT * FROM sdcard");
-  	$filesA = array();
-  	while($rowA = mysql_fetch_assoc($filesDBQ)) {
-  		$filesA[] = Array(
-  			"path" 	=> $rowA['path'], 
-  			"ts" 	=> $rowA['ts'], 
-  			"size" 	=> $rowA['size'], 
-  			"md5" 	=> $rowA['md5']);
-  	}
-  	$responseA['files'] = $filesA;
+	// we return the last server update timestamp
+	// if that timestamp is the same that was requested by the phone
+	// it means there were no changes in the database, so the phone
+	// must take no further action.
+	// if the timestamp is different then the phone must compare the
+	// returned list with the files found in the sdcard, and probably
+	// download some new / updated files.
+	$lastDBChange = implode(file($Config['PATH']['LASTDBCHANGE']));
+  	$responseA['last_server_upd'] = $lastDBChange;
 
+	if ($lastDBChange != $_REQUEST['last_server_upd']) {
+	  	$filesDBQ = query("SELECT * FROM sdcard");
+	  	$filesA = array();
+	  	while($rowA = mysql_fetch_assoc($filesDBQ)) {
+	  		$filesA[] = Array(
+	  			"path" 	=> $rowA['path'], 
+	  			"ts" 	=> $rowA['ts'], 
+	  			"size" 	=> $rowA['size'], 
+	  			"md5" 	=> $rowA['md5']);
+	  	}
+	  	$responseA['files'] = $filesA;
+	} 
+	
 ?>
