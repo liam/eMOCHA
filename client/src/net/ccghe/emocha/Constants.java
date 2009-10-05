@@ -32,7 +32,9 @@ public class Constants {
 	
 	public static final String FILE_PATTERN_VIDEO   	= "^\\w.*\\.mp4$";	
 	public static final String FILE_PATTERN_HTML    	= "^\\w.*\\.html$";	
-	
+
+	public static final int ONE_SECOND = 1000; // milliseconds
+
 	public static final int SERVER_URL_MIN_LENGTH   	= 18; 
 
 	/*
