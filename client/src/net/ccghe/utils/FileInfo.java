@@ -19,11 +19,25 @@
  ******************************************************************************/
 package net.ccghe.utils;
 
+import java.io.File;
+
+import net.ccghe.emocha.model.DBAdapter;
+
+import android.database.Cursor;
+
 public class FileInfo {
 	private String mPath;
 	private long mLastModified;
 	private long mLength;
 	private String mMD5;
+	private Boolean mValid = true;
+	
+	public FileInfo(File file) {
+		mPath			= file.getPath();
+		mLastModified	= file.lastModified();
+		mLength			= file.length();
+		mMD5			= FileUtils.getMd5Hash(file);
+	}
 	
 	public FileInfo(String path, long lastModified, long length, String md5) {
 		mPath 			= path;
@@ -32,6 +46,20 @@ public class FileInfo {
 		mMD5			= md5;
 	}
 	
+	public FileInfo(Cursor c) {
+		if (c.getCount() > 0) {
+			mPath 			= c.getString(DBAdapter.COLUMN_PATH);
+			mLastModified 	= c.getLong(DBAdapter.COLUMN_TS);
+			mLength			= c.getLong(DBAdapter.COLUMN_SIZE);
+			mMD5			= c.getString(DBAdapter.COLUMN_MD5);
+		} else {
+			mValid			= false;
+		}
+	}
+	
+	public boolean isInDB() {
+		return mValid;
+	}
 	public String path() {
 		return mPath;
 	}
