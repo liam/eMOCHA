@@ -53,4 +53,5 @@ public class Constants {
 	// Next value must equal the value of: 
 	// org.google.android.odk.SharedConstants.FILEPATH_KEY
     public static final String ODK_FILEPATH_KEY 			= "formpath";
+	public static final String LOG_TAG 						= "EMOCHA";
 }
