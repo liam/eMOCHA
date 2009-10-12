@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
-public class PostData {
+public class Server {
 	private static String user;
 	private static String password;
 	private static String serverURL;

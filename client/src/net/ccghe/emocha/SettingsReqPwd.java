@@ -20,7 +20,7 @@
 package net.ccghe.emocha;
 
 import net.ccghe.emocha.model.Preferences;
-import net.ccghe.utils.PostData;
+import net.ccghe.utils.Server;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +50,7 @@ public class SettingsReqPwd extends Activity {
 		if (url.length() < Constants.SERVER_URL_MIN_LENGTH) {
 			responseText.setText(R.string.settings_serverURL_undefined);			
 		} else {		
-	        JSONObject response = PostData.activatePhone(Preferences.getImei(this));
+	        JSONObject response = Server.activatePhone(Preferences.getImei(this));
 			
 			try {
 				String msg = response.getString("msg");

@@ -20,7 +20,7 @@
 package net.ccghe.emocha;
 
 import net.ccghe.emocha.model.Preferences;
-import net.ccghe.utils.PostData;
+import net.ccghe.utils.Server;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -62,7 +62,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		update();
 		// TODO: Settings should not know about PostData, but PostData can not listen to prefchange event...
-		PostData.init(this);
+		Server.init(this);
 	}
 	private void update() {
 		screen.findPreference(Preferences.PREF_SERVER_URL).
