@@ -19,6 +19,16 @@
  ******************************************************************************/
 package net.ccghe.emocha.model;
 
+import java.util.ArrayList;
+
+import net.ccghe.emocha.Constants;
+import net.ccghe.utils.FileInfo;
+import net.ccghe.utils.Sdcard;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -42,10 +52,20 @@ public class DBAdapter {
 		+ "md5 TEXT NOT NULL, " 
 		+ "to_delete INTEGER, " 
 		+ "to_download INTEGER);"; 
-		
+
+	public final static int COLUMN_PATH 		= 0;
+	public final static int COLUMN_TS 			= 1;
+	public final static int COLUMN_SIZE			= 2;
+	public final static int COLUMN_MD5 			= 3;
+	public final static int COLUMN_TO_DELETE 	= 4;
+	public final static int COLUMN_TO_DOWNLOAD 	= 5;
+	
 	private static DBHelper sDBHelper;
 	private static SQLiteDatabase sDB;
 
+	public static final String FILTER_DOWNLOAD = "to_download=1";
+	public static final String FILTER_DELETE   = "to_delete=1";
+	
 	public static void init(Context tContext) throws SQLException {
 		sDBHelper = new DBHelper(tContext);
 		sDB = sDBHelper.getWritableDatabase();
@@ -55,7 +75,7 @@ public class DBAdapter {
 		sDBHelper.close();
 		sDBHelper = null;
 	}
-
+	
 	private static class DBHelper extends SQLiteOpenHelper {
 		DBHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,41 +95,31 @@ public class DBAdapter {
 		}
 	}
 	
-	public static class FileDetails {
-		private Cursor mCursor = null;
-		private boolean mValid = true;
-		FileDetails(Cursor cursor) {
-			if (cursor.getCount() > 0) {
-				mCursor = cursor;
-			} else {
-				mValid = false;
-			}
-		}
-		public boolean valid() {
-			return mValid;
-		}
-		public long length() {
-			return mCursor.getLong(2);
-		}
-		public long lastModified() {
-			return mCursor.getLong(1);
-		}
-		public void close() {
-			mCursor.close();
-			mCursor = null;
-		}
-	}
-	public static FileDetails getFile(String path) throws SQLException {
+
+	public static FileInfo getFile(String path) throws SQLException {
+		FileInfo info;
 		Cursor c = sDB.query(true, SDCARD_TABLE, 
 				new String[] { "path", "ts", "size", "md5", "to_delete", "to_download" },
 				"path='" + path + "'", null, null, null, null, null);
 		if (c != null) {
 			c.moveToFirst();
 		}
-		return new FileDetails(c);
+		info = new FileInfo(c); 
+		c.close();
+		return info;
 	}
 	
 	
+	private static String getFirst(String column, String filter) {
+		String result = null;
+		Cursor c = sDB.query(SDCARD_TABLE, new String[] { column }, filter, null, null, null, null);
+		if(c.getCount() > 0) {
+			c.moveToFirst();
+			result = c.getString(COLUMN_PATH); 
+		}
+		c.close();
+		return result;		
+	}
 	private static ContentValues getValues(long ts, long size, String md5, boolean delete, boolean download) {
 		ContentValues values = new ContentValues();
 		values.put("ts", 			ts);
@@ -131,7 +141,7 @@ public class DBAdapter {
 		return sDB.delete(SDCARD_TABLE, "path='" + path + "'", null) > 0;
 	}
 	public static boolean deleteMarked() {
-		return sDB.delete(SDCARD_TABLE, "to_delete=1", null) > 0;		
+		return sDB.delete(SDCARD_TABLE, FILTER_DELETE, null) > 0;		
 	}
 
 	public static boolean updateFile(String path, long ts, long size, String md5, boolean delete, boolean download) {
@@ -148,15 +158,136 @@ public class DBAdapter {
 		values.put("to_delete", state ? 1 : 0);
 		return sDB.update(SDCARD_TABLE, values, null, null) > 0;
 	}
+	public static boolean markForDownload(String path, String newMD5) {
+		ContentValues values = new ContentValues();
+		values.put("to_download", 1);
+		values.put("md5", newMD5);
+		return sDB.update(SDCARD_TABLE, values, "path='" + path + "'", null) > 0;
+	}
 	
 	public static Cursor getFiles() {
 		return sDB.query(SDCARD_TABLE, 
 				new String[] { "path", "ts", "size", "md5", "to_delete", "to_download"}, 
 				null, null, null, null, null);
 	}
-	public static Cursor getToDeleteFiles() {
-		return sDB.query(SDCARD_TABLE, 
+	public static ArrayList<String> getFilePaths() {
+		Cursor c = sDB.query(SDCARD_TABLE, 
 				new String[] { "path"}, 
-				"to_delete=1", null, null, null, null);		
+				null, null, null, null, null);
+		ArrayList<String> result = new ArrayList<String>();
+		
+		int numRows = c.getCount();
+		for (int i = 0; i < numRows; i++) {
+			c.moveToPosition(i);
+			result.add(c.getString(COLUMN_PATH));
+		}		
+		c.close();
+		return result;
 	}
+	public static int pendingDownloadNum() {
+		int result;
+		Cursor c = sDB.query(SDCARD_TABLE, 
+				new String[] { "1" }, 
+				FILTER_DOWNLOAD, null, null, null, null);
+		if (c == null) {
+			result = 0;
+		} else {
+			result = c.getCount();
+		}
+		c.close();
+		return result;
+	}
+	public static String getFirstDownloadID() {
+		return getFirst("path", FILTER_DOWNLOAD);
+	}
+	public static ArrayList<String> getFilesFiltered(String filter) {
+		ArrayList<String> result = new ArrayList<String>();
+		Cursor c = sDB.query(SDCARD_TABLE, new String[] { "path"}, filter, null, null, null, null);
+		int numRows = c.getCount();
+		Log.i(Constants.LOG_TAG, filter + " : " + numRows);
+		for (int i = 0; i < numRows; i++) {
+			c.moveToPosition(i);
+			result.add(c.getString(COLUMN_PATH));
+			Log.i(Constants.LOG_TAG, i + " : " + c.getString(COLUMN_PATH));
+		}
+		c.close();
+		return result;
+	}
+	public static int updateFromJSON(JSONArray jsonFilesArray) {
+		// Mark all files for database removal 
+		// Later un-mark files that are supposed to be there
+		markForDeletion(true);
+        Log.i(Constants.LOG_TAG, "UPDJ: Mark all for deletetion");
+        
+        String 		path;
+		FileInfo 	dbFile;
+		JSONObject 	jsonFile;
+		int 		filesToDownload = 0;
+
+		try {
+			int numOfFiles = jsonFilesArray.length(); 
+			
+			// go through the list of files found
+			// in server side, and make the local sqlite3
+			// database look like it, marking what needs
+			// to be downloaded.
+			for (int i = 0; i < numOfFiles; i++) {  
+				jsonFile = jsonFilesArray.getJSONObject(i);	
+				
+				// is the current json file found in the database?
+				path = '/' + jsonFile.getString("path");
+				dbFile = getFile(path);
+				if (dbFile.isInDB()) {
+					String targetMD5 = jsonFile.getString("md5"); 
+					if (targetMD5.equals(dbFile.md5())) {
+						// the file looks identical
+						markForDeletion(path, false);
+						Log.i(Constants.LOG_TAG, "UPDJ: Unchanged " + path);
+					} else {
+						// the file has changed. 
+						// don't delete, download a new version.
+						markForDeletion(path, false);
+						markForDownload(path, targetMD5);
+						filesToDownload++;
+						Log.i(Constants.LOG_TAG, "UPDJ: Changed " + path);
+						Log.w(Constants.LOG_TAG, jsonFile.getString("md5") + " != " + dbFile.md5() );
+					}
+				} else {
+					// file not in local database. insert it
+					// and mark it for download.
+					Long r = insertFile(path, 
+						jsonFile.getLong("ts"), 
+						jsonFile.getLong("size"), 
+						jsonFile.getString("md5"), 
+						false, 
+						true);
+					filesToDownload++;
+					Log.i(Constants.LOG_TAG, "UPDJ: New " + path + ", result=" + r);
+				}
+			}			
+		} catch (JSONException e) {
+			Log.e("EMOCHA", "Error parsing json file list");
+			e.printStackTrace();
+		}
+        deleteMarked();
+		Sdcard.deleteUnwantedFiles(getFiles());
+        return filesToDownload;
+	}
+	public static void markAsDownloaded(FileInfo file) {
+		ContentValues values = new ContentValues();
+		values.put("to_download", 0);
+				
+		int affected = sDB.update(SDCARD_TABLE, values, 
+				"path='" + file.path() + "' AND md5='" + file.md5() + "'", null);
+		
+		Log.i(Constants.LOG_TAG, "Mark as downloaded: " + file.path() + 
+				" (" + file.md5() + ") " + affected);
+	}
+	public static int clean() {
+		ContentValues values = new ContentValues();
+		values.put("to_download", 0);
+				
+		return sDB.update(SDCARD_TABLE, values, null, null);
+	}
+	
 }
