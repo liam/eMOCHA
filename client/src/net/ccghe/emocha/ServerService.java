@@ -22,9 +22,9 @@ package net.ccghe.emocha;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.ccghe.emocha.async.DownloadOneFile;
 import net.ccghe.emocha.model.DBAdapter;
 import net.ccghe.emocha.model.Preferences;
+import net.ccghe.utils.FileUtils;
 import net.ccghe.utils.Server;
 
 import org.json.JSONException;
@@ -40,7 +40,7 @@ import android.util.Log;
 public class ServerService extends Service {
 	private static final long INTERVAL_CALL_SERVER 		= 30 * Constants.ONE_SECOND;
 	private static final long INTERVAL_DOWNLOAD 		= 5 * Constants.ONE_SECOND;
-	private static Downloader downloader;
+	private static FileTransmitter fileTransmitter;
 	private Timer serverTimer = new Timer();
 	private Handler handler = new Handler();
 		    
@@ -51,7 +51,7 @@ public class ServerService extends Service {
 		DBAdapter.init(this);
 		Server.init(this);
 		
-		downloader = new Downloader();
+		fileTransmitter = new FileTransmitter();
 		
 	    serverTimer.schedule(onServerTimer, 0, INTERVAL_CALL_SERVER);
 	    
@@ -66,7 +66,7 @@ public class ServerService extends Service {
 		if (serverTimer != null) {
 			serverTimer.cancel();
 		}
-		downloader.stop(handler, downloadLoop);		
+		fileTransmitter.stop(handler, transmitLoop);		
 		Preferences.destroy();
 		DBAdapter.destroy();
 		
@@ -89,42 +89,51 @@ public class ServerService extends Service {
 	
 	private Runnable serverThread = new Runnable() {
 		public void run() {
-            if (DBAdapter.pendingDownloadNum() == 0) {
+            if (DBAdapter.pendingFileTransfersNum() == 0) {
     			Context c = ServerService.this.getApplicationContext();
 
-    			if (downloader.isRunning()) {
-    				downloader.stop(handler, downloadLoop);
+    			if (fileTransmitter.isRunning()) {
+    				fileTransmitter.stop(handler, transmitLoop);
     			}
-    			
+
+    			// Build a list of files that should be sent to the server
+            	Long newestTimestamp = DBAdapter.insertFilesNewerThan(Preferences.getLastUploadTimestamp(c), 
+            			FileUtils.getFilesAsArrayListRecursive(Constants.PATH_ODK_DATA));
+            	Preferences.setLastUploadTimestamp(newestTimestamp, c);
+            	
             	// Call the server, maybe get back a list of files to download 
-            	String localFileListTimestamp = Preferences.getLastServerUpdateTS(c);
-    	        JSONObject response = Server.GetSdcardFileList(localFileListTimestamp);
+            	String lastDownloadTimestamp = Preferences.getLastDownloadTimestamp(c);
+    	        JSONObject response = Server.GetSdcardFileList(lastDownloadTimestamp);
 
     			try {
-    				String timestamp = response.getString("last_server_upd");
-    				if (localFileListTimestamp.equals(timestamp)) {
-    					Log.i("EMOCHA", "Server TS unchanged. Nothing to do.");
+    				//DBAdapter.updateFilesToUpload(lastLocalTimestamp);
+
+    				String lastServerUpd = response.getString("last_server_upd");    				
+    				if (lastDownloadTimestamp.equals(lastServerUpd)) {
+    					Log.i("EMOCHA", "Server TS unchanged. Nothing to download.");
     				} else {
     					DBAdapter.updateFromJSON(response.getJSONArray("files"));
-        				Preferences.setLastServerUpdateTS(timestamp, c);
+        				Preferences.setLastDownloadTimestamp(lastServerUpd, c);
 
     					Log.i("EMOCHA", "Server TS changed. Requests written in database.");
     				}
     			} catch (JSONException e) {
     				Log.e("EMOCHA", "json exception while parsing server response");			
     			}            	
-            } else if (!downloader.isRunning()) {
-				Log.i("EMOCHA", "Downloads found in database. Start downloader.");
-				downloader.start(handler, downloadLoop);
+            } else if (!fileTransmitter.isRunning()) {
+				Log.i("EMOCHA", "Transfers found in database. Start Transmitter.");
+				fileTransmitter.start(handler, transmitLoop);
             }
 		}
 	};	
 
-	public class Downloader {
+	public class FileTransmitter {
+		public final int UPLOAD = 1;
+		public final int DOWNLOAD = 2;
 		private Boolean isActive 		= false;
-		private Boolean isDownloading 	= false;
+		private Boolean isTransmitting 	= false;
 		private String mFilePath;
-		private String mServerURL;
+		private int mDirection;
 		
 		public void start(Handler h, Runnable r) {
 			isActive = true;
@@ -138,44 +147,55 @@ public class ServerService extends Service {
 		public Boolean isRunning() {
 			return isActive;
 		}
-		public void downloadPrepare(String path, String serverURL) {
-			isDownloading = true;
+		public void transmitPrepare(String path, int direction) {
+			isTransmitting = true;
 			mFilePath = path;
-			mServerURL = serverURL;
-			Log.i(Constants.LOG_TAG, "DOWNLOAD PREPARE: " + mFilePath);			
+			mDirection = direction;
+			Log.i(Constants.LOG_TAG, "TRANSMIT prepare: " + mFilePath);			
 		}
-		public void downloadBegin() {
-			Log.i(Constants.LOG_TAG, "DOWNLOAD begin: " + mFilePath);			
-			new DownloadOneFile(mFilePath, mServerURL, this);			
+		public void transmitBegin() {
+			Log.i(Constants.LOG_TAG, "TRANSMIT begin: " + mFilePath);
+			switch (mDirection) {
+			case DOWNLOAD:
+				Server.DownloadFile(mFilePath, this);
+				break;
+			case UPLOAD:
+				Server.UploadFile(mFilePath, this);
+				break;
+			}
 		}
-		public void downloadComplete() {
-			isDownloading = false;
-			Log.i(Constants.LOG_TAG, "DOWNLOAD complete: " + mFilePath);			
+		public void transmitComplete() {
+			isTransmitting = false;
+			Log.i(Constants.LOG_TAG, "TRANSMIT complete: " + mFilePath);			
 		}
 	}
 
-	private Runnable downloadLoop = new Runnable() {
+	private Runnable transmitLoop = new Runnable() {
 		public void run() {
-        	if (downloader.isDownloading) {
-            	Log.w(Constants.LOG_TAG, "Downloading...");	            		
+        	if (fileTransmitter.isTransmitting) {
+            	Log.w(Constants.LOG_TAG, "Sending / receiving files...");	            		
 			} else {
 				Context c = ServerService.this.getApplicationContext();
 				if (Preferences.getNetworkActive(c)) {
-					String filePath = DBAdapter.getFirstDownloadID();
-					if (filePath != null) {
-						String serverURL = Preferences.getServerURL(c);
-
-						downloader.downloadPrepare(filePath, serverURL);
-						new Thread(null, downloadThread, "DownloadThread").start();	    		
+					String downloadPath = DBAdapter.getFirstDownloadID();
+					if (downloadPath != null) {
+						fileTransmitter.transmitPrepare(downloadPath, fileTransmitter.DOWNLOAD);
+						new Thread(null, fileTransmitThread, "FileTransmitThread").start();
+					} else {
+						String uploadPath = DBAdapter.getFirstUploadID();
+						if (uploadPath != null) {
+							fileTransmitter.transmitPrepare(uploadPath, fileTransmitter.UPLOAD);
+							new Thread(null, fileTransmitThread, "FileTransmitThread").start();
+						}
 					}
 				}
         	}
 			handler.postDelayed(this, INTERVAL_DOWNLOAD);        	
 		}
 	};
-	private Runnable downloadThread = new Runnable() {
+	private Runnable fileTransmitThread = new Runnable() {
 		public void run() {
-			downloader.downloadBegin();
+			fileTransmitter.transmitBegin();
 		}
 	};
 }
