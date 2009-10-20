@@ -19,11 +19,9 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import net.ccghe.emocha.model.DBAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,26 +37,15 @@ public class TrainingDocList extends Activity {
 	private ArrayAdapter<String> pAdapter;
 	private ArrayList<String>	 pUnits;
 	private int 				 pType;
-	
-	private Pattern 			 pFilePatternVideo;
-	private Pattern   			 pFilePatternHTML;
-	private Matcher				 pPatternMatcher;
-	
-	/**
-	 * @param tFolderPath
-	 */
-	private void addFilesFromFolder(String tFolderPath, Pattern tPattern) {
-		  File tFolder = new File(tFolderPath);
-		  File[] tListOfFiles = tFolder.listFiles();	  
-		  for (int i = 0; i < tListOfFiles.length; i++) {
-			  if (tListOfFiles[i].isFile()) {
-				  String tName = tListOfFiles[i].getName();
-				  pPatternMatcher = tPattern.matcher(tName);
-				  if(pPatternMatcher.matches()) {
-					  pUnits.add(tName);
-				  }
-		    } 
-		  }	  		
+
+	private ArrayList<String> getNames(ArrayList<String> paths) {
+		ArrayList<String> result = new ArrayList<String> ();
+		int count = paths.size();
+		for (int i = 0; i < count; i++) {
+			String path = paths.get(i);
+			result.add(path.substring(1 + path.lastIndexOf("/"), path.lastIndexOf(".")));
+		}
+		return result;
 	}
 	
 	@Override
@@ -73,22 +60,19 @@ public class TrainingDocList extends Activity {
 	  pList  = (ListView) findViewById(R.id.TrainingList);
 	  pTitle = (TextView) findViewById(R.id.TrainingListTitle);
 	  pUnits = new ArrayList<String> ();
-	  
-	  pFilePatternVideo = Pattern.compile(Constants.FILE_PATTERN_VIDEO);
-	  pFilePatternHTML  = Pattern.compile(Constants.FILE_PATTERN_HTML);
-	  	  
+	  	  	  
 	  switch (pType) {
 		  case R.id.ButtonTrainCourses:
 			  pTitle.setText(R.string.label_training_courses);
-			  addFilesFromFolder(Constants.PATH_TRAINING_COURSES, pFilePatternVideo);			  
+			  pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_COURSES));
 			  break;
 		  case R.id.ButtonTrainLectures:
 			  pTitle.setText(R.string.label_training_lectures);
-			  addFilesFromFolder(Constants.PATH_TRAINING_LECTURES, pFilePatternVideo);			  			  
+			  pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_LECTURES));
 			  break;
 		  case R.id.ButtonTrainLibrary:
 			  pTitle.setText(R.string.label_training_library);
-			  addFilesFromFolder(Constants.PATH_TRAINING_LIBRARY, pFilePatternHTML);
+			  pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_LIBRARY));
 			  break;
 	  }
 	  pAdapter = new ArrayAdapter<String>(this, R.layout.training_row, R.id.ListText, pUnits);
@@ -101,12 +85,12 @@ public class TrainingDocList extends Activity {
 			switch (pType) {
 				  case R.id.ButtonTrainCourses:
 					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
-					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_COURSES + pUnits.get(tPosition));					  
+					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_COURSES + pUnits.get(tPosition) + ".mp4");  					  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLectures:
 					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
-					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_LECTURES + pUnits.get(tPosition));					  
+					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_LECTURES + pUnits.get(tPosition) + ".mp4");				  
 					  startActivity(tIntent);
 					  break;
 				  case R.id.ButtonTrainLibrary:

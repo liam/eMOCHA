@@ -31,9 +31,6 @@ public class Constants {
 	public static final String PATH_TRAINING_LECTURES	= PATH_BASE + "training/lectures/";
 	public static final String PATH_TRAINING_LIBRARY	= PATH_BASE + "training/library/";
 	
-	public static final String FILE_PATTERN_VIDEO   	= "^\\w.*\\.mp4$";	
-	public static final String FILE_PATTERN_HTML    	= "^\\w.*\\.html$";	
-
 	public static final int ONE_SECOND = 1000; // milliseconds
 
 	public static final int SERVER_URL_MIN_LENGTH   	= 18; 
@@ -54,5 +51,6 @@ public class Constants {
 	// Next value must equal the value of: 
 	// org.google.android.odk.SharedConstants.FILEPATH_KEY
     public static final String ODK_FILEPATH_KEY 			= "formpath";
+    
 	public static final String LOG_TAG 						= "EMOCHA";
 }

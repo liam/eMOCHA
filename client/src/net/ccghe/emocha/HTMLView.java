@@ -41,7 +41,7 @@ public class HTMLView extends Activity {
 
 	    
 	    try {
-		    webview.loadUrl(LocalFileContentProvider.makeUri(Constants.PATH_TRAINING_LIBRARY + tDocID));
+		    webview.loadUrl(LocalFileContentProvider.makeUri(Constants.PATH_TRAINING_LIBRARY + tDocID + ".html"));  
 
 		    //webview.loadUrl("file:///android_asset/full_" + tDocID + ".html" );
 

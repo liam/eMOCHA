@@ -20,6 +20,7 @@
 package net.ccghe.emocha.model;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import net.ccghe.emocha.Constants;
 import net.ccghe.utils.FileInfo;
@@ -72,8 +73,11 @@ public class DBAdapter {
 	private static DBHelper sDBHelper;
 	private static SQLiteDatabase sDB;
 
-	public static final String FILTER_DOWNLOAD = "to_download=1";
-	public static final String FILTER_DELETE   = "to_delete=1";
+	public static final String FILTER_DOWNLOAD 			= "to_download=1";
+	public static final String FILTER_DELETE   			= "to_delete=1";
+	public static final String FILTER_TRAINING_COURSES 	= "path LIKE '" + Constants.PATH_TRAINING_COURSES + "%.mp4' AND to_download=0";
+	public static final String FILTER_TRAINING_LECTURES = "path LIKE '" + Constants.PATH_TRAINING_LECTURES + "%.mp4' AND to_download=0";
+	public static final String FILTER_TRAINING_LIBRARY	= "path LIKE '" + Constants.PATH_TRAINING_LIBRARY + "%.html' AND to_download=0";
 	
 	public static void init(Context tContext) throws SQLException {
 		sDBHelper = new DBHelper(tContext);
@@ -194,6 +198,11 @@ public class DBAdapter {
 			result.add(c.getString(DL_COL_PATH));
 		}		
 		c.close();
+		return result;
+	}
+	public static ArrayList<String> getFilePaths(String path, Pattern pattern) {
+		ArrayList<String> result = new ArrayList<String>();
+		
 		return result;
 	}
 	public static int pendingFileTransfersNum() {
@@ -331,5 +340,5 @@ public class DBAdapter {
 		}
 		return newUploadTimeStamp;
 	}
-	
+
 }
