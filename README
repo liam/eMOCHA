@@ -3,7 +3,7 @@ Name:
 
 Version:
 	Pre-alpha version - 26.08.2009
-	Working concept demo, with hardcoded values for our specific set up.
+	Working concept demo.
 
 Description:
 	eMOCHA is a free open source tool that helps health workers in developing countries.
@@ -17,7 +17,7 @@ Description:
 	to health workers.
 
 Changes since last version:
-	None
+	eMOCHA can now sync files between the sdcard and a folder in the server.
 	
 Requirements:
 	Android phone running OS version 1.5
@@ -36,5 +36,5 @@ Pricing:
 License:
 	GNU General Public License
 	
-	eMOCHA includes the Open Data Kit Android application, 
+	eMOCHA uses a modified version of the Open Data Kit Android application, 
 	which is distributed under the Apache License, Version 2.0
