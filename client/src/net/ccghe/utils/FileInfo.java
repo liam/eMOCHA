@@ -48,10 +48,10 @@ public class FileInfo {
 	
 	public FileInfo(Cursor c) {
 		if (c.getCount() > 0) {
-			mPath 			= c.getString(DBAdapter.COLUMN_PATH);
-			mLastModified 	= c.getLong(DBAdapter.COLUMN_TS);
-			mLength			= c.getLong(DBAdapter.COLUMN_SIZE);
-			mMD5			= c.getString(DBAdapter.COLUMN_MD5);
+			mPath 			= c.getString(DBAdapter.DL_COL_PATH);
+			mLastModified 	= c.getLong(DBAdapter.DL_COL_TS);
+			mLength			= c.getLong(DBAdapter.DL_COL_SIZE);
+			mMD5			= c.getString(DBAdapter.DL_COL_MD5);
 		} else {
 			mValid			= false;
 		}

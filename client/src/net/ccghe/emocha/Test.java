@@ -19,7 +19,7 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
-import net.ccghe.emocha.model.DBAdapter;
+import net.ccghe.emocha.model.Preferences;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -32,8 +32,10 @@ public class Test extends Activity {
 		TextView tTV = new TextView(this);
 		setContentView(tTV);
 		
-		int resetDownloads = DBAdapter.clean();
+		//int resetDownloads = DBAdapter.clean();
 		
-        tTV.setText("All downloads reset in database. " + resetDownloads);
+		Preferences.setLastUploadTimestamp(0L, this);
+		tTV.setText("Cleared last upload timestamp, so will upload all again");
+		
 	}
 }

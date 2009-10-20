@@ -24,11 +24,12 @@ public class Constants {
 	public static final String DOC_ID					= "docID";
 
 	public static final String PATH_ODK_FORMS        	= "/sdcard/odk/forms/";
+	public static final String PATH_ODK_DATA			= "/sdcard/odk/instances/";
 	
-	public static final String BASE_PATH 				= "/sdcard/emocha/";
-	public static final String PATH_TRAINING_COURSES	= BASE_PATH + "training/courses/";
-	public static final String PATH_TRAINING_LECTURES	= BASE_PATH + "training/lectures/";
-	public static final String PATH_TRAINING_LIBRARY	= BASE_PATH + "training/library/";
+	public static final String PATH_BASE 				= "/sdcard/emocha/";
+	public static final String PATH_TRAINING_COURSES	= PATH_BASE + "training/courses/";
+	public static final String PATH_TRAINING_LECTURES	= PATH_BASE + "training/lectures/";
+	public static final String PATH_TRAINING_LIBRARY	= PATH_BASE + "training/library/";
 	
 	public static final String FILE_PATTERN_VIDEO   	= "^\\w.*\\.mp4$";	
 	public static final String FILE_PATTERN_HTML    	= "^\\w.*\\.html$";	
