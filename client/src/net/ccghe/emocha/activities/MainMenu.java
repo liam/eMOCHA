@@ -17,9 +17,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package net.ccghe.emocha;
+package net.ccghe.emocha.activities;
 
+import net.ccghe.emocha.Constants;
+import net.ccghe.emocha.R;
+import net.ccghe.emocha.Settings;
+import net.ccghe.emocha.Test;
 import net.ccghe.emocha.model.Preferences;
+import net.ccghe.emocha.services.ServerService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +32,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-public class Main extends Activity {
+public class MainMenu extends Activity {
 	private Button pCallButton;
 	private Button pTrainingButton;
 	private Button pAddPatientButton;
@@ -53,7 +58,7 @@ public class Main extends Activity {
 
 		pCallButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), CallMenu.class);
+				Intent i = new Intent(getApplicationContext(), CommunicationsMenu.class);
                 startActivity(i); 
 			}
 		});
@@ -76,7 +81,7 @@ public class Main extends Activity {
 		});		
 		pHelpButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), Help.class);
+				Intent i = new Intent(getApplicationContext(), HelpActivity.class);
                 startActivity(i);
 			}
 		});

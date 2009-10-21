@@ -26,10 +26,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 
-import net.ccghe.emocha.ServerService.FileTransmitter;
 import net.ccghe.emocha.async.DownloadOneFile;
 import net.ccghe.emocha.async.UploadOneFile;
 import net.ccghe.emocha.model.Preferences;
+import net.ccghe.emocha.services.ServerService.FileTransmitter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

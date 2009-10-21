@@ -17,8 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package net.ccghe.emocha;
+package net.ccghe.emocha.activities;
 
+import net.ccghe.emocha.Constants;
+import net.ccghe.emocha.R;
+import net.ccghe.emocha.VideoPlayer;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;

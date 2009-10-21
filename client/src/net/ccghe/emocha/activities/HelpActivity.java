@@ -17,12 +17,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package net.ccghe.emocha;
+package net.ccghe.emocha.activities;
 
+import net.ccghe.emocha.R;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class Help extends Activity {
+public class HelpActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

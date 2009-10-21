@@ -17,10 +17,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package net.ccghe.emocha;
+package net.ccghe.emocha.activities;
 
 import java.util.ArrayList;
 
+import net.ccghe.emocha.Constants;
+import net.ccghe.emocha.HTMLView;
+import net.ccghe.emocha.R;
 import net.ccghe.emocha.model.DBAdapter;
 import android.app.Activity;
 import android.content.Intent;

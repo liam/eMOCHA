@@ -29,8 +29,8 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import net.ccghe.emocha.Constants;
-import net.ccghe.emocha.ServerService.FileTransmitter;
 import net.ccghe.emocha.model.DBAdapter;
+import net.ccghe.emocha.services.ServerService.FileTransmitter;
 import net.ccghe.utils.FileInfo;
 import net.ccghe.utils.FileUtils;
 import android.util.Log;

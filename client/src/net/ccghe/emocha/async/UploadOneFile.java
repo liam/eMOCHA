@@ -25,8 +25,8 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import net.ccghe.emocha.Constants;
-import net.ccghe.emocha.ServerService.FileTransmitter;
 import net.ccghe.emocha.model.DBAdapter;
+import net.ccghe.emocha.services.ServerService.FileTransmitter;
 import net.ccghe.utils.Server;
 
 import org.apache.http.HttpEntity;

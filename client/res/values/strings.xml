@@ -3,7 +3,7 @@
     <string name="preferences_input_title_reqpwd">Request password</string>
     <string name="pleaseWait">Please wait</string>
 
-<color name="hopkins_blue">#00276F</color>
+<color name="hopkins_blue">#00276FFF</color>
 <color name="background">#FFFFFF</color>
     
 <string name="app_name">eMOCHA</string>
