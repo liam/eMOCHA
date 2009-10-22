@@ -1,57 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionCode="1"
-      android:versionName="1.0.0" 
-      package="net.ccghe.emocha">
-      
-<application android:icon="@drawable/icon_desktop" android:label="@string/app_name" android:debuggable="true" android:theme="@style/EmochaTheme">
-	<activity android:name=".activities.MainMenu" android:label="@string/app_name">
-		<intent-filter>
-			<action android:name="android.intent.action.MAIN"></action>
-			<category android:name="android.intent.category.DEFAULT"></category>
-			<category android:name="android.intent.category.LAUNCHER"></category>
-		</intent-filter>
-	</activity>
-	<activity android:name=".activities.LogInActivity" 		 android:label="@string/app_name"></activity>	
-	<activity android:name=".activities.CommunicationsMenu"  android:label="@string/app_name"></activity>
-	<activity android:name=".activities.HelpActivity" 		 android:label="@string/app_name"></activity>
-	<activity android:name=".activities.TrainingMenu" 		 android:label="@string/app_name"></activity>
-	<activity android:name=".activities.PatientAddActivity"  android:label="@string/app_name"></activity>
-	<activity android:name=".activities.PatientListActivity" android:label="@string/app_name"></activity>
-	<activity android:name=".activities.PatientInfoActivity" android:label="@string/app_name"></activity>
-	<activity android:name=".activities.TrainingThumb" 		 android:label="@string/app_name"></activity>
-	<activity android:name=".activities.TrainingDocList" 	 android:label="@string/app_name"></activity>	
-
-	<activity android:name="Settings"		android:label="@string/app_name"></activity>
-	<activity android:name="SettingsReqPwd"	android:label="@string/app_name"></activity>
-
-	<activity android:name="VideoPlayer" 	android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-	<activity android:name="HTMLView" 		android:label="@string/app_name"></activity>
-
-	<activity android:name="Test"></activity>
- 
- 	<service android:name=".services.GpsService" />
-	<service android:name=".services.ServerService" />
-	
-	
-	<provider android:authorities="net.ccghe" android:name="net.ccghe.utils.LocalFileContentProvider"></provider>
-
-	<receiver android:name=".receivers.StartupReceiver">
-		<intent-filter >
-			<action android:name="net.ccghe.emocha.START" />
-		</intent-filter>
-	</receiver>
-	
-</application>
-
-<uses-permission android:name="android.permission.CALL_PHONE" />
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
-<uses-permission android:name="android.permission.ACCESS_GPS" />
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-
-<uses-sdk android:minSdkVersion="3"></uses-sdk>
-
-</manifest> 
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionCode="1"
+	android:versionName="1.0.0"
+	package="net.ccghe.emocha">
+	<application
+		android:icon="@drawable/icon_desktop"
+		android:label="@string/app_name"
+		android:debuggable="true"
+		android:theme="@style/EmochaTheme">
+		<activity
+			android:name=".activities.MainMenu"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action
+					android:name="android.intent.action.MAIN"></action>
+				<category
+					android:name="android.intent.category.DEFAULT"></category>
+				<category
+					android:name="android.intent.category.LAUNCHER"></category>
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".activities.LogInActivity"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.CommunicationsMenu"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.HelpActivity"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.TrainingMenu"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.PatientAddActivity"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.PatientListActivity"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.PatientInfoActivity"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.TrainingThumb"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name=".activities.TrainingDocList"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name="Settings"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name="SettingsReqPwd"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name="VideoPlayer"
+			android:screenOrientation="landscape"
+			android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+		<activity
+			android:name="HTMLView"
+			android:label="@string/app_name"></activity>
+		<activity
+			android:name="Test"></activity>
+		<service
+			android:name=".services.GpsService" />
+		<service
+			android:name=".services.ServerService" />
+		<provider
+			android:authorities="net.ccghe"
+			android:name="net.ccghe.utils.LocalFileContentProvider"></provider>
+		<receiver
+			android:name=".receivers.StartupReceiver">
+			<intent-filter>
+				<action
+					android:name="net.ccghe.emocha.START" />
+			</intent-filter>
+		</receiver>
+	</application>
+	<uses-permission
+		android:name="android.permission.CALL_PHONE" />
+	<uses-permission
+		android:name="android.permission.INTERNET" />
+	<uses-permission
+		android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission
+		android:name="android.permission.ACCESS_GPS" />
+	<uses-permission
+		android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission
+		android:name="android.permission.ACCESS_MOCK_LOCATION" />
+	<uses-sdk
+		android:minSdkVersion="3"></uses-sdk>
+</manifest>
