@@ -35,77 +35,77 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class TrainingDocList extends Activity {
-	private TextView			 pTitle;
-	private ListView             pList;
-	private ArrayAdapter<String> pAdapter;
-	private ArrayList<String>	 pUnits;
-	private int 				 pType;
+    private ListView pList;
+    private ArrayAdapter<String> pAdapter;
+    private ArrayList<String> pUnits;
+    private int pType;
 
-	private ArrayList<String> getNames(ArrayList<String> paths) {
-		ArrayList<String> result = new ArrayList<String> ();
-		int count = paths.size();
-		for (int i = 0; i < count; i++) {
-			String path = paths.get(i);
-			result.add(path.substring(1 + path.lastIndexOf("/"), path.lastIndexOf(".")));
-		}
-		return result;
+    private ArrayList<String> getNames(ArrayList<String> paths) {
+	ArrayList<String> result = new ArrayList<String>();
+	int count = paths.size();
+	for (int i = 0; i < count; i++) {
+	    String path = paths.get(i);
+	    result.add(path.substring(1 + path.lastIndexOf("/"), path.lastIndexOf(".")));
 	}
+	return result;
+    }
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-	  super.onCreate(savedInstanceState);
-	  
-	  setContentView(R.layout.training_list);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-	  Bundle extras = getIntent().getExtras();
-	  pType = extras.getInt(Constants.TRAINING_TYPE);
-	  
-	  pList  = (ListView) findViewById(R.id.TrainingList);
-	  pTitle = (TextView) findViewById(R.id.TrainingListTitle);
-	  pUnits = new ArrayList<String> ();
-	  	  	  
-	  switch (pType) {
-		  case R.id.ButtonTrainCourses:
-			  pTitle.setText(R.string.label_training_courses);
-			  pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_COURSES));
-			  break;
-		  case R.id.ButtonTrainLectures:
-			  pTitle.setText(R.string.label_training_lectures);
-			  pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_LECTURES));
-			  break;
-		  case R.id.ButtonTrainLibrary:
-			  pTitle.setText(R.string.label_training_library);
-			  pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_LIBRARY));
-			  break;
-	  }
-	  pAdapter = new ArrayAdapter<String>(this, R.layout.training_row, R.id.ListText, pUnits);
-	  pList.setAdapter(pAdapter);
-	  
-	  pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-		public void onItemClick(AdapterView<?> parent, View v, int tPosition, long id) {
-			//Toast.makeText(getApplicationContext(), pUnits[position], Toast.LENGTH_SHORT).show();	
-			Intent tIntent;
-			switch (pType) {
-				  case R.id.ButtonTrainCourses:
-					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
-					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_COURSES + pUnits.get(tPosition) + ".mp4");  					  
-					  startActivity(tIntent);
-					  break;
-				  case R.id.ButtonTrainLectures:
-					  tIntent = new Intent(getApplicationContext(), TrainingThumb.class);				
-					  tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_LECTURES + pUnits.get(tPosition) + ".mp4");				  
-					  startActivity(tIntent);
-					  break;
-				  case R.id.ButtonTrainLibrary:
-					  tIntent = new Intent(getApplicationContext(), HTMLView.class);
-				      tIntent.putExtra(Constants.DOC_ID, pUnits.get(tPosition));
-				      startActivity(tIntent);
-					  break;	
-			}
-						
-        }
-	  });
-	  
+	setContentView(R.layout.training_list);
+
+	Bundle extras = getIntent().getExtras();
+	pType = extras.getInt(Constants.TRAINING_TYPE);
+
+	pList = (ListView) findViewById(R.id.TrainingList);
+	TextView mH1 = (TextView) findViewById(R.id.header_title);
+	pUnits = new ArrayList<String>();
+
+	switch (pType) {
+	case R.id.ButtonTrainCourses:
+	    mH1.setText(R.string.label_training_courses);
+	    pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_COURSES));
+	    break;
+	case R.id.ButtonTrainLectures:
+	    mH1.setText(R.string.label_training_lectures);
+	    pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_LECTURES));
+	    break;
+	case R.id.ButtonTrainLibrary:
+	    mH1.setText(R.string.label_training_library);
+	    pUnits = getNames(DBAdapter.getFilesFiltered(DBAdapter.FILTER_TRAINING_LIBRARY));
+	    break;
 	}
+	pAdapter = new ArrayAdapter<String>(this, R.layout.training_row, R.id.ListText, pUnits);
+	pList.setAdapter(pAdapter);
+
+	pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	    public void onItemClick(AdapterView<?> parent, View v, int tPosition, long id) {
+		// Toast.makeText(getApplicationContext(), pUnits[position],
+		// Toast.LENGTH_SHORT).show();
+		Intent tIntent;
+		switch (pType) {
+		case R.id.ButtonTrainCourses:
+		    tIntent = new Intent(getApplicationContext(), TrainingThumb.class);
+		    tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_COURSES + pUnits.get(tPosition) + ".mp4");
+		    startActivity(tIntent);
+		    break;
+		case R.id.ButtonTrainLectures:
+		    tIntent = new Intent(getApplicationContext(), TrainingThumb.class);
+		    tIntent.putExtra(Constants.DOC_ID, Constants.PATH_TRAINING_LECTURES + pUnits.get(tPosition) + ".mp4");
+		    startActivity(tIntent);
+		    break;
+		case R.id.ButtonTrainLibrary:
+		    tIntent = new Intent(getApplicationContext(), HTMLView.class);
+		    tIntent.putExtra(Constants.DOC_ID, pUnits.get(tPosition));
+		    startActivity(tIntent);
+		    break;
+		}
+
+	    }
+	});
+
+    }
 
 }

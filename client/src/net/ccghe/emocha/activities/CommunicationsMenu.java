@@ -19,46 +19,48 @@
  ******************************************************************************/
 package net.ccghe.emocha.activities;
 
+
 import net.ccghe.emocha.R;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class CommunicationsMenu extends Activity {
-	private Button pCallConsult;
-	private Button pCallClinic;
-	private Button pCallOther;
+public class CommunicationsMenu extends ListActivity {
+
+    final String[] labels = {"Consultation" , "Hospital or Clinic" , "Other Numbers"};
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.call_menu);
+        initViews();
+    }
+    private void initViews(){
+        this.setContentView(R.layout.standard_main_menu);
+        setListAdapter( new ArrayAdapter<String>(this , R.layout.standard_list_button , R.id.firstLine, labels) );
 		
-		
-		pCallConsult = (Button) findViewById(R.id.ButtonCallConsult);
-		pCallClinic  = (Button) findViewById(R.id.ButtonCallClinic);
-		pCallOther   = (Button) findViewById(R.id.ButtonCallOther);
-		
-		pCallConsult.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				callHospital();
+        TextView mH1 = (TextView) findViewById(R.id.header_title);
+        mH1.setText("Make a call");
 			}
-		});
-		pCallClinic.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        switch( position ){
+            case 0:
+            case 1:
 				callHospital();
-			}
-		});
-		pCallOther.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+                break;
+            case 2:
 				Intent OpenDialer = new Intent(Intent.ACTION_DIAL);
 	            startActivity(OpenDialer);
+                break;
             }
-		});
+        super.onListItemClick(l, v, position, id);
 	}
+    
 	private void callHospital() {
 		try {
 	        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+256777667444")));

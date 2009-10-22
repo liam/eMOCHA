@@ -17,7 +17,9 @@
 	<activity android:name=".activities.CommunicationsMenu"  android:label="@string/app_name"></activity>
 	<activity android:name=".activities.HelpActivity" 		 android:label="@string/app_name"></activity>
 	<activity android:name=".activities.TrainingMenu" 		 android:label="@string/app_name"></activity>
-	
+	<activity android:name=".activities.PatientAddActivity"  android:label="@string/app_name"></activity>
+	<activity android:name=".activities.PatientListActivity" android:label="@string/app_name"></activity>
+	<activity android:name=".activities.PatientInfoActivity" android:label="@string/app_name"></activity>
 	<activity android:name=".activities.TrainingThumb" 		 android:label="@string/app_name"></activity>
 	<activity android:name=".activities.TrainingDocList" 	 android:label="@string/app_name"></activity>	
 
@@ -29,9 +31,18 @@
 
 	<activity android:name="Test"></activity>
  
+ 	<service android:name=".services.GpsService" />
 	<service android:name=".services.ServerService" />
 	
+	
 	<provider android:authorities="net.ccghe" android:name="net.ccghe.utils.LocalFileContentProvider"></provider>
+
+	<receiver android:name=".receivers.StartupReceiver">
+		<intent-filter >
+			<action android:name="net.ccghe.emocha.START" />
+		</intent-filter>
+	</receiver>
+	
 </application>
 
 <uses-permission android:name="android.permission.CALL_PHONE" />

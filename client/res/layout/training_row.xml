@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:layout_height="wrap_content" 
-	android:textColor="@color/hopkins_blue" 
-	android:layout_width="fill_parent" 
-	android:id="@+id/ListText" 
-	android:paddingLeft="5px" 
-	android:paddingRight="5px" android:textSize="16px" android:paddingBottom="13px" android:paddingTop="13px"></TextView>
+<TextView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:id="@+id/ListText"
+	android:paddingLeft="@dimen/screen_margin_horizontal"
+	android:paddingRight="@dimen/screen_margin_horizontal"
+	android:textSize="@dimen/standard_text_size"
+	android:paddingBottom="@dimen/screen_margin_horizontal"
+	android:paddingTop="@dimen/screen_margin_horizontal"></TextView>

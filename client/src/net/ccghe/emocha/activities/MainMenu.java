@@ -19,107 +19,84 @@
  ******************************************************************************/
 package net.ccghe.emocha.activities;
 
-import net.ccghe.emocha.Constants;
 import net.ccghe.emocha.R;
 import net.ccghe.emocha.Settings;
 import net.ccghe.emocha.Test;
 import net.ccghe.emocha.model.Preferences;
-import net.ccghe.emocha.services.ServerService;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class MainMenu extends Activity {
-	private Button pCallButton;
-	private Button pTrainingButton;
-	private Button pAddPatientButton;
-	private Button pEditPatientButton;
-	private Button pHelpButton;
+public class MainMenu extends ListActivity {
 	
-	private final static int MENU_SETTINGS = 1;
-	private final static int MENU_TEST = 2;
+    private final static int MENU_SETTINGS = 1;
+    private final static int MENU_TEST = 2;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_menu);
-		
-		Intent tService = new Intent(this, ServerService.class);
-		startService(tService);
+    final String[] labels = { "Communication", "Patients", "Training", "Help", "Settings" };
+      
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	initViews();
+
+	this.sendBroadcast(new Intent().setAction("net.ccghe.emocha.START"));
+    }
+
+    private void initViews() {
+	this.setContentView(R.layout.standard_main_menu);
+	setListAdapter(new ArrayAdapter<String>(this, R.layout.standard_list_button, R.id.firstLine, labels));
+	TextView mH1 = (TextView) findViewById(R.id.header_title);
+	mH1.setText("Welcome. What would you like to do today?");
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        switch( position ){
+            case 0:
+                launchActivity( CommunicationsMenu.class );
+                break;
+            case 1:
+                launchActivity( PatientListActivity.class );
+                break;
+            case 2:
+                launchActivity( TrainingMenu.class );
+                break;
+            case 3:
+                launchActivity( HelpActivity.class );
+                break;
+            case 4:
+                launchActivity( Settings.class );
+                break;
+			}
+        super.onListItemClick(l, v, position, id);
+			}
+    
+    private void launchActivity(Class<?> clazz) {
+	Intent i = new Intent(getApplicationContext(), clazz);
+	startActivity(i);
+    }
 	
-		pCallButton =        (Button) findViewById(R.id.ButtonMainMenuCall);
-		pTrainingButton =    (Button) findViewById(R.id.ButtonMainMenuTraining);
-		pAddPatientButton =  (Button) findViewById(R.id.ButtonMainMenuAddPatient);
-		pEditPatientButton = (Button) findViewById(R.id.ButtonMainMenuUpdPatient);
-		pHelpButton =        (Button) findViewById(R.id.ButtonMainMenuHelp);
+    @Override
+    protected void onStart() {
+	super.onStart();
 
-		pCallButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), CommunicationsMenu.class);
-                startActivity(i); 
-			}
-		});
-		pTrainingButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), TrainingMenu.class);
-                startActivity(i);
-			}
-		});
-		pAddPatientButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-                Intent i = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
-                i.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "mHealth.xml");
-                startActivity(i);                
-			}
-		});
-		pEditPatientButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-			}
-		});		
-		pHelpButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), HelpActivity.class);
-                startActivity(i);
-			}
-		});
+	// if basic settings have not been set, go to preferences screen.
+	if (!Preferences.hasBasicSettings(this)) {
+	    Intent i = new Intent(getApplicationContext(), Settings.class);
+	    startActivity(i);
 	}
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		
-		// if basic settings have not been set, go to preferences screen.
-		if (!Preferences.hasBasicSettings(this)) {
-			Intent i = new Intent(getApplicationContext(), Settings.class);
-			startActivity(i);    	   			
-		}
-	}
+    }
 
+    public boolean onCreateOptionsMenu(Menu tMenu) {
+	tMenu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.ic_menu_preferences).setIntent(new Intent(this, Settings.class));
+	tMenu.add(0, MENU_TEST, 0, "Test").setIcon(R.drawable.ic_menu_clear_playlist).setIntent(new Intent(this, Test.class));
 
+	return true;
+    }
 
-	public boolean onCreateOptionsMenu(Menu tMenu) {
-		tMenu.
-			add(0, MENU_SETTINGS, 0, "Settings").
-			setIcon(R.drawable.ic_menu_preferences).
-			setIntent(new Intent(this, Settings.class));
-
-		tMenu.
-			add(0, MENU_TEST, 0, "Test").
-			setIcon(R.drawable.ic_menu_clear_playlist).
-			setIntent(new Intent(this, Test.class));
-		
-		return true;
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		//Intent tService = new Intent(this, ServerService.class);
-		//stopService(tService);
-	}
-	
-	
 }

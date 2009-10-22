@@ -29,50 +29,57 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class TrainingThumb extends Activity {
 
-	private String pVideoPath;
+    private String pVideoPath;
     private Button pPlayVideo;
     private Button pTakeQuiz;
-	
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	
-	    setContentView(R.layout.training_thumb);
 
-        pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);        
-        pPlayVideo.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View v) {
-				Intent tIntent = new Intent(getApplicationContext(), VideoPlayer.class);				
-				tIntent.putExtra(Constants.DOC_ID, pVideoPath);					  
-				startActivity(tIntent);        		
-        	}
-        });
-        
-        pTakeQuiz  = (Button) findViewById(R.id.ButtonTakeQuiz);
-        pTakeQuiz.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-                Intent tIntent = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
-                tIntent.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "quiz_one.xml");
-                startActivity(tIntent);                				
-			}
-		});
-	    
-	    Bundle extras = getIntent().getExtras();
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-	    // get path to the requested video, replace file extension by .jpg (video thumbnail)
-	    pVideoPath = extras.getString(Constants.DOC_ID);		
-	    String tThumbPath = pVideoPath.replaceFirst(".mp4", ".jpg");
-	    Uri tThumbUri = Uri.parse(tThumbPath);
-	    
-	    //TODO: check if the image exists, otherwise show some default thumb
-	    	    
-	    ImageView tThumb = (ImageView) findViewById(R.id.ImageVideoThumb);
-	    
-	    tThumb.setImageURI(tThumbUri);	    
-	}
+	setContentView(R.layout.training_thumb);	
+
+	TextView mH1 = (TextView) findViewById(R.id.header_title);
+	mH1.setText("Video player");
+	
+	pPlayVideo = (Button) findViewById(R.id.ButtonPlayVideo);
+	pPlayVideo.setOnClickListener(new View.OnClickListener() {
+	    public void onClick(View v) {
+		Intent tIntent = new Intent(getApplicationContext(), VideoPlayer.class);
+		tIntent.putExtra(Constants.DOC_ID, pVideoPath);
+		startActivity(tIntent);
+	    }
+	});
+
+	pTakeQuiz = (Button) findViewById(R.id.ButtonTakeQuiz);
+	pTakeQuiz.setOnClickListener(new View.OnClickListener() {
+	    public void onClick(View v) {
+		Intent tIntent = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
+		tIntent.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "quiz_one.xml");
+		startActivity(tIntent);
+	    }
+	});
+
+	Bundle extras = getIntent().getExtras();
+
+	// get path to the requested video, replace file extension by .jpg
+	// (video thumbnail)
+	pVideoPath = extras.getString(Constants.DOC_ID);
+	String tThumbPath = pVideoPath.replaceFirst(".mp4", ".jpg");
+	Uri tThumbUri = Uri.parse(tThumbPath);
+
+	// TODO: check if the image exists, otherwise show some default thumb
+	ImageView tThumb = (ImageView) findViewById(R.id.ImageVideoThumb);
+	tThumb.setImageURI(tThumbUri);
+	
+	//set video title
+	TextView t = (TextView) findViewById(R.id.VideoTitle);
+	t.setText(pVideoPath);
+    }
 
 }

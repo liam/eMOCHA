@@ -20,6 +20,7 @@
 package net.ccghe.emocha.async;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,66 +37,82 @@ import net.ccghe.utils.FileUtils;
 import android.util.Log;
 
 public class DownloadOneFile {
-	/**
-	 * Constructor
-	 * 
-	 * @param path
-	 * 				id of the requested file as stored in the database.
-	 * @param serverURL
-	 *           	The server API url
-	 * @param transmitter
-	 * 				Used for notifying when the download is complete
-	 */
-	public DownloadOneFile(String path, String serverURL, FileTransmitter transmitter) {
-		String serverRootURL;
-		try {
-			serverRootURL = FileUtils.baseURL(new URL(serverURL));
-		} catch (MalformedURLException e) {
-			Log.e(Constants.LOG_TAG, "MalformedURLException: " + e);
-			transmitter.transmitComplete();
-			return;
-		}
+    private String mServerRootURL;
+    private String mPath;
+    private FileTransmitter mTransmitter;
+    private HttpURLConnection mConn = null;
 
-		HttpURLConnection con = null;
-		byte[] buffer = new byte[1024];
-		int len = 0;
-		String folder = FileUtils.getFolder(path);
-		String fileName = FileUtils.getFilename(path);
-		
-		FileUtils.createFolder(folder);
-
-		try {
-			URL fileURL = new URL(serverRootURL + path);
-
-			con = (HttpURLConnection) fileURL.openConnection();
-			con.setReadTimeout(20 * Constants.ONE_SECOND);
-			con.setConnectTimeout(10 * Constants.ONE_SECOND);
-			con.setRequestMethod("GET");
-			con.setDoOutput(true);
-			con.connect();
-
-			File newFile = new File(folder, fileName); 
-			FileOutputStream f = new FileOutputStream(newFile);
-			InputStream in = con.getInputStream();
-
-			// TODO: what if connection closes in the middle? maybe we get a -1...
-			while ((len = in.read(buffer)) != -1) {
-				f.write(buffer, 0, len);
-			}
-			f.close();
-					
-			DBAdapter.markAsDownloaded(new FileInfo(newFile));
-			
-			Log.i(Constants.LOG_TAG, "END DOWNLOAD: " + newFile.getPath());
-		} catch (SocketTimeoutException e) {
-			Log.e(Constants.LOG_TAG, "Socket Timeout Exception", e);
-		} catch (IOException e) {
-			Log.e(Constants.LOG_TAG, "IOException", e);
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-			transmitter.transmitComplete();
-		}
+    /**
+     * Constructor
+     * 
+     * @param path
+     *            id of the requested file as stored in the database.
+     * @param serverURL
+     *            The server API url
+     * @param transmitter
+     *            Used for notifying when the download is complete
+     */
+    public DownloadOneFile(String path, String serverURL, FileTransmitter transmitter) {
+	try {
+	    mServerRootURL = FileUtils.baseURL(new URL(serverURL));
+	} catch (MalformedURLException e) {
+	    Log.e(Constants.LOG_TAG, "MalformedURLException: " + e);
+	    destroy();
+	    return;
 	}
+	mPath = path;
+	mTransmitter = transmitter;
+
+	byte[] buffer = new byte[1024];
+	int len = 0;
+	String folder = FileUtils.getFolder(mPath);
+	String fileName = FileUtils.getFilename(mPath);
+
+	FileUtils.createFolder(folder);
+
+	try {
+	    URL fileURL = new URL(mServerRootURL + mPath);
+
+	    mConn = (HttpURLConnection) fileURL.openConnection();
+	    mConn.setReadTimeout(20 * Constants.ONE_SECOND);
+	    mConn.setConnectTimeout(10 * Constants.ONE_SECOND);
+	    mConn.setRequestMethod("GET");
+	    mConn.setDoOutput(true);
+	    mConn.connect();
+
+	    File newFile = new File(folder, fileName);
+	    FileOutputStream f = new FileOutputStream(newFile);
+	    InputStream in = mConn.getInputStream();
+
+	    // TODO: what if connection closes in the middle? maybe we get a
+	    // -1...
+	    while ((len = in.read(buffer)) != -1) {
+		f.write(buffer, 0, len);
+	    }
+	    f.close();
+
+	    DBAdapter.markAsDownloaded(new FileInfo(newFile));
+
+	    Log.i(Constants.LOG_TAG, "END DOWNLOAD: " + newFile.getPath());
+	} catch (SocketTimeoutException e) {
+	    Log.e(Constants.LOG_TAG, "Socket Timeout Exception", e);
+	} catch (FileNotFoundException e) {
+	    Log.e(Constants.LOG_TAG, "FileNotFoundException", e);
+	    DBAdapter.deleteFile(mPath);
+	} catch (IOException e) {
+	    Log.e(Constants.LOG_TAG, "IOException", e);
+	    DBAdapter.deleteFile(mPath);
+	} finally {
+	    destroy();
+	}
+    }
+
+    private void destroy() {
+	if (mConn != null) {
+	    mConn.disconnect();
+	}
+	mTransmitter.transmitComplete();
+	mTransmitter = null;
+    }
+
 }

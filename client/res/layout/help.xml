@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/LinearLayout01" android:orientation="vertical" android:layout_centerHorizontal="true" android:layout_height="fill_parent" android:background="@color/background" android:layout_width="fill_parent" android:padding="10px">
-	<ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:paddingBottom="40px" android:layout_width="wrap_content" android:padding="5px" android:src="@drawable/logo"></ImageView>
-	<TextView android:id="@+id/TextView01" android:layout_height="wrap_content" style="@style/ScreenHeader" android:layout_width="wrap_content" android:text="@string/label_help"></TextView>
-	<ScrollView android:id="@+id/ScrollView01" android:layout_width="wrap_content" android:layout_height="wrap_content"><TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/hopkins_blue" android:text="@string/help_text" android:paddingLeft="10px" android:paddingRight="10px"></TextView>
-</ScrollView>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include
+		layout="@layout/standard_header"
+		android:id="@+id/header" />
+	<ScrollView
+		android:id="@+id/ScrollView01"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fadingEdge="none">
+		<TextView
+			android:id="@+id/TextView02"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/standard_darkgrey"
+			android:text="@string/help_text"
+			android:textSize="@dimen/standard_text_size"
+			android:paddingLeft="@dimen/screen_margin_horizontal"
+			android:paddingRight="@dimen/screen_margin_horizontal" />
+	</ScrollView>
 </LinearLayout>

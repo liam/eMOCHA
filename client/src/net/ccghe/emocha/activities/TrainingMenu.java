@@ -19,54 +19,57 @@
  ******************************************************************************/
 package net.ccghe.emocha.activities;
 
+
 import net.ccghe.emocha.Constants;
 import net.ccghe.emocha.R;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class TrainingMenu extends Activity {
-	private Button pTrainingLectures;
-	private Button pTrainingCourses;
-	private Button pTrainingLibrary;
+public class TrainingMenu extends ListActivity {
 	
-	private View.OnClickListener pOnClick;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.training_menu);
-		
-		pTrainingCourses  = (Button) findViewById(R.id.ButtonTrainCourses);
-		pTrainingLectures = (Button) findViewById(R.id.ButtonTrainLectures);
-		pTrainingLibrary  = (Button) findViewById(R.id.ButtonTrainLibrary);
-		
-		pOnClick = new View.OnClickListener() {
-			public void onClick(View v) {
-				int tID = v.getId();
-		        switch(tID) {
-		        	case R.id.ButtonTrainCourses:
-						Toast.makeText(getApplicationContext(), "COURSES", Toast.LENGTH_SHORT).show();						        		
-		        		break;
-		        	case R.id.ButtonTrainLectures:
-						Toast.makeText(getApplicationContext(), "LECTURES", Toast.LENGTH_SHORT).show();						        		
-		        		break;
-		        	case R.id.ButtonTrainLibrary:
-						Toast.makeText(getApplicationContext(), "LIBRARY", Toast.LENGTH_SHORT).show();						        		
-		        		break;
-		        }
-		        Intent tIntent = new Intent(getApplicationContext(), TrainingDocList.class);
-		        tIntent.putExtra(Constants.TRAINING_TYPE, tID);
-		        startActivity(tIntent);
-            }			
-		};
-		
-		pTrainingCourses.setOnClickListener(pOnClick);
-		pTrainingLectures.setOnClickListener(pOnClick);
-		pTrainingLibrary.setOnClickListener(pOnClick);
+    final String[] labels = {"Lectures" , "Courses" , "Library"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	initViews();
+    }
+
+    private void initViews() {
+	this.setContentView(R.layout.standard_main_menu);
+	setListAdapter(new ArrayAdapter<String>(this, R.layout.standard_list_button, R.id.firstLine, labels));
+
+	TextView mH1 = (TextView) findViewById(R.id.header_title);
+	mH1.setText("Choose a category");
+
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+	switch (position) {
+	case 0:
+	    launchActivity(R.id.ButtonTrainLectures);
+	    break;
+	case 1:
+	    launchActivity(R.id.ButtonTrainCourses);
+	    break;
+	case 2:
+	    launchActivity(R.id.ButtonTrainLibrary);
+	    break;
 	}
 
+	super.onListItemClick(l, v, position, id);
+    }
+
+    private void launchActivity(int id) {
+	Intent tIntent = new Intent(getApplicationContext(), TrainingDocList.class);
+	tIntent.putExtra(Constants.TRAINING_TYPE, id);
+	startActivity(tIntent);
+    }
 }
