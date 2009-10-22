@@ -46,110 +46,114 @@ import android.content.Context;
 import android.util.Log;
 
 public class Server {
-	private static String user;
-	private static String password;
-	private static String serverURL;
-	
-	public static final String CMD_HELLO 				= "hello";
-	public static final String CMD_ACTIVATE_PHONE 		= "activatePhone";
-	public static final String CMD_GET_FILE 			= "getFile";
-	public static final String CMD_GET_SDCARD_FILE_LIST	= "getSdcardFileList";
-	public static final String CMD_UPLOAD_FILE			= "uploadFile";
-	
-	// TODO: retrigger init after changing the settings
-	public static void init(Context context) {
-		serverURL 	= Preferences.getServerURL(context);
-		user 		= Preferences.getUser(context);
-		password 	= Preferences.getPassword(context);
+    private static String user;
+    private static String password;
+    private static String serverURL;
+
+    public static final String CMD_HELLO = "hello";
+    public static final String CMD_ACTIVATE_PHONE = "activatePhone";
+    public static final String CMD_GET_FILE = "getFile";
+    public static final String CMD_GET_SDCARD_FILE_LIST = "getSdcardFileList";
+    public static final String CMD_UPLOAD_FILE = "uploadFile";
+
+    // TODO: retrigger init after changing the settings
+    public static void init(Context context) {
+	serverURL = Preferences.getServerURL(context);
+	user = Preferences.getUser(context);
+	password = Preferences.getPassword(context);
+    }
+
+    public static JSONObject Send(PostDataPairs pairs) {
+	HttpClient client = new DefaultHttpClient();
+	try {
+	    HttpPost post = new HttpPost(serverURL);
+	    post.setEntity(new UrlEncodedFormEntity(pairs.get()));
+	    HttpResponse response = client.execute(post);
+
+	    HttpEntity entity = response.getEntity();
+	    InputStream stream = entity.getContent();
+	    String jsonResponse = convertStreamToString(stream);
+	    stream.close();
+	    if (entity != null) {
+		entity.consumeContent();
+	    }
+	    JSONObject jObject = new JSONObject(jsonResponse);
+
+	    return jObject;
+	} catch (ClientProtocolException e) {
+	    Log.e("EMOCHA", "ClientProtocolException ERR. " + e.getMessage());
+	} catch (UnknownHostException e) {
+	    Log.e("EMOCHA", "UnknownHostException ERR. " + e.getMessage());
+	} catch (IOException e) {
+	    Log.e("EMOCHA", "IOException ERR. " + e.getMessage());
+	} catch (Exception e) {
+	    Log.e("EMOCHA", "Exception ERR. " + e.getMessage());
 	}
-	
-	public static JSONObject Send(PostDataPairs pairs) {		
-		HttpClient client = new DefaultHttpClient();
-        try {
-        	HttpPost post = new HttpPost(serverURL); 
-        	post.setEntity(new UrlEncodedFormEntity(pairs.get()));
-        	HttpResponse response = client.execute(post);
-        	
-			HttpEntity entity   = response.getEntity();
-			InputStream stream  = entity.getContent();
-			String jsonResponse = convertStreamToString(stream);			
-			stream.close();
-			if (entity != null) {
-			    entity.consumeContent();
-			}        
-			JSONObject jObject = new JSONObject(jsonResponse);
-			
-        	return jObject;
-        } catch(ClientProtocolException e) {
-        	Log.e("EMOCHA", "ClientProtocolException ERR. " + e.getMessage());
-        } catch(UnknownHostException e) {
-        	Log.e("EMOCHA", "UnknownHostException ERR. " + e.getMessage());        	
-        } catch (IOException e) {
-        	Log.e("EMOCHA", "IOException ERR. " + e.getMessage());
-        } catch (Exception e) {
-        	Log.e("EMOCHA", "Exception ERR. " + e.getMessage());        	
-        }
-        return null;
-	}
-	public static JSONObject SendAuthenticated(PostDataPairs pairs) {
-		pairs.add("usr", user);
-		pairs.add("pwd", password);
-		return Send(pairs);
-	}
-	public static JSONObject GetSdcardFileList(String lastServerUpdate) {
-		PostDataPairs data = new PostDataPairs();
-        data.add("last_server_upd", lastServerUpdate);	        
-        data.add("cmd", CMD_GET_SDCARD_FILE_LIST);
-		return SendAuthenticated(data);
-	}
-	public static JSONObject activatePhone(String imei) {
-		PostDataPairs data = new PostDataPairs();
-        data.add("imei", imei);	        
-        data.add("cmd", CMD_ACTIVATE_PHONE);
-        return Send(data);		
+	return null;
+    }
+
+    public static JSONObject SendAuthenticated(PostDataPairs pairs) {
+	pairs.add("usr", user);
+	pairs.add("pwd", password);
+	return Send(pairs);
+    }
+
+    public static JSONObject GetSdcardFileList(String lastServerUpdate, String gpsPos) {
+	PostDataPairs data = new PostDataPairs();
+	data.add("last_server_upd", lastServerUpdate);
+	data.add("cmd", CMD_GET_SDCARD_FILE_LIST);
+	data.add("gps", gpsPos);
+	return SendAuthenticated(data);
+    }
+
+    public static JSONObject activatePhone(String imei) {
+	PostDataPairs data = new PostDataPairs();
+	data.add("imei", imei);
+	data.add("cmd", CMD_ACTIVATE_PHONE);
+	return Send(data);
+    }
+
+    public static void UploadFile(String path, FileTransmitter transmitter) {
+	MultipartEntity entity = new MultipartEntity();
+	try {
+	    entity.addPart("usr", new StringBody(user));
+	    entity.addPart("pwd", new StringBody(password));
+	    entity.addPart("cmd", new StringBody(CMD_UPLOAD_FILE));
+	} catch (UnsupportedEncodingException e) {
+	    e.printStackTrace();
 	}
 
-	public static void UploadFile(String path, FileTransmitter transmitter) {
-		MultipartEntity entity = new MultipartEntity();
-		try {
-			entity.addPart("usr", new StringBody(user));
-			entity.addPart("pwd", new StringBody(password));
-			entity.addPart("cmd", new StringBody(CMD_UPLOAD_FILE));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		new UploadOneFile(path, serverURL, transmitter, entity);					
-	}
-	
-	public static void DownloadFile(String path, FileTransmitter transmitter) {
-		new DownloadOneFile(path, serverURL, transmitter);			
-	}
-	
+	new UploadOneFile(path, serverURL, transmitter, entity);
+    }
+
+    public static void DownloadFile(String path, FileTransmitter transmitter) {
+	new DownloadOneFile(path, serverURL, transmitter);
+    }
+
     /*
      * To convert the InputStream to String we use the BufferedReader.readLine()
      * method. We iterate until the BufferedReader return null which means
      * there's no more data to read. Each line will appended to a StringBuilder
      * and returned as String.
      */
-	public static String convertStreamToString(InputStream stream) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder result = new StringBuilder();
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                result.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
- 
-        return result.toString();
-    } 		
+    public static String convertStreamToString(InputStream stream) {
+	BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+	StringBuilder result = new StringBuilder();
+	String line = null;
+	try {
+	    while ((line = reader.readLine()) != null) {
+		result.append(line + "\n");
+	    }
+	} catch (IOException e) {
+	    e.printStackTrace();
+	} finally {
+	    try {
+		stream.close();
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	}
+
+	return result.toString();
+    }
 }

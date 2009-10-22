@@ -120,7 +120,8 @@ public class ServerService extends Service {
 
 		// Call the server, maybe get back a list of files to download
 		String lastDownloadTimestamp = Preferences.getLastDownloadTimestamp(c);
-		JSONObject response = Server.GetSdcardFileList(lastDownloadTimestamp);
+		String gpsPos = Preferences.getGpsPos(c);
+		JSONObject response = Server.GetSdcardFileList(lastDownloadTimestamp, gpsPos);
 
     	        if(response == null){
                     handler.post(new Runnable() {

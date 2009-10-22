@@ -3,6 +3,7 @@ package net.ccghe.emocha.services;
 import java.io.IOException;
 
 import net.ccghe.emocha.Constants;
+import net.ccghe.emocha.model.Preferences;
 import net.ccghe.utils.FileLogUtil;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -86,7 +87,6 @@ public class GpsService extends Service {
                 mPendingUpdate = true;
             }
         }
-
     }
 
     public class DeviceLocationListener implements LocationListener {
@@ -101,8 +101,8 @@ public class GpsService extends Service {
             double lat = location.getLatitude();
             double lng = location.getLongitude();
 	    String pos = lat + ":" + lng;
-	    //Context c = GpsService.this.getApplicationContext();
-	    //Preferences.setGpsPos(pos);
+	    Context c = GpsService.this.getApplicationContext();
+	    Preferences.setGpsPos(pos, c);
 	    
 	    appendLog(" loc : [ " + pos + " ]\n");
 	    onGpsResult(location);
