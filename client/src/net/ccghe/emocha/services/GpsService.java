@@ -3,6 +3,7 @@ package net.ccghe.emocha.services;
 import java.io.IOException;
 
 import net.ccghe.emocha.Constants;
+import net.ccghe.emocha.model.Preferences;
 import net.ccghe.utils.FileLogUtil;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -20,10 +21,6 @@ import android.util.Log;
 public class GpsService extends Service {
 
     public static final String      INTENT_FILTER    = "net.ccghe.emocha.GPS_LOCATION_UPDATE";
-
-//    private static final String     LONGITUDE        = "lng";
-//    private static final String     LATTITUDE        = "lat";
-//    private static final String     TIME             = "time";
     private static final int        MAX_FIX_ATTEMPS  = 6;
     private static final String     GPS_PROVIDER_ID  = LocationManager.GPS_PROVIDER;
     private static final long       GPS_UPDATE_MS    = 30 * Constants.ONE_SECOND;
@@ -93,8 +90,11 @@ public class GpsService extends Service {
 	public void onLocationChanged(Location location) {
 	    double lat = location.getLatitude();
 	    double lng = location.getLongitude();
-
-	    appendLog(" loc : [ " + lat + ":" + lng + " ]\n");
+	    String pos = lat + ":" + lng;
+	    Context c = GpsService.this.getApplicationContext();
+	    Preferences.setGpsPos(pos);
+	    
+	    appendLog(" loc : [ " + pos + " ]\n");
 	    onGpsResult(location);
 	}
 
