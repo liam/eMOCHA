@@ -49,6 +49,9 @@
 			android:name=".activities.TrainingDocList"
 			android:label="@string/app_name"></activity>
 		<activity
+			android:name=".activities.HtmlBookViewActivity"
+			android:label="@string/app_name"></activity>
+		<activity
 			android:name="Settings"
 			android:label="@string/app_name"></activity>
 		<activity
@@ -58,9 +61,6 @@
 			android:name="VideoPlayer"
 			android:screenOrientation="landscape"
 			android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-		<activity
-			android:name="HTMLView"
-			android:label="@string/app_name"></activity>
 		<activity
 			android:name="Test"></activity>
 		<service

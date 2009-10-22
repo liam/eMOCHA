@@ -22,7 +22,6 @@ package net.ccghe.emocha.activities;
 import java.util.ArrayList;
 
 import net.ccghe.emocha.Constants;
-import net.ccghe.emocha.HTMLView;
 import net.ccghe.emocha.R;
 import net.ccghe.emocha.model.DBAdapter;
 import android.app.Activity;
@@ -97,7 +96,7 @@ public class TrainingDocList extends Activity {
 		    startActivity(tIntent);
 		    break;
 		case R.id.ButtonTrainLibrary:
-		    tIntent = new Intent(getApplicationContext(), HTMLView.class);
+		    tIntent = new Intent(getApplicationContext(), HtmlBookViewActivity.class);
 		    tIntent.putExtra(Constants.DOC_ID, pUnits.get(tPosition));
 		    startActivity(tIntent);
 		    break;

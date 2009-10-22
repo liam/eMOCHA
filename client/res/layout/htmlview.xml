@@ -6,10 +6,15 @@
 	android:layout_centerHorizontal="true"
 	android:layout_height="fill_parent"
 	android:background="@color/background"
-	android:layout_width="fill_parent"
-	android:padding="10px">
+	android:layout_width="fill_parent">
+	<include
+		layout="@layout/standard_header" />
 	<WebView
 		android:id="@+id/webview"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
+		android:layout_height="fill_parent" 
+		android:layout_marginLeft="@dimen/screen_margin_horizontal"
+		android:layout_marginRight="@dimen/screen_margin_horizontal"
+		android:layout_marginBottom="@dimen/screen_margin_vertical"
+		/>
 </LinearLayout>

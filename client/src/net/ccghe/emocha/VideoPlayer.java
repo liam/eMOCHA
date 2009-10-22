@@ -40,11 +40,7 @@ public class VideoPlayer extends Activity {
 	String tDocID = extras.getString(Constants.DOC_ID);
 
 	getWindow().setFormat(PixelFormat.TRANSLUCENT);
-	// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-	// WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-	setContentView(R.layout.video_player);
-
+	
 	pVideo = (VideoView) findViewById(R.id.video);
 	pVideo.setVideoPath(tDocID);
 	pVideo.start();
