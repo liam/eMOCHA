@@ -26,77 +26,70 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class HtmlBookViewActivity extends Activity {
-    private final String LOG_TAG = HtmlBookViewActivity.class.getSimpleName();
-    
-	private WebView webview;
-	private ProgressDialog myProgressDialog = null;
-	private StringBuilder sBuilder = new StringBuilder("Loading ");
-	private TextView mH1;
-	private String mBookName;
-	
-	@Override
+
+    private WebView webview;
+    private ProgressDialog myProgressDialog = null;
+    private StringBuilder sBuilder = new StringBuilder("Loading ");
+    private TextView mH1;
+    private String mBookName;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    
-	    setContentView(R.layout.htmlview);
+	super.onCreate(savedInstanceState);
 
-	    mH1 = (TextView) findViewById(R.id.header_title);
-	 
-	    Bundle extras = getIntent().getExtras();
-	    mBookName = extras.getString(Constants.DOC_ID);
-		
-		mH1.setText("Loading book: " + mBookName);
-		
-	    myProgressDialog = ProgressDialog.show(this , "Please wait..." , sBuilder.append( mBookName ).toString()  , true ); 
-	    myProgressDialog.setCancelable(true);
-	    myProgressDialog.setOnCancelListener( new DialogInterface.OnCancelListener(){
-            public void onCancel(DialogInterface dialog) {
-                finish();
-            }      
-	    });
-	    
-	    webview = (WebView) findViewById(R.id.webview);
-	    webview.setVisibility(View.INVISIBLE);
-	    webview.setWebViewClient( new ViewClient() );
-	    
-	    sBuilder.setLength(0);
-	    sBuilder.append(Constants.PATH_TRAINING_LIBRARY);
-	    sBuilder.append(mBookName);
-	    sBuilder.append(".html");
+	setContentView(R.layout.htmlview);
 
-	    webview.loadUrl(LocalFileContentProvider.makeUri( sBuilder.toString() ));  
+	Bundle extras = getIntent().getExtras();
+	mBookName = extras.getString(Constants.DOC_ID);
+
+	mH1 = (TextView) findViewById(R.id.header_title);
+	mH1.setText("Loading book: " + mBookName);
+
+	myProgressDialog = ProgressDialog.show(this, "Please wait...", sBuilder.append(mBookName).toString(), true);
+	myProgressDialog.setCancelable(true);
+	myProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+	    public void onCancel(DialogInterface dialog) {
+		finish();
+	    }
+	});
+
+	webview = (WebView) findViewById(R.id.webview);
+	webview.setVisibility(View.INVISIBLE);
+	webview.setWebViewClient(new ViewClient());
+
+	sBuilder.setLength(0);
+	sBuilder.append(Constants.PATH_TRAINING_LIBRARY);
+	sBuilder.append(mBookName);
+	sBuilder.append(".html");
+
+	webview.loadUrl(LocalFileContentProvider.makeUri(sBuilder.toString()));
 
     }
-	
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+	super.onDestroy();
     }
 
-    private void onReady(){
-	    webview.setVisibility(View.VISIBLE);
-	    myProgressDialog.dismiss();
-	    
-	    mH1.setText("Book: " + mBookName);
-	}
-    
-	private final class ViewClient extends WebViewClient{
+    private void onReady() {
+	webview.setVisibility(View.VISIBLE);
+	myProgressDialog.dismiss();
 
-        @Override
-	    public void onPageFinished(WebView view, String url) {
-            onReady();
-	        super.onPageFinished(view, url);
-	    }
+	mH1.setText("Book: " + mBookName);
+    }
+
+    private final class ViewClient extends WebViewClient {
+
+	@Override
+	public void onPageFinished(WebView view, String url) {
+	    onReady();
+	    super.onPageFinished(view, url);
 	}
+    }
 }
-
