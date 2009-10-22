@@ -19,23 +19,27 @@
  ******************************************************************************/
 package net.ccghe.emocha;
 
+import net.ccghe.emocha.model.DBAdapter;
 import net.ccghe.emocha.model.Preferences;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 public class Test extends Activity {	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-											        
-		TextView tTV = new TextView(this);
-		setContentView(tTV);
-		
-		//int resetDownloads = DBAdapter.clean();
-		
-		Preferences.setLastUploadTimestamp(0L, this);
-		tTV.setText("Cleared last upload timestamp, so will upload all again");
-		
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	TextView tTV = new TextView(this);
+	setContentView(tTV);
+
+	int resetDownloads = DBAdapter.clean();
+
+	tTV.setText("All downloads reset in database. " + resetDownloads);
+
+	DBAdapter.markForDeletion(true);
+	DBAdapter.deleteMarked();
+
+	Preferences.setLastDownloadTimestamp("0", this);
+
+    }
 }

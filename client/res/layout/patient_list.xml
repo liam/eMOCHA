@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include
+		layout="@layout/standard_header" />
+	<!--
+		http://groups.google.com/group/android-developers/msg/d334017d72909c79
+	-->
+	<Button
+		style="@style/CustomButton"
+		android:text="Add new patient"
+		android:id="@+id/ButtonNewPatientForm"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:drawableLeft="@drawable/add_32"
+		android:drawablePadding="@dimen/screen_margin_horizontal"
+		android:gravity="center_vertical"
+		android:layout_marginLeft="@dimen/screen_margin_horizontal"
+		android:layout_marginRight="@dimen/screen_margin_horizontal">
+	</Button>
+	<ImageView
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:scaleType="fitXY"
+		android:layout_marginLeft="6dip"
+		android:layout_marginRight="6dip"
+		android:fadingEdge="none"
+		android:background="@color/standard_grey" />
+	<ListView
+		android:id="@id/android:list"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+		android:fadingEdge="none"
+		android:drawSelectorOnTop="false"
+		android:layout_marginLeft="@dimen/screen_margin_horizontal"
+		android:layout_marginRight="@dimen/screen_margin_horizontal"
+		android:divider="@drawable/standard_list_divider"
+		android:dividerHeight="1dip" />
+	<TextView
+		android:id="@id/android:empty"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:text="No data" />
+</LinearLayout>

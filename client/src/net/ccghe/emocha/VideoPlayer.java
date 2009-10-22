@@ -32,26 +32,27 @@ public class VideoPlayer extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.video_player);
+	super.onCreate(savedInstanceState);
 
-	    Bundle extras = getIntent().getExtras();
-		String tDocID = extras.getString(Constants.DOC_ID);
-        
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
-//      getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        setContentView(R.layout.video_player);
+	setContentView(R.layout.video_player);
 
-        pVideo = (VideoView) findViewById(R.id.video);
-        pVideo.setVideoPath(tDocID);
-        pVideo.start();
-        
-        pPlayer = new MediaController(this);
-        pPlayer.setMediaPlayer(pVideo);     
-        pVideo.setMediaController(pPlayer);
-        pVideo.requestFocus();
+	Bundle extras = getIntent().getExtras();
+	String tDocID = extras.getString(Constants.DOC_ID);
+
+	getWindow().setFormat(PixelFormat.TRANSLUCENT);
+	// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+	// WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+	setContentView(R.layout.video_player);
+
+	pVideo = (VideoView) findViewById(R.id.video);
+	pVideo.setVideoPath(tDocID);
+	pVideo.start();
+
+	pPlayer = new MediaController(this);
+	pPlayer.setMediaPlayer(pVideo);
+	pVideo.setMediaController(pPlayer);
+	pVideo.requestFocus();
     }
 
-} 
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/root"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include
+		layout="@layout/standard_header"
+		android:id="@+id/header" />
+	<TextView
+		android:layout_below="@id/header"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:id="@+id/TextView01"
+		android:layout_marginLeft="@dimen/screen_margin_horizontal"
+		android:layout_marginRight="@dimen/screen_margin_horizontal"
+		android:textSize="@dimen/standard_text_size" />
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_alignParentBottom="true"
+		android:id="@+id/footer">
+		<Button
+			style="@style/WeightedEditButton"
+			android:text="Edit"
+			android:layout_centerInParent="true"
+			android:id="@+id/ButtonEditPatient"
+			android:layout_marginRight="0dip" />
+		<!--
+			<Button style="@style/WeightedCancelButton"
+			android:layout_marginLeft="3dip" android:layout_centerInParent="true"
+			android:id="@+id/ButtonCancelAddPatient"/>
+		-->
+	</LinearLayout>
+</RelativeLayout>

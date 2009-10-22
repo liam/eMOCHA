@@ -1,26 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout android:id="@+id/RelativeLayout01" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/background">
-
-<LinearLayout android:id="@+id/LinearLayout01" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true">
-
-
-<ImageView android:id="@+id/ImageView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="20px" android:paddingBottom="40px" android:src="@drawable/logo">
-</ImageView>
-<TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/ImageView01" android:paddingBottom="20px" android:paddingLeft="20px" android:text="@string/label_welcome" android:textColor="@color/hopkins_blue"></TextView><TableLayout android:id="@+id/TableLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/TextView01" android:paddingLeft="45px">
-<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content">
-<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingRight="10px" android:text="@string/label_username" android:textColor="@color/hopkins_blue"></TextView>
-
-<EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/InputUser"></EditText>
-</TableRow>
-<TableRow android:id="@+id/TableRow02" android:layout_width="wrap_content" android:layout_height="wrap_content">
-<TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingRight="10px" android:text="@string/label_password" android:textColor="@color/hopkins_blue"></TextView>
-
-<EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:password="true" android:id="@+id/InputPassword"></EditText>
-<Button android:id="@+id/ButtonLogIn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/label_login" android:textColor="@color/hopkins_blue"></Button></TableRow>
-
-</TableLayout>
-
-</LinearLayout>
-
+<RelativeLayout
+	android:id="@+id/RelativeLayout01"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
+	android:background="@color/background">
+	<LinearLayout
+		android:id="@+id/LinearLayout01"
+		android:orientation="vertical"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true">
+		<ImageView
+			android:id="@+id/ImageView01"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="20px"
+			android:paddingBottom="40px"
+			android:src="@drawable/logo">
+		</ImageView>
+		<TextView
+			android:id="@+id/TextView01"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/ImageView01"
+			android:paddingBottom="20px"
+			android:paddingLeft="20px"
+			android:text="@string/label_welcome"
+			android:textColor="@color/hopkins_blue"></TextView>
+		<TableLayout
+			android:id="@+id/TableLayout01"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/TextView01"
+			android:paddingLeft="45px">
+			<TableRow
+				android:id="@+id/TableRow01"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<TextView
+					android:id="@+id/TextView02"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingRight="10px"
+					android:text="@string/label_username"
+					android:textColor="@color/hopkins_blue"></TextView>
+				<EditText
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/InputUser"></EditText>
+			</TableRow>
+			<TableRow
+				android:id="@+id/TableRow02"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<TextView
+					android:id="@+id/TextView03"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingRight="10px"
+					android:text="@string/label_password"
+					android:textColor="@color/hopkins_blue"></TextView>
+				<EditText
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:password="true"
+					android:id="@+id/InputPassword"></EditText>
+				<Button
+					android:id="@+id/ButtonLogIn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/label_login"
+					android:textColor="@color/hopkins_blue"></Button>
+			</TableRow>
+		</TableLayout>
+	</LinearLayout>
 </RelativeLayout>

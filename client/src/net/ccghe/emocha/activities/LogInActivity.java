@@ -17,52 +17,48 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package net.ccghe.emocha;
+package net.ccghe.emocha.activities;
 
+import net.ccghe.emocha.R;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class CallMenu extends Activity {
-	private Button pCallConsult;
-	private Button pCallClinic;
-	private Button pCallOther;
+public class LogInActivity extends Activity {
 
+	private Button pLoginButton;
+	private EditText pInputUser;
+	private EditText pInputPassword;
+
+	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.call_menu);
+		setContentView(R.layout.log_in);
+
+		pLoginButton   = (Button) findViewById(R.id.ButtonLogIn);
+		pInputUser     = (EditText) findViewById(R.id.InputUser);
+		pInputPassword = (EditText) findViewById(R.id.InputPassword);
 		
-		
-		pCallConsult = (Button) findViewById(R.id.ButtonCallConsult);
-		pCallClinic  = (Button) findViewById(R.id.ButtonCallClinic);
-		pCallOther   = (Button) findViewById(R.id.ButtonCallOther);
-		
-		pCallConsult.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				callHospital();
+		pLoginButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {		
+				String tUser     = pInputUser.getText().toString();
+				String tPassword = pInputPassword.getText().toString();
+
+				if (tUser.equals("user") && tPassword.equals("pass")) {
+					Intent i = new Intent(getApplicationContext(), MainMenu.class);
+	                startActivity(i);
+				} else {
+					Toast.makeText(LogInActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();				
+				}
 			}
+
 		});
-		pCallClinic.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				callHospital();
-			}
-		});
-		pCallOther.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent OpenDialer = new Intent(Intent.ACTION_DIAL);
-	            startActivity(OpenDialer);
-            }
-		});
-	}
-	private void callHospital() {
-		try {
-	        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+256777667444")));
-	      } catch (Exception e) {
-	        e.printStackTrace();
-	    }								
+
 	}
 }

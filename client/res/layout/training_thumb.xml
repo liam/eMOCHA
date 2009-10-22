@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:background="@color/background" android:layout_height="fill_parent" android:layout_width="fill_parent" android:padding="10px" android:orientation="vertical"><ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:paddingBottom="40px" android:layout_width="wrap_content" android:padding="5px" android:src="@drawable/logo"></ImageView>
-<TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/hopkins_blue" android:textSize="24px" android:layout_marginBottom="5px" android:text="Sample title of the video"></TextView>
-<FrameLayout android:id="@+id/FrameLayout01" android:layout_width="fill_parent" android:layout_height="200px" android:layout_marginBottom="5px">
-
-
-
-<ImageView android:scaleType="centerInside" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/ImageVideoThumb" android:src="@drawable/default_video_thumb"></ImageView><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical|center_horizontal" android:text="Play video" android:id="@+id/ButtonPlayVideo"></Button>
-</FrameLayout><TextView android:id="@+id/TextView02" android:layout_height="wrap_content" android:text="Seen 3 times." android:gravity="right" android:layout_width="fill_parent"></TextView>
-<Button android:layout_height="wrap_content" android:text="Take quiz" android:layout_width="fill_parent" android:id="@+id/ButtonTakeQuiz"></Button><TextView android:id="@+id/TextView03" android:textColor="@color/hopkins_blue" android:layout_width="fill_parent" android:layout_marginTop="10px" android:textSize="16px" android:text="Quiz passed on 28.08.2009!" android:gravity="center" android:layout_height="fill_parent"></TextView>
-
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="@color/background"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
+	android:padding="10px"
+	android:orientation="vertical">
+	<include
+		layout="@layout/standard_header"></include>
+	<TextView
+		android:id="@+id/VideoTitle"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textColor="@color/hopkins_blue"
+		android:textSize="24px"
+		android:layout_marginBottom="5px"
+		android:text=""></TextView>
+	<FrameLayout
+		android:id="@+id/FrameLayout01"
+		android:layout_width="fill_parent"
+		android:layout_height="200px"
+		android:layout_marginBottom="5px">
+		<ImageView
+			android:scaleType="centerInside"
+			android:layout_height="fill_parent"
+			android:layout_width="fill_parent"
+			android:id="@+id/ImageVideoThumb"
+			android:src="@drawable/default_video_thumb"></ImageView>
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|center_horizontal"
+			android:text="Play video"
+			android:id="@+id/ButtonPlayVideo"></Button>
+	</FrameLayout>
+	<TextView
+		android:id="@+id/TextView02"
+		android:layout_height="wrap_content"
+		android:text="Seen 3 times."
+		android:gravity="right"
+		android:layout_width="fill_parent"></TextView>
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Take quiz"
+		android:layout_width="fill_parent"
+		android:id="@+id/ButtonTakeQuiz"></Button>
+	<TextView
+		android:id="@+id/TextView03"
+		android:textColor="@color/hopkins_blue"
+		android:layout_width="fill_parent"
+		android:layout_marginTop="10px"
+		android:textSize="16px"
+		android:text="Quiz passed on 28.08.2009!"
+		android:gravity="center"
+		android:layout_height="fill_parent"></TextView>
 </LinearLayout>
