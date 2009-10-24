@@ -31,6 +31,15 @@
 			"WHERE imei_md5='$_REQUEST[usr]' AND pwd=PASSWORD('$_REQUEST[pwd]') AND validated=1");
 		if (!($usrID)) {
 			sendError('unauthorized user '.$_REQUEST['usr'].', '.$_REQUEST['pwd']);
+		} else {
+			$gps = '';
+			if (isset($_REQUEST['gps'])) {
+				$gps = preg_replace('/[^0-9.,:-]/', '', $_REQUEST['gps']);
+			}			
+			query("UPDATE phone SET ".
+				"last_connect_ts=UNIX_TIMESTAMP(), ".
+				"gps='$gps' ".
+				"WHERE ID=$usrID");
 		}
 	}
 	

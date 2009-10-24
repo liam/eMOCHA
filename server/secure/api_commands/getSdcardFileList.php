@@ -22,11 +22,6 @@
       - files on the phone should be dowloaded to a temporary folder until they are
         complete, then moved to the final destination 
 	*/
-
-	if (isset($_REQUEST['gps'])) {
-		$gps = preg_replace('/[^0-9.,:]/', '', $_REQUEST['gps']);
-		query("UPDATE phone SET gps='$gps' WHERE ID=$usrID");
-	}
 		
 	$lastFSCheck = implode(file($Config['PATH']['LASTFSCHECK']));
 	$timeForNewCheck = time() > ($lastFSCheck + $Config['TIME']['FSCHECKFREQ']);
