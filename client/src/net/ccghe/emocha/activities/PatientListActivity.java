@@ -123,7 +123,7 @@ public class PatientListActivity extends ListActivity {
 	// (AdapterContextMenuInfo)item.getMenuInfo();
 	if (!item.getTitle().equals("cancel")) {
 	    Intent i = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
-	    i.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "mHealth.xml");
+	    i.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "eMOCHA.xml");
 	    startActivity(i);
 
 	}
