@@ -1,0 +1,120 @@
+BODY {
+    background-color:#EEE;
+    padding:0px;
+    margin:0px;
+}
+BODY, TD {
+	font-family:Arial,Helvetica;
+	font-size:small;
+	color:#0a2972;
+}
+A {
+    text-decoration:none;
+	color:#0a2972;
+}
+TD {
+	vertical-align:top;
+}
+TH {
+    text-align:left;
+}
+
+FORM {
+    margin:0px;
+}
+INPUT.minmax {
+	width:50px;
+}
+.fullWidth {
+    width:100%;
+}
+TABLE.darkHeader TH {
+    padding-left:5px;
+    padding-right:5px;
+    font-weight:normal;
+    font-size:small;
+    background-color:#f7941e;
+    color:#FFF;
+}
+
+#content {
+    width:900px;
+    height:100%;
+    background-color:#FFF;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#header {
+    margin-top:5px;
+    height:60px;
+}
+#banner {
+    padding-left:10px;
+    background-color:#FFF;
+}
+#banner IMG {
+    margin-right:15px;
+}
+#bannerimg {
+    width:468px;
+    height:60px;
+}
+#login {
+    padding-left:10px;
+    padding-right:20px;
+    font-size:80%;
+    text-align:right;
+}
+#login INPUT {
+    width:80px;
+    margin-bottom:4px;
+}
+#status {
+    width:120px;
+    background-color:yellow;
+    text-align:center;
+}
+
+#mid {
+    margin-top:20px;
+}
+#menu {
+    padding-left:10px;
+    padding-right:10px;
+    line-height:180%;
+}
+#menu UL {
+    margin-left:0px;
+    padding-left:0px;
+}
+#menu LI {
+    list-style-type: none;
+    border-bottom:1px dotted gray;
+}
+#map {
+    border:1px dotted gray;
+}
+#map_canvas {
+    width:600px; 
+    height:400px;
+    margin-right:10px;
+}
+
+#bottom {
+    margin-top:20px;
+}
+#bottom TABLE TD {
+    padding:5px;
+    border-bottom:1px solid #CCC;
+    border-right:1px solid #CCC;
+}
+#bottom TABLE {
+    width:100%;
+}
+#graphs {
+    width:70%;
+}
+#msg {
+    width:30%;
+}
