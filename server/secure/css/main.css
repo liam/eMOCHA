@@ -38,8 +38,6 @@ TABLE.darkHeader TH {
 }
 
 #content {
-    width:900px;
-    height:100%;
     background-color:#FFF;
     margin-left:auto;
     margin-right:auto;
@@ -48,6 +46,11 @@ TABLE.darkHeader TH {
 #header {
     margin-top:5px;
     height:60px;
+}
+#header TD {
+	border:1px solid #CCC;
+	vertical-align:middle;
+	padding:4px;
 }
 #banner {
     padding-left:10px;

@@ -22,13 +22,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-  <title></title>
-  <script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
-  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<? include 'config/google_maps_key'; ?>" type="text/javascript"></script>
-  <script src="js/markerclusterer_packed.js" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="style/main.css">
-  <LINK REL="SHORTCUT ICON" HREF="favicon.ico">
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+	<title>eMOCHA</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link type="text/css" href="css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+	<LINK REL="SHORTCUT ICON" HREF="favicon.ico">
 </head>
 <body onload="initialize()" onunload="GUnload()">
 	
@@ -36,76 +34,87 @@
 	
 	<TABLE id="header" class="fullWidth">
 		<tr>
-			<td id="banner">
+			<td id="banner" class="ui-corner-all">
 				<img src="i/banner_cut.gif">
 				<img src="i/eMOCHA_logo.png" />
 			</td>
-			<td id="login">
+			<td id="login" class="ui-corner-all">
 				<form>
 					Username: <input type="text" /><br/>
 					Password: <input type="password" /><br/>
 					<input type="submit" value="Sign in" />
 				</form>
 			</td>
-			<td id="status">
-				<br/>alarm 
+			<td id="status" class="ui-corner-all">
+				alarm 
 				<br/>status
 			</td>
 		</tr>
 	</table>
 
-	<TABLE id="mid" class="fullWidth">
-		<tr>
-			<td id="menu">
-				<ul>
-					<li><a href="?section=map">Map</a>
-					<li><a href="?section=alarm">Alarms</a>
-					<li><a href="?section=stats">Stats</a>
-					<li><a href="?section=messages">Messages</a>
-					<li><a href="?section=settings">Settings</a>
-					<li><a href="?section=phones">Phones</a>
-				</ul>
-			</td>
-			<td id="map">
-				<table>
-					<tr>
-						<td>
-							<div id="map_canvas"></div>
-						</td>
-						<td>
-							<form name="form1" action="index.php" method="post">
-							Gender<br/>
-							<input type="radio" name="gender" value="m" />Male<br/>
-							<input type="radio" name="gender" value="f" />Female<br/>
-							<input type="radio" name="gender" value="" />Both<br/>
-							<br/>
-							TB<br/>
-							<input type="radio" name="tb" value="y" />yes<br/>
-							<input type="radio" name="tb" value="n" />no<br/>
-							<input type="radio" name="tb" value="" />both<br/>
-							<br/>
-							HIV<br/>
-							<input type="radio" name="hiv" value="y" />yes<br/>
-							<input type="radio" name="hiv" value="n" />no<br/>
-							<input type="radio" name="hiv" value="" />both<br/>
-							<br/>
-							Age between<br/>
-							<input type="text" name="age_min" class="minmax" /> and
-							<input type="text" name="age_max" class="minmax" /><br/>
-							<br/>
-							Temp between<br/>
-							<input type="text" name="temp_min" class="minmax" /> and 
-							<input type="text" name="temp_max" class="minmax" /><br/>
-							<br/>
-							<input type="submit" value="search" />
-							</form>
-						</td>
-					</tr>
-				</table>
+	<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+		<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+			<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="?section=main">Main</a></li>
+			<li class="ui-state-default ui-corner-top"><a href="?section=edu">Edu</a></li>
+			<li class="ui-state-default ui-corner-top"><a href="?section=telemed">TeleMed</a></li>
+			<li class="ui-state-default ui-corner-top"><a href="?section=stats">Stats</a></li>
+			<li class="ui-state-default ui-corner-top"><a href="?section=handsets">Handsets</a></li>
+		</ul>
 
-			</td>
-		</tr>
-	</TABLE>
+		<TABLE id="mid" class="fullWidth">
+			<tr>
+				<td id="menu">
+					<ul>
+						<li><a href="?section=map">Map</a>
+						<li><a href="?section=alarm">Alarms</a>
+						<li><a href="?section=stats">Stats</a>
+						<li><a href="?section=messages">Messages</a>
+						<li><a href="?section=settings">Settings</a>
+						<li><a href="?section=phones">Phones</a>
+					</ul>
+				</td>
+				<td id="map">
+					<table>
+						<tr>
+							<td>
+								<div id="map_canvas"></div>
+							</td>
+							<td>
+								<form name="form1" action="index.php" method="post">
+								Gender<br/>
+								<input type="radio" name="gender" value="m" />Male<br/>
+								<input type="radio" name="gender" value="f" />Female<br/>
+								<input type="radio" name="gender" value="" />Both<br/>
+								<br/>
+								TB<br/>
+								<input type="radio" name="tb" value="y" />yes<br/>
+								<input type="radio" name="tb" value="n" />no<br/>
+								<input type="radio" name="tb" value="" />both<br/>
+								<br/>
+								HIV<br/>
+								<input type="radio" name="hiv" value="y" />yes<br/>
+								<input type="radio" name="hiv" value="n" />no<br/>
+								<input type="radio" name="hiv" value="" />both<br/>
+								<br/>
+								Age between<br/>
+								<input type="text" name="age_min" class="minmax" /> and
+								<input type="text" name="age_max" class="minmax" /><br/>
+								<br/>
+								Temp between<br/>
+								<input type="text" name="temp_min" class="minmax" /> and 
+								<input type="text" name="temp_max" class="minmax" /><br/>
+								<br/>
+								<input type="submit" value="search" />
+								</form>
+							</td>
+						</tr>
+					</table>
+	
+				</td>
+			</tr>
+		</TABLE>
+	</div>
+		
 	<!--
 	<TABLE id="bottom" class="fullWidth">
 		<tr>
@@ -247,5 +256,10 @@
 	    </script>
 
 	</div>
+	
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<? include 'config/google_maps_key'; ?>" type="text/javascript"></script>
+	<script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+	<script src="js/markerclusterer_packed.js" type="text/javascript"></script>
 </body>
 </html>
