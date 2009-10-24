@@ -123,14 +123,18 @@ public class ServerService extends Service {
 		String gpsPos = Preferences.getGpsPos(c);
 		JSONObject response = Server.GetSdcardFileList(lastDownloadTimestamp, gpsPos);
 
-    	        if(response == null){
-                    handler.post(new Runnable() {
-                        public void run(){
-                            Toast.makeText(getApplicationContext(), "JSON object is null! Cannot connect to server check url in prefs" , Toast.LENGTH_SHORT ).show();
-                        }
-                    }); 
-                   return;
-    	        }
+		if (response == null) {
+		    // Remove this toast, since it's triggered every minute when no Internet available.
+		    /*
+		    handler.post(new Runnable() {
+			public void run() {
+			    Toast.makeText(getApplicationContext(), "JSON object is null! Cannot connect to server check url in prefs",
+				    Toast.LENGTH_SHORT).show();
+			}
+		    });
+		    */
+		    return;
+		}
 		
 		try {
 		    // DBAdapter.updateFilesToUpload(lastLocalTimestamp);
