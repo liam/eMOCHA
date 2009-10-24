@@ -168,7 +168,7 @@
 		$q = mysql_query('SELECT ID, last_connect_ts, gps, comments FROM phone WHERE LOCATE(":", gps) > 0');
 		while($row = mysql_fetch_assoc($q)) {		
 		  $loc = explode(':', $row['gps']);
-		  print sprintf('tMarker=new GMarker(new GLatLng(%d,%d)); tMarker.PID=%d; tMarkers.push(tMarker);'."\n", 
+		  print sprintf('tMarker=new GMarker(new GLatLng(%s,%s)); tMarker.PID=%d; tMarkers.push(tMarker);'."\n", 
 			  $loc[0], $loc[1], $row['ID']);
 		  
 		  print sprintf('pPatientData[%d]="<b>%s</b><br/>'.
