@@ -5,7 +5,7 @@ BODY {
 }
 BODY, TD {
 	font-family:Arial,Helvetica;
-	font-size:small;
+	font-size:x-small;
 	color:#0a2972;
 }
 A {
@@ -75,26 +75,22 @@ TABLE.darkHeader TH {
 }
 #status {
     width:120px;
-    background-color:yellow;
     text-align:center;
 }
 
 #mid {
     margin-top:20px;
 }
+
 #menu {
-    padding-left:10px;
-    padding-right:10px;
-    line-height:180%;
+	width:100px;
 }
-#menu UL {
-    margin-left:0px;
-    padding-left:0px;
+#menu INPUT {
+	width:100%;
+    padding:4px;
+	margin-bottom:6px;
 }
-#menu LI {
-    list-style-type: none;
-    border-bottom:1px dotted gray;
-}
+
 #map {
     border:1px dotted gray;
 }
@@ -104,17 +100,23 @@ TABLE.darkHeader TH {
     margin-right:10px;
 }
 
-#bottom {
-    margin-top:20px;
+#tabs {
+	margin-top:10px;
+	margin-bottom:10px;
 }
-#bottom TABLE TD {
-    padding:5px;
-    border-bottom:1px solid #CCC;
-    border-right:1px solid #CCC;
+
+#bottom {
+    margin-top:0px;
+}
+#bottom TD {
+	border:1px solid #CCC;
+	vertical-align:middle;
+	padding:4px;
 }
 #bottom TABLE {
     width:100%;
 }
+
 #graphs {
     width:70%;
 }

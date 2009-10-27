@@ -1,0 +1,14 @@
+#app TABLE {
+	border:1px solid #CCC;
+}
+#app TABLE TH {
+	background-color:#EEE;
+	padding:3px;
+	text-align:right;
+
+}
+#app TABLE TD {
+	padding:3px;
+	text-align:right;
+	border-bottom:1px solid #EEE;
+}

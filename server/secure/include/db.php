@@ -10,7 +10,7 @@
 			@mysql_query("SET CHARACTER SET utf8");
 			@mysql_query("SET NAMES utf8");
 		} else {
-			include $tCurrentPath.'db_error.html';
+			include $tCurrentPath.'../errors/database.html';
 			exit();
 		}
 	}

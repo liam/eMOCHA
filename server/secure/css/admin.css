@@ -1,0 +1,131 @@
+BODY {
+	padding:20px;
+	font-family:Arial, Helvetica;
+}
+H1 {
+	color:#96C047;
+	font-family:Georgia,"Times New Roman",Times,serif;
+	font-style:oblique;
+}
+TD {
+	vertical-align:top;
+}
+
+.link {
+	cursor:pointer;
+	cursor:hand;
+}
+.link:hover {
+	text-decoration:underline;
+}
+.overflow_01 {
+	width:250px;
+	max-height:480px;
+	overflow:auto;
+	padding:5px;
+	font-size:small;
+}
+#header {
+	font-weight:bold;
+}
+#app_table {
+    width:100%;
+}
+#app_table TD {
+	border:1px solid #CCC;
+	padding:10px;
+}
+
+#status {
+	padding:2px;
+	width:100%;
+	position:fixed;
+	right:0px;
+	bottom:0px;
+	text-align:center;
+	font-size:x-small;
+	background-color:#FFF;
+	border:1px solid #EEE;
+}
+.st_OK {
+	background-color:#BADA8F !important;
+	border:1px solid #8FC249 !important;
+	color:#456020 !important;
+}
+.st_ERR {
+	background-color:#D75640 !important;
+	border:1px solid #C14028 !important;
+	color:#6D2316 !important;
+}
+
+#user {
+	margin-top:1px;
+	margin-right:1px;
+	padding:2px;
+	padding-right:10px;
+	position:fixed;
+	right:0px;
+	top:0px;
+	background-color:#EEE;
+	text-align:center;
+}
+#user INPUT {
+	border:1px solid #CCC;
+	padding:2px;
+	margin-right:5px;
+	width:95px;
+}
+#user INPUT:focus {
+	background-color:#F8FEA9;
+}
+
+#menu {
+    /*
+	background-image:url(images/logo.gif);
+	background-repeat:no-repeat;
+	background-position:8px 3px;
+	*/
+	padding-left:90px;
+	padding-right:10px;
+	border:1px solid #CCC;
+	position:fixed;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:23px;
+	background-color:#EEE;
+	text-align:left;
+}
+#menu SPAN {
+	padding-top:2px;
+	padding-bottom:2px;
+	padding-left:5px;
+	padding-right:5px;
+}
+#menu SPAN:hover {
+	background-color:#DDD;
+	cursor:pointer;
+	cursor:hand;
+}
+DIV.subMenu {
+	background-color:#FFF;
+	padding:5px;
+	border:1px solid #CCC;
+	position:fixed;
+	top:21px;
+	font-size:small;
+	line-height:150%;
+}
+DIV.subMenu DIV {
+}
+DIV.subMenu DIV:hover {
+	background-color:#EEE;
+}
+
+#app INPUT.err {
+    border: 2px solid #F00;
+}
+
+.hidden {
+	display:none;
+}

@@ -1,0 +1,9 @@
+input.text,
+textarea.text { 
+    margin-bottom:12px; 
+    width:95%; 
+    padding: .4em; 
+}
+label, input { 
+    display:block; 
+}
