@@ -39,4 +39,7 @@
     	'DB'  => ''
 	);
 
+  $Config['EMAIL']['ACTIVATEPHONE'] = "";
+  $Config['EMAIL']['SERVER'] = "";
+
 ?>
