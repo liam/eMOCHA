@@ -43,7 +43,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 public class ServerService extends Service {
     private static final long INTERVAL_CALL_SERVER = 30 * Constants.ONE_SECOND;
