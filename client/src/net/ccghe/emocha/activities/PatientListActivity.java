@@ -1,9 +1,13 @@
 package net.ccghe.emocha.activities;
 
+import java.io.File;
+
 import net.ccghe.emocha.Constants;
 import net.ccghe.emocha.R;
 import net.ccghe.emocha.model.PatientDB;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -28,6 +32,9 @@ public class PatientListActivity extends ListActivity {
     private static final int NAME_COLUMN    = 1;
     private static final int STATUS_COLUMN  = 2;
     
+    private static final int MENU_FILL_FORM = 0;
+    private static final int MENU_CANCEL = 1;
+    private static final int MENU_INFO = 2;
     
     private static final int RESULT_CODE = 1;
     
@@ -56,7 +63,6 @@ public class PatientListActivity extends ListActivity {
         });
         
         registerForContextMenu(getListView());
-        
     }
     
     @Override
@@ -119,13 +125,33 @@ public class PatientListActivity extends ListActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-	// AdapterContextMenuInfo info =
-	// (AdapterContextMenuInfo)item.getMenuInfo();
-	if (!item.getTitle().equals("cancel")) {
-	    Intent i = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
-	    i.putExtra(Constants.ODK_FILEPATH_KEY, Constants.PATH_ODK_FORMS + "eMOCHA.xml");
-	    startActivity(i);
+	switch (item.getItemId()) {
+	case MENU_FILL_FORM:
+	    String mainForm = Constants.PATH_ODK_FORMS + "eMOCHA.xml";
+	    File mainFormFile = new File(mainForm);
+	    if (mainFormFile.exists()) {
+		Intent i = new Intent(Constants.ODK_INTENT_FILTER_SHOW_FORM);
+		i.putExtra(Constants.ODK_FILEPATH_KEY, mainForm);
+		startActivity(i);
+	    } else {
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle("Main form no found");
+		alertDialog.setMessage("Please configure eMOCHA's network settings and wait until all data is downloaded.");
+		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int which) {
+			return;
+		    }
+		});
+		alertDialog.show();
+	    }
+	    break;
+	case MENU_INFO:
+	    Intent tIntent = new Intent(getApplicationContext(), PatientInfoActivity.class);
+	    tIntent.putExtra("row_id_patient", mPatientCursor.getInt(ROW_ID));
+	    startActivity(tIntent);
 
+	    // tPatientCursor.close();
+	    break;
 	}
 	return true;
     }
@@ -136,11 +162,14 @@ public class PatientListActivity extends ListActivity {
 
 	Object o = this.getListAdapter().getItem(info.position);
 	Cursor tPatientCursor = (Cursor) o;
-	// we can also set ids to the menu for easier discrimenation in the
+	// we can also set ids to the menu for easier discrimination in the
 	// handler. For
 	// now i use the title and check if == cancel
-	menu.add("Enter data for:\n" + tPatientCursor.getString(NAME_COLUMN));
-	menu.add("cancel");
+	menu.setHeaderTitle("Patient: " + tPatientCursor.getString(NAME_COLUMN));
+	
+	menu.add(0, MENU_FILL_FORM, 0, "Fill out form");
+	menu.add(0, MENU_INFO, 0, "Patient info");
+	menu.add(0, MENU_CANCEL, 0, "Cancel");
     }
     
     @Override
@@ -148,12 +177,8 @@ public class PatientListActivity extends ListActivity {
 	Object o = this.getListAdapter().getItem(position);
 	mPatientCursor = (Cursor) o;
 
-	Intent tIntent = new Intent(getApplicationContext(), PatientInfoActivity.class);
-	tIntent.putExtra("row_id_patient", mPatientCursor.getInt(ROW_ID));
-	startActivity(tIntent);
-
-	// tPatientCursor.close();
-
+	l.showContextMenuForChild(v);
+	
 	super.onListItemClick(l, v, position, id);
     }
 
