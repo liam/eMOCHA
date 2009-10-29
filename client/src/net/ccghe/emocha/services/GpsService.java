@@ -34,7 +34,7 @@ public class GpsService extends Service {
     public static final String      INTENT_FILTER    = "net.ccghe.emocha.GPS_LOCATION_UPDATE";
     private static final int        MAX_FIX_ATTEMPS  = 3;
     private static final String     GPS_PROVIDER_ID  = LocationManager.GPS_PROVIDER;
-    private static final long       GPS_UPDATE_MS    = 60 * Constants.ONE_SECOND;
+    private static final long       GPS_UPDATE_MS    = 7200 * Constants.ONE_SECOND;
     private static final boolean    LOG_TO_TEXT      = true;
 
     private LocationManager         mLocationManager = null;
