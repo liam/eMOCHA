@@ -31,13 +31,18 @@ public class PatientDB {
 
     public static void init(Context tContext) throws SQLException {
         sDBHelper = new DBHelper(tContext);
+        try {
         sDB = sDBHelper.getWritableDatabase();
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("Database is allready open, this should not be the case. : " + e.getMessage() );
+        }
+            
+ 
     }
     public static void destroy() throws IllegalStateException{
         if( sDB!=null || !sDB.isOpen() ){
             throw new IllegalStateException("Database is allready closed");
         }else{
-
             sDB = null;
             sDBHelper.close();
             sDBHelper = null;
