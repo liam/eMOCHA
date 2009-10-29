@@ -25,6 +25,11 @@
 			"creation_ip='$ip'"
 		);
 		$responseA['msg'] = 'Phone activation sent. The administrator will contact you.';
+		
+		mail($Config['EMAIL']['ACTIVATEPHONE'], 
+			'Phone activation requested', 
+			'ID: '.mysql_insert_id(), 
+			$Config['EMAIL']['SERVER']);
 	} else {
 		$responseA['msg'] = 'Server says IMEI code not received!';		
 	}
