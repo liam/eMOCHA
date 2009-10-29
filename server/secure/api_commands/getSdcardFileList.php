@@ -100,7 +100,7 @@
   	$responseA['last_server_upd'] = $lastDBChange;
 
 	if ($lastDBChange != $_REQUEST['last_server_upd']) {
-	  	$filesDBQ = query("SELECT * FROM sdcard");
+	  	$filesDBQ = query("SELECT * FROM sdcard ORDER BY size");
 	  	$filesA = array();
 	  	while($rowA = mysql_fetch_assoc($filesDBQ)) {
 	  		$filesA[] = Array(
