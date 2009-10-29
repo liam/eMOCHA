@@ -92,6 +92,13 @@ public class DownloadOneFile {
 	    f.close();
 
 	    DBAdapter.markAsDownloaded(new FileInfo(newFile));
+	    
+	    // TODO: quick fix for the presentation in Baltimore
+	    // copy forms to odk folder. Should not only copy but delete
+	    // old ones, so it should do  full sync of that folder.
+	    if (folder.indexOf("/odk/forms") > 0) {
+		FileUtils.copyFile(newFile, new File(Constants.PATH_ODK_FORMS, fileName));
+	    }
 
 	    Log.i(Constants.LOG_TAG, "END DOWNLOAD: " + newFile.getPath());
 	} catch (SocketTimeoutException e) {
@@ -102,6 +109,8 @@ public class DownloadOneFile {
 	} catch (IOException e) {
 	    Log.e(Constants.LOG_TAG, "IOException", e);
 	    DBAdapter.deleteFile(mPath);
+	} catch (Exception e) {
+	    Log.e(Constants.LOG_TAG, "Exception copying file", e);
 	} finally {
 	    destroy();
 	}
