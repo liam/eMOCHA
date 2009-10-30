@@ -14,7 +14,7 @@
 			'pPatientData[%d]="<b>%s</b><br/>%s";'."\n",
 			  $row['ID'], 
 			  $row['comments'], 
-			  date('d-m-Y h:i', (3600*3)+$row['last_connect_ts'])
+			  date('d-m-Y h:i', (3600*0)+$row['last_connect_ts'])
 		  );
 		}
 ?>
