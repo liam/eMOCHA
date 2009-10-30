@@ -141,8 +141,8 @@
 		
 	<table id="bottom" class="fullWidth">
 		<tr>
-			<td id="graphs" class="ui-corner-all">(a)</td>
-			<td id="msg" class="ui-corner-all">(b)</td>
+			<td id="graphs" class="ui-corner-all"></td>
+			<td id="msg" class="ui-corner-all"></td>
 		</tr>
 	</table>
 
