@@ -1,6 +1,6 @@
 <? 
 	$markerDataJS = '';
-	$q = mysql_query('SELECT * FROM form_data ORDER BY ts');
+	$q = mysql_query('SELECT * FROM uploaded_data ORDER BY ts');
 	while($row = mysql_fetch_assoc($q)) {		
 		$xml = simplexml_load_string(stripslashes($row['xml']));
 		// print '<h1>'.$xml->patient_name.'</h1>';
@@ -37,15 +37,24 @@
 			$showit = $showit && ($tempMax >= $xml->patient_temp);
 		}
 		
-		if ($showit) {
+		if ($showit && strlen($xml->patient_location) > 10) {
 			$markerDataJS .= sprintf('tMarker=new GMarker(new GLatLng(%s)); tMarker.PID=%d; tMarkers.push(tMarker);'."\n", 
-				$xml->patient_location, $row['ID']);
+				str_replace(' ', ',', $xml->patient_location), $row['ID']);
+							
+			if (strlen($xml->patient_image) > 5) {
+				$url = sprintf("sdcard/%s/sdcard/odk/instances/%s/%s", $row['usrID'], $row['folderName'], $xml->patient_image);
+				$img = sprintf("<img onClick='jQuery.slimbox(\\\"%s\\\", \\\"%s\\\");' src='%s' style='float:right;' width='60'>", 
+				$url, $xml->patient_name, $url);				
+			} else {
+				$img = '';
+			}
 			
-			$markerDataJS .= sprintf('pPatientData[%d]="<b>%s</b><br/>'.
+			$markerDataJS .= sprintf('pPatientData[%d]="%s<b>%s</b><br/>'.
 				'%s year old %s<br/>'.
 				'Temp: %sºC<br/>'.
 				'%s %s<br/>%s";'."\n",
 				$row['ID'], 
+				$img,
 				$xml->patient_name, 
 				$xml->patient_age,
 				$xml->patient_sex == 'm' ? 'male' : 'female',
@@ -65,6 +74,7 @@
 	var pPatientData = [];
 
 	function showMarkerDetails(tMarker) {
+		// send PID to ajax.php, which will return html and image
 		tMarker.openInfoWindowHtml(pPatientData[tMarker.PID]);				
 	}
 
@@ -123,3 +133,6 @@
 		</td>
 	</tr>
 </table>
+
+<script src="js/slimbox2.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/slimbox2.css">
