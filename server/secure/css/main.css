@@ -1,6 +1,6 @@
 BODY {
-    background-color:#EEE;
-    padding:0px;
+    background-color:#FFF;
+    padding:10px;
     margin:0px;
 }
 BODY, TD {
@@ -92,7 +92,6 @@ TABLE.darkHeader TH {
 }
 
 #map {
-    border:1px dotted gray;
 }
 #map_canvas {
     width:600px; 
