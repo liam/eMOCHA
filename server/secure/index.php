@@ -90,7 +90,7 @@
 			<td id="login" class="ui-corner-all">	
 				<?
 					if ($userA['alias']) {
-						print "Hello $userA[alias]! ".
+						print "Hello $userA[alias]!<br/>".
 							'<span id="send_logout" class="activelink link">Log out</span>.<br/>';
 					} else {
 						print 'Username: '.html_text('usr_name', 'user', 8, 32, 'id="usr_name"').'<br/>';
@@ -99,7 +99,7 @@
 					}
 				?>							
 			</td>
-			<td id="status" class="ui-corner-all">Welcome</td>
+			<!--<td id="status" class="ui-corner-all">Welcome</td>-->
 		</tr>
 	</table>
 
