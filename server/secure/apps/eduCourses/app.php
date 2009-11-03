@@ -6,19 +6,19 @@
 	
 	
 	foreach($filesA AS $fileA) {
-		if (substr($fileA['filename'], -4) == '.mp4') {
-			$time = date('d-m-Y H:j:s', $fileA['ts']);
-			$plainName = substr($fileA['filename'], 0, -4);
-			
-			$size = number_format(filesize($folderPath.$fileA['filename']));
-			$img = $folderPath.$plainName.'.jpg';
+		$filePath = $folderPath.$fileA['filename'];
+		$infoA = pathinfo($filePath);
+		if ($infoA['extension'] == 'mp4') {
+			$time = date('d-m-Y H:j:s', $fileA['ts']);			
+			$size = number_format(filesize($filePath));
+			$img = $folderPath.$infoA['filename'].'.jpg';
 			if (!is_file($img)) {
 				$img = '';
 			}
 			
 			print "<tr>";
 			print "<td><img src=\"$img\"></td>";
-			print "<td><b>$plainName</b><br/>$time<br/>$size bytes</td>";
+			print "<td><b>$infoA[filename]</b><br/>$time<br/>$size bytes</td>";
 			print "</tr>";
 		}
 	}
