@@ -1,0 +1,13 @@
+#video_thumb_table {
+	width:auto;
+}
+
+#video_thumb_table TD {
+	padding:10px;
+	border:1px solid #CCC;
+}
+
+#video_thumb_table TD IMG {
+	width:120px;
+	height:80px;
+}
