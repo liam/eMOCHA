@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +24,6 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class PatientListActivity extends ListActivity {
-    
-    private final Handler guiHandler = new Handler();
     
     private static final int ROW_ID      = 0;
     private static final int NAME_COLUMN    = 1;
@@ -67,7 +64,6 @@ public class PatientListActivity extends ListActivity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Runnable tstMes;
       
         final Intent rData = data;
         
@@ -77,28 +73,10 @@ public class PatientListActivity extends ListActivity {
             mBuilder.append(rData.getExtras().getString("name"));
             mBuilder.append(" has been added");
             
-            tstMes = new Runnable() {
-                public void run(){
-                    //this will run on the mainGui Thread , because a service is running on the main GUI thread
-                    Toast.makeText(getApplicationContext(), mBuilder.toString() , Toast.LENGTH_SHORT ).show();
-                }
-            };
-            
-            guiHandler.post(tstMes);
+            Toast.makeText(getApplicationContext(), mBuilder.toString() , Toast.LENGTH_SHORT ).show();
            
         }
         if(resultCode == RESULT_CANCELED ){
-//            mBuilder.setLength(0);
-//            mBuilder.append("Cancelled");
-//            tstMes = new Runnable() {
-//                public void run(){
-//                    //this will run on the mainGui Thread , because a service is running on the main GUI thread
-//                    Toast.makeText(getApplicationContext(), mBuilder.toString() , Toast.LENGTH_SHORT ).show();
-//                }
-//            };
-//            
-//            guiHandler.post(tstMes);
- 
         }
  
         super.onActivityResult(requestCode, resultCode, data);
