@@ -4,13 +4,37 @@ The folder "secure/" contains the files and folders to be placed inside a web se
 Some .htaccess files are found inside those folders. They are meant for an Apache web 
 server.
 
-* secure/sdcard/
+* secure/sdcard/emocha/
 
-Please create a folder "sdcard" inside the "secure/" folder. This folder should be
-writable by the webserver. One way to achieve this is changing the owner of this folder
-(using "chown" so it's the same owner as the web server proccess). Making the folder
-writable by everyone (chmod 777) is another easy option, but it's not secure for live 
-servers and not recommended.
+Files inside this folder will be downloaded by the phones running eMOCHA.
+There are three folders inside "secure/sdcard/emoca/training/. 
+
+"courses/" and "lectures/" should contain pairs of files without spaces 
+in the filenames in this format:
+movie_about_something.mpg
+movie_about_something.jpg
+movie_about_something_else.mpg
+movie_about_something_else.jpg
+The jpg file is a thumbnail of the mp4 video.
+
+This movies and thumbnails will be available in the phones.
+
+"library/" should contain html files, with the "html" file extension. These
+html files can not include links to css files or images, and ideally should
+simple html files without much formatting (avoid wide tables for example)
+so they render faster and correctly. The idea is to provide some reference
+material for the phone user.
+
+Currently all training materials can not be nested in subfolders (like
+"library/treatments/a/some_treatment.html", but this will be soon fixed.
+
+* make secure/sdcard/ writable by PHP
+The "sdcard/" folder should be writable by the web server. PHP will attempt to
+create there one folder for each phone user, and save inside that folder any
+data sent by the phone. One way to make the folder writable is changing the 
+owner of this folder (using "chown" so it's the same owner as the web server 
+proccess). Making the folder writable by everyone (chmod 777) is another easy 
+option, but it's not recommended because of security issues.
 
 * config/google_maps_key
 
