@@ -2,9 +2,6 @@ client/bin
 client/gen/net/ccghe/emocha/R.java
 client/default.properties
 server/eMOCHA
-server/secure/sdcard/
-server/secure/download/
 server/secure/config/google_maps_key
-server/secure/phpMyAdmin/
 server/secure/include/config_local.php
 _*/

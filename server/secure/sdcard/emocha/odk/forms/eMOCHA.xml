@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" 
+				xmlns:h="http://www.w3.org/1999/xhtml" 
+				xmlns:ev="http://www.w3.org/2001/xml-events" 
+				xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				xmlns:jr="http://openrosa.org/javarosa"
+				xmlns:emocha="http://ccghe.net/eMOCHA">
+	<h:head>
+		<h:title>eMOCHA test form 1</h:title>
+		
+		<model>
+			
+			<itext>
+				<translation lang="English">
+					<text id="survey_taker">
+						<value>What is your name?</value>
+					</text>
+					<text id="red">
+						<value>Red</value>
+					</text>
+				</translation>
+			</itext>
+			
+			<instance>
+				<patient xmlns:emocha="http://ccghe.net/eMOCHA">
+					<patient_name />
+					<patient_sex />
+					<patient_pregnant />
+					<patient_age />
+					<patient_temp />
+					<patient_tbc />
+					<patient_hiv />
+					<patient_image/>
+					<patient_location />
+				</patient>
+			</instance>
+			
+			<bind nodeset="patient_name" required="true()" type="string" />
+			<bind nodeset="patient_sex" required="true()" type="string" />
+			<!-- would be better to use type="date" for patient_age, but I don't know if I can do ". <= today()-20 and . >= today()-40" -->
+			<bind nodeset="patient_age" required="true()" type="int" constraint=". &gt;= 20 and . &lt;= 40" jr:constraintMsg="No patients younger than 20 or older than 40 years old allowed for this study!"/>
+			<bind nodeset="patient_pregnant" relevant="selected(../patient_sex, 'f')" type="string" />
+			<bind nodeset="patient_tbc" required="true()" type="string" />
+			<bind nodeset="patient_hiv" required="true()" type="string" />
+			<bind nodeset="patient_image" />
+			<bind nodeset="patient_temp" required="true()" type="decimal" />
+			<bind nodeset="patient_location" required="false()" type="geopoint" />
+					
+		</model>
+	</h:head>
+	<h:body>
+		
+		<input ref="patient_name">
+			<label>Patient name</label>
+		</input>
+		
+		<select1 ref="patient_sex">
+			<label>Patient gender</label>
+			<item>
+				<label>Male</label>
+				<value>m</value>
+			</item>
+			<item>
+				<label>Female</label>
+				<value>f</value>
+			</item>
+		</select1>
+
+		<select1 ref="patient_pregnant">
+			<label>Is she pregnant?</label>
+			<item>
+				<label>Yes</label>
+				<value>y</value>
+			</item>
+			<item>
+				<label>No</label>
+				<value>n</value>
+			</item>
+		</select1>
+		
+		<input ref="patient_age">
+			<label>How old is the patient?</label>
+		</input>
+
+		<select1 ref="patient_tbc">
+			<label>TBC?</label>
+			<item>
+				<label>Yes</label>
+				<value>y</value>
+			</item>
+			<item>
+				<label>No</label>
+				<value>n</value>
+			</item>
+		</select1>
+
+		<select1 ref="patient_hiv">
+			<label>HIV?</label>
+			<item>
+				<label>Yes</label>
+				<value>y</value>
+			</item>
+			<item>
+				<label>No</label>
+				<value>n</value>
+			</item>
+		</select1>
+
+		<upload ref="patient_image" mediatype="image/*">
+			<label>Take a picture of the patient.</label>
+		</upload>
+
+		<input ref="patient_temp">
+			<label>Please enter the patient temperature</label>
+		</input>
+		
+		<input ref="patient_location">
+			<label>Stand near the front door to get a GPS reading.</label>
+		</input>
+		
+	</h:body>
+</h:html>
